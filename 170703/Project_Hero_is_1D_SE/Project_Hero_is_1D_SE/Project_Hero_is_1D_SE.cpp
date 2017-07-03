@@ -30,7 +30,7 @@ int main()
 	tpHero = new SCharacter();
 	tpHero->mX = 0;
 	tpHero->mHP = 200;
-	tpHero->mAP = 90;
+	tpHero->mAP = 50;
 
 	SCharacter *tpSlime = NULL;
 	tpSlime = new SCharacter();
@@ -42,7 +42,7 @@ int main()
 	tpKingSlime = new SCharacter();
 
 	tpKingSlime->mX = 4;
-	tpKingSlime->mHP = 200;
+	tpKingSlime->mHP = 300;
 	tpKingSlime->mAP = 20;
 
 	//오프닝
@@ -85,19 +85,16 @@ int main()
 			{
 				break;
 			}
-
 			else if (0 >= tpKingSlime->mHP)
 			{
 				break;
 			}
 		}
-
 		if (0 >= tpHero->mHP)
 		{
 			cout << "GAME OVER" << endl << endl;
 			break;
 		}
-
 		else if (0 >= tpKingSlime->mHP)
 		{
 			cout << "보스를 물리쳤다. 세상이 평화로워졌다." << endl << endl;
@@ -112,7 +109,7 @@ int main()
 	cout << "============================================================================" << endl;
 	cout << "============================================================================" << endl;
 
-	//
+	//동적할당 삭제.
 	if (NULL != tpKingSlime)
 	{
 		delete tpKingSlime;
@@ -135,6 +132,7 @@ int main()
 }
 
 //버그 1 : 슬라임을 물리치고 앞으로 갔다 돌아와서 만나면 슬라임의 체력이 0인 상태
+//죽음 상태를 만들자.
 
 //1. 맵 이동 함수 
 void DoMoveFuction(char tMoveDir, SCharacter *tpHero)
@@ -198,37 +196,50 @@ void EventMoveHero(int tAttrib, SCharacter *tpHero, SCharacter *tpSlime, SCharac
 	case 1:  // 슬라임 조우 및 주사위 이벤트
 	{
 		cout << "      용사는 " << tpHero->mX << "타일에 있습니다." << endl;
-		cout << "      슬라임과 만났습니다. 전투를 시작합니다." << endl << endl;
 
-		char tRollDice = 'r';
-
-		cout << "================================================================================" << endl;
-		cout << "================================슬라임과의 전투=================================" << endl;
-		cout << "================================================================================" << endl;
-		cout << endl;
-
-		while (1)
+		if (tpSlime->mHP <= 0)
 		{
-			cout << "\t [[용사]] \t\t\t\t [[슬라임]]" << endl;
-			cout << "\t 공격력 : " << tpHero->mAP << "\t\t\t\t 공격력 : " << tpSlime->mAP << endl;
-			cout << "\t   체력 : " << tpHero->mHP << "\t\t\t\t   체력 : " << tpSlime->mHP << endl <<endl;
+			cout << "      슬라임과 만났다..... 움직임이 없다..... 이미 시체인 것 같다." << endl << endl;
+		}
 
-			cout << "  >> [ r ] 버튼을 눌러 주사위를 던져주세요 : ";
-			cin >> tRollDice;
+		else
+		{
+			cout << "      슬라임과 만났습니다. 전투를 시작합니다." << endl << endl;
+
+			char tRollDice = 'r';
+
+			cout << "================================================================================" << endl;
+			cout << "================================슬라임과의 전투=================================" << endl;
+			cout << "================================================================================" << endl;
 			cout << endl;
 
-			DoBattleSlime(tRollDice, tpHero, tpSlime); //슬라임 전투 진행(주사위)
-
-			if (0 >= tpHero->mHP)
+			while (1)
 			{
-				cout << "      용사의 죽음 " << endl;
-				break;
-			}
+				int tActivity_Hero = 0;
 
-			else if (0 >= tpSlime->mHP)
-			{
-				cout << "      용사는 슬라임을 물리쳤다." << endl << endl;
-				break;
+				cout << "\t [[용사]] \t\t\t\t [[슬라임]]" << endl;
+				cout << "\t 공격력 : " << tpHero->mAP << "\t\t\t\t 공격력 : " << tpSlime->mAP << endl;
+				cout << "\t   체력 : " << tpHero->mHP << "\t\t\t\t   체력 : " << tpSlime->mHP << endl << endl;
+				
+
+
+				cout << "  >> [ r ] 버튼을 눌러 주사위를 던져주세요 : ";
+				cin >> tRollDice;
+				cout << endl;
+
+				DoBattleSlime(tRollDice, tpHero, tpSlime); //슬라임 전투 진행(주사위)
+
+				if (0 >= tpHero->mHP)
+				{
+					cout << "      용사의 죽음 " << endl;
+					break;
+				}
+
+				else if (0 >= tpSlime->mHP)
+				{
+					cout << "      용사는 슬라임을 물리쳤다." << endl << endl;
+					break;
+				}
 			}
 		}
 
@@ -319,9 +330,10 @@ void DoBattleSlime(char tRollDice, SCharacter *tpHero, SCharacter *tpSlime)
 //4. 킹 슬라임 전투(가위바위보)
 void DoBattleKingSlime(int tHero_RSP, SCharacter *tpHero, SCharacter *tpKingSlime)
 {
+
 	int tKingSlime_RSP = rand() % 3;
 
-	if (tHero_RSP = 0) // 용사가 가위일 때
+	if (0 ==tHero_RSP) // 용사가 가위일 때
 	{
 		switch (tKingSlime_RSP)
 		{
@@ -330,6 +342,7 @@ void DoBattleKingSlime(int tHero_RSP, SCharacter *tpHero, SCharacter *tpKingSlim
 			cout << "      용사 : 가위" << endl;
 			cout << "      킹 슬라임 : 가위" << endl;
 			cout << "      [무승부]입니다." << endl << endl;
+
 			break;
 		}
 
@@ -365,7 +378,7 @@ void DoBattleKingSlime(int tHero_RSP, SCharacter *tpHero, SCharacter *tpKingSlim
 		}
 	}
 
-	else if (tHero_RSP = 1)
+	else if (1==tHero_RSP)
 	{
 		switch (tKingSlime_RSP)
 		{
@@ -389,6 +402,7 @@ void DoBattleKingSlime(int tHero_RSP, SCharacter *tpHero, SCharacter *tpKingSlim
 			cout << "      용사 : 바위" << endl;
 			cout << "      킹 슬라임 : 바위" << endl;
 			cout << "      [무승부]입니다." << endl << endl;
+
 			break;
 		}
 
