@@ -46,26 +46,30 @@ int main()
 	tpKingSlime->mAP = 20;
 
 	//오프닝
-	cout << "========================================" << endl;
-	cout << "==============용사는 1차원==============" << endl;
-	cout << "========================================" << endl;
+	cout << "================================================================================" << endl;
+	cout << "================================================================================" << endl;
+	cout << "===================================용사는 1차원=================================" << endl;
+	cout << "================================================================================" << endl;
+	cout << "================================================================================" << endl;
 	cout << endl;
 
 
 	char tGameStart = 0;
-	cout << "게임을 시작하시겠습니까?(y/n)";
+	cout << " >> 게임을 시작하시겠습니까?(y/n)";
 	cin >> tGameStart;
+	cout << endl;
 
-	//게임 루프
+	//메인 게임 루프
 	while ('y' == tGameStart)
 	{
 		while (1)
 		{
 			//////////////////맵 이동 기능/////////////////////////////
 			char tMoveDir = 'd';
-			cout << "이동하시겠습니까??(왼쪽 : a, 오른쪽 : d) : ";
+			cout << " >> 이동하시겠습니까??(왼쪽 : a, 오른쪽 : d) : ";
 			cin >> tMoveDir;
-			
+			cout << endl;
+						
 			DoMoveFuction(tMoveDir, tpHero); //이동 함수
 
 			/////////////////매칭 및 전투 기능/////////////////////////
@@ -75,7 +79,6 @@ int main()
 			//2 : 킹 슬라임 이벤트 - 가위바위보
 			
 			int tAttrib = tWorld[tpHero->mX];
-
 			EventMoveHero(tAttrib, tpHero, tpSlime, tpKingSlime); //이벤트 함수
 
 			if (0 >= tpHero->mHP)
@@ -103,7 +106,11 @@ int main()
 	}
 
 	//게임 종료
-	cout << "용사는 1차원을 종료합니다." << endl << endl;
+	cout << "============================================================================" << endl;
+	cout << "============================================================================" << endl;
+	cout << "===========================용사는 1차원 종료합니다==========================" << endl;
+	cout << "============================================================================" << endl;
+	cout << "============================================================================" << endl;
 
 	//
 	if (NULL != tpKingSlime)
@@ -138,11 +145,11 @@ void DoMoveFuction(char tMoveDir, SCharacter *tpHero)
 		if (tpHero->mX > 0)
 		{
 			tpHero->mX = tpHero->mX - 1;
-			cout << "<<-- 왼쪽으로 이동합니다." << endl;
+			cout << "      <<-- 왼쪽으로 이동합니다." << endl << endl;
 		}
 		else
 		{
-			cout << "더 이상 왼쪽으로 이동할 수 없습니다." << endl;
+			cout << "      더 이상 왼쪽으로 이동할 수 없습니다." << endl<<endl;
 		}
 	}
 	// 우로 이동 기능
@@ -152,18 +159,18 @@ void DoMoveFuction(char tMoveDir, SCharacter *tpHero)
 		if (tpHero->mX < 4)
 		{
 			tpHero->mX = tpHero->mX + 1;
-			cout << "-->> 오른쪽으로 이동합니다." << endl;
+			cout << "      -->> 오른쪽으로 이동합니다." << endl<<endl;
 
 		}
 		else
 		{
-			cout << "더 이상 오른쪽으로 이동할 수 없습니다." << endl;
+			cout << "      더 이상 오른쪽으로 이동할 수 없습니다." << endl<<endl;
 		}
 	}
 	// 잘못된 입력
 	else
 	{
-		cout << "잘못된 값을 입력하셨습니다. 다시 입력해주세요." << endl;
+		cout << "      잘못된 값을 입력하셨습니다. 다시 입력해주세요." << endl << endl;
 	}
 
 	return;
@@ -182,22 +189,31 @@ void EventMoveHero(int tAttrib, SCharacter *tpHero, SCharacter *tpSlime, SCharac
 	
 	case 0: //아무도 없어서 이벤트 없음.
 	{
-		cout << "용사는 " << tpHero->mX << "타일에 있습니다." << endl;
-		cout << "아무도 없습니다. " << endl;
+		cout << "      용사는 " << tpHero->mX << "타일에 있습니다." << endl;
+		cout << "      아무도 없습니다. " << endl << endl;
 		break; // case0을 브레이크
 	}
 
 
 	case 1:  // 슬라임 조우 및 주사위 이벤트
 	{
-		cout << "용사는 " << tpHero->mX << "타일에 있습니다." << endl;
-		cout << "슬라임과 만났습니다. 전투를 시작합니다." << endl;
+		cout << "      용사는 " << tpHero->mX << "타일에 있습니다." << endl;
+		cout << "      슬라임과 만났습니다. 전투를 시작합니다." << endl << endl;
 
 		char tRollDice = 'r';
 
+		cout << "================================================================================" << endl;
+		cout << "================================슬라임과의 전투=================================" << endl;
+		cout << "================================================================================" << endl;
+		cout << endl;
+
 		while (1)
 		{
-			cout << "[ r ] 버튼을 눌러 주사위를 던져주세요 : ";
+			cout << "\t [[용사]] \t\t\t\t [[슬라임]]" << endl;
+			cout << "\t 공격력 : " << tpHero->mAP << "\t\t\t\t 공격력 : " << tpSlime->mAP << endl;
+			cout << "\t   체력 : " << tpHero->mHP << "\t\t\t\t   체력 : " << tpSlime->mHP << endl <<endl;
+
+			cout << "  >> [ r ] 버튼을 눌러 주사위를 던져주세요 : ";
 			cin >> tRollDice;
 			cout << endl;
 
@@ -205,13 +221,13 @@ void EventMoveHero(int tAttrib, SCharacter *tpHero, SCharacter *tpSlime, SCharac
 
 			if (0 >= tpHero->mHP)
 			{
-				cout << "용사의 죽음 " << endl;
+				cout << "      용사의 죽음 " << endl;
 				break;
 			}
 
 			else if (0 >= tpSlime->mHP)
 			{
-				cout << "용사는 슬라임을 물리쳤다." << endl << endl;
+				cout << "      용사는 슬라임을 물리쳤다." << endl << endl;
 				break;
 			}
 		}
@@ -222,27 +238,38 @@ void EventMoveHero(int tAttrib, SCharacter *tpHero, SCharacter *tpSlime, SCharac
 	// 킹 슬라임 조우 및 가위바위보 이벤트
 	case 2:
 	{
-		cout << "용사는 " << tpHero->mX << "타일에 있습니다." << endl;
-		cout << "킹 슬라임과 만났습니다. 전투를 시작합니다. " << endl << endl;
+		cout << "      용사는 " << tpHero->mX << "타일에 있습니다." << endl;
+		cout << "      킹 슬라임과 만났습니다. 전투를 시작합니다. " << endl << endl;
+
+		cout << "================================================================================" << endl;
+		cout << "===============================킹슬라임과의 전투================================" << endl;
+		cout << "================================================================================" << endl;
+		cout << endl;
 
 		int tHero_RSP = 0;
 
 		while (1)
 		{
-			cout << "가위바위보 게임을 합니다. [0 : 가위, 1 : 바위. 2 : 보]";
+
+			cout << "\t [[용사]] \t\t\t\t [[킹 슬라임]]" << endl;
+			cout << "\t 공격력 : " << tpHero->mAP << "\t\t\t\t 공격력 : " << tpKingSlime->mAP << endl;
+			cout << "\t   체력 : " << tpHero->mHP << "\t\t\t\t   체력 : " << tpKingSlime->mHP << endl << endl;
+
+
+			cout << "  >> 가위바위보 게임을 합니다. [0 : 가위, 1 : 바위. 2 : 보]";
 			cin >> tHero_RSP;
 
 			DoBattleKingSlime(tHero_RSP, tpHero, tpKingSlime);
 
 			if (0 >= tpHero->mHP)
 			{
-				cout << "용사의 죽음 " << endl;
+				cout << "      용사의 죽음 " << endl;
 				break;
 			}
 
 			else if (0 >= tpKingSlime->mHP)
 			{
-				cout << "용사는 킹 슬라임을 물리쳤다." << endl << endl;
+				cout << "      용사는 킹 슬라임을 물리쳤다." << endl << endl;
 				break;
 			}
 		}
@@ -266,21 +293,21 @@ void DoBattleSlime(char tRollDice, SCharacter *tpHero, SCharacter *tpSlime)
 		case 2:
 		case 3:
 		{
-			cout << "슬라임의 공격!!" << endl;
-			cout << "용사가 " << tpSlime->mAP << "의 피해를 입었습니다." << endl;
+			cout << "      슬라임의 공격!!" << endl;
+			cout << "      용사가 " << tpSlime->mAP << "의 피해를 입었습니다." << endl;
 			tpHero->mHP = tpHero->mHP - tpSlime->mAP;
-			cout << "용사의 체력이 " << tpHero->mHP << "만큼 남았습니다. " << endl << endl;
+			cout << "      용사의 체력이 " << tpHero->mHP << "만큼 남았습니다. " << endl << endl;
 			break;
 		}
 		case 4:
 		case 5:
 		case 6:
 		{
-			cout << "용사의 공격!!" << endl;
-			cout << "슬라임이 " << tpHero->mAP << "의 피해를 입었습니다." << endl;
+			cout << "      용사의 공격!!" << endl;
+			cout << "      슬라임이 " << tpHero->mAP << "의 피해를 입었습니다." << endl;
 			tpSlime->mHP = tpSlime->mHP - tpHero->mAP;
 
-			cout << "슬라임의 체력이 " << tpSlime->mHP << "만큼 남았습니다. " << endl << endl;
+			cout << "      슬라임의 체력이 " << tpSlime->mHP << "만큼 남았습니다. " << endl << endl;
 
 			break;
 		}
@@ -300,38 +327,38 @@ void DoBattleKingSlime(int tHero_RSP, SCharacter *tpHero, SCharacter *tpKingSlim
 		{
 		case 0://킹 슬라임이 가위
 		{
-			cout << "용사 : 가위" << endl;
-			cout << "킹 슬라임 : 가위" << endl;
-			cout << "무승부입니다." << endl << endl;
+			cout << "      용사 : 가위" << endl;
+			cout << "      킹 슬라임 : 가위" << endl;
+			cout << "      [무승부]입니다." << endl << endl;
 			break;
 		}
 
 		case 1://킹 슬라임이 바위
 		{
-			cout << "용사 : 가위" << endl;
-			cout << "킹 슬라임 : 바위" << endl;
-			cout << "용사의 패배." << endl << endl;
+			cout << "      용사 : 가위" << endl;
+			cout << "      킹 슬라임 : 바위" << endl;
+			cout << "      용사의 [패배]." << endl << endl;
 
 			tpHero->mHP = tpHero->mHP - tpKingSlime->mAP;
 
-			cout << "킹 슬라임의 공격!!" << endl;
-			cout << "용사가 " << tpKingSlime->mAP << "의 피해를 입었습니다." << endl;
-			cout << "용사의 체력이 " << tpHero->mHP << "만큼 남았습니다. " << endl << endl;
+			cout << "      킹 슬라임의 공격!!" << endl;
+			cout << "      용사가 " << tpKingSlime->mAP << "의 피해를 입었습니다." << endl;
+			cout << "      용사의 체력이 " << tpHero->mHP << "만큼 남았습니다. " << endl << endl;
 
 			break;
 		}
 
 		case 2://킹 슬라임이 보
 		{
-			cout << "용사 : 가위" << endl;
-			cout << "킹 슬라임 : 보" << endl;
-			cout << "용사의 승리." << endl << endl;
+			cout << "      용사 : 가위" << endl;
+			cout << "      킹 슬라임 : 보" << endl;
+			cout << "      용사의 [승리]." << endl << endl;
 
 			tpKingSlime->mHP = tpKingSlime->mHP - tpHero->mAP;
 
-			cout << "용사의 공격!!" << endl;
-			cout << "슬라임이 " << tpHero->mAP << "의 피해를 입었습니다." << endl;
-			cout << "슬라임의 체력이 " << tpKingSlime->mHP << "만큼 남았습니다. " << endl << endl;
+			cout << "      용사의 공격!!" << endl;
+			cout << "      슬라임이 " << tpHero->mAP << "의 피해를 입었습니다." << endl;
+			cout << "      슬라임의 체력이 " << tpKingSlime->mHP << "만큼 남았습니다. " << endl << endl;
 
 			break;
 		}
@@ -344,39 +371,39 @@ void DoBattleKingSlime(int tHero_RSP, SCharacter *tpHero, SCharacter *tpKingSlim
 		{
 		case 0:
 		{
-			cout << "용사 : 바위" << endl;
-			cout << "킹 슬라임 : 가위" << endl;
-			cout << "용사의 승리." << endl << endl;
+			cout << "      용사 : 바위" << endl;
+			cout << "      킹 슬라임 : 가위" << endl;
+			cout << "      용사의 [승리]." << endl << endl;
 
 			tpKingSlime->mHP = tpKingSlime->mHP - tpHero->mAP;
 
-			cout << "용사의 공격!!" << endl;
-			cout << "슬라임이 " << tpHero->mAP << "의 피해를 입었습니다." << endl;
-			cout << "슬라임의 체력이 " << tpKingSlime->mHP << "만큼 남았습니다. " << endl << endl;
+			cout << "      용사의 공격!!" << endl;
+			cout << "      슬라임이 " << tpHero->mAP << "의 피해를 입었습니다." << endl;
+			cout << "      슬라임의 체력이 " << tpKingSlime->mHP << "만큼 남았습니다. " << endl << endl;
 
 			break;
 		}
 
 		case 1:
 		{
-			cout << "용사 : 바위" << endl;
-			cout << "킹 슬라임 : 바위" << endl;
-			cout << "무승부입니다." << endl << endl;
+			cout << "      용사 : 바위" << endl;
+			cout << "      킹 슬라임 : 바위" << endl;
+			cout << "      [무승부]입니다." << endl << endl;
 			break;
 		}
 
 		case 2:
 		{
-			cout << "용사 : 바위" << endl;
-			cout << "킹 슬라임 : 보" << endl;
-			cout << "용사의 패배." << endl << endl;
+			cout << "      용사 : 바위" << endl;
+			cout << "      킹 슬라임 : 보" << endl;
+			cout << "      용사의 [패배]." << endl << endl;
 
 
 			tpHero->mHP = tpHero->mHP - tpKingSlime->mAP;
 
-			cout << "킹 슬라임의 공격!!" << endl;
-			cout << "용사가 " << tpKingSlime->mAP << "의 피해를 입었습니다." << endl;
-			cout << "용사의 체력이 " << tpHero->mHP << "만큼 남았습니다. " << endl << endl;
+			cout << "      킹 슬라임의 공격!!" << endl;
+			cout << "      용사가 " << tpKingSlime->mAP << "의 피해를 입었습니다." << endl;
+			cout << "      용사의 체력이 " << tpHero->mHP << "만큼 남았습니다. " << endl << endl;
 
 			break;
 		}
@@ -390,39 +417,39 @@ void DoBattleKingSlime(int tHero_RSP, SCharacter *tpHero, SCharacter *tpKingSlim
 		{
 		case 0:
 		{
-			cout << "용사 : 보" << endl;
-			cout << "킹 슬라임 : 가위" << endl;
-			cout << "용사의 패배." << endl << endl;
+			cout << "      용사 : 보" << endl;
+			cout << "      킹 슬라임 : 가위" << endl;
+			cout << "      용사의 [패배]." << endl << endl;
 
 
 			tpHero->mHP = tpHero->mHP - tpKingSlime->mAP;
 
-			cout << "킹 슬라임의 공격!!" << endl;
-			cout << "용사가 " << tpKingSlime->mAP << "의 피해를 입었습니다." << endl;
-			cout << "용사의 체력이 " << tpHero->mHP << "만큼 남았습니다. " << endl << endl;
+			cout << "      킹 슬라임의 공격!!" << endl;
+			cout << "      용사가 " << tpKingSlime->mAP << "의 피해를 입었습니다." << endl;
+			cout << "      용사의 체력이 " << tpHero->mHP << "만큼 남았습니다. " << endl << endl;
 
 			break;
 		}
 
 		case 1:
 		{
-			cout << "용사 : 보" << endl;
-			cout << "킹 슬라임 : 바위" << endl;
-			cout << "용사의 승리." << endl << endl;
+			cout << "      용사 : 보" << endl;
+			cout << "      킹 슬라임 : 바위" << endl;
+			cout << "      용사의 [승리]." << endl << endl;
 
 			tpKingSlime->mHP = tpKingSlime->mHP - tpHero->mAP;
 
-			cout << "용사의 공격!!" << endl;
-			cout << "슬라임이 " << tpHero->mAP << "의 피해를 입었습니다." << endl;
-			cout << "슬라임의 체력이 " << tpKingSlime->mHP << "만큼 남았습니다. " << endl << endl;
+			cout << "      용사의 공격!!" << endl;
+			cout << "      슬라임이 " << tpHero->mAP << "의 피해를 입었습니다." << endl;
+			cout << "      슬라임의 체력이 " << tpKingSlime->mHP << "만큼 남았습니다. " << endl << endl;
 			break;
 		}
 
 		case 2:
 		{
-			cout << "용사 : 보" << endl;
-			cout << "킹 슬라임 : 보" << endl;
-			cout << "무승부입니다." << endl << endl;
+			cout << "      용사 : 보" << endl;
+			cout << "      킹 슬라임 : 보" << endl;
+			cout << "      [무승부]입니다." << endl << endl;
 			break;
 		}
 		}
