@@ -19,9 +19,7 @@ public:
 	float GetHP();
 
 	void SetAP(float tAP);
-	float GetAP();
-	
-	void EventMoveHero(int tAttrib, CHero *tHero, CSlime *tSlime, CKingSlime *tKingSlime);
+	float GetAP();	
 };
 
 class CHero : public CCharacter
@@ -49,10 +47,7 @@ public:
 	void DoBattleKingSlime(int tRSP_Result, CHero *tHero);
 };
 
-//void DoMoveFuction(char tMoveDir, CHero tHero);
-//void EventMoveHero(int tAttrib, CHero tHero, CSlime *tSlime, CKingSlime *tKingSlime);
-//void DoBattleSlime(char tRollDice, CHero tHero, CSlime tSlime);
-//void DoBattleKingSlime(int tHero_RSP, CHero tHero, CKingSlime tKingSlime);
+void EventMoveHero(int tAttrib, CHero *tpHero, CSlime *tpSlime, CKingSlime *tpKingSlime);
 
 int main()
 {
@@ -60,43 +55,22 @@ int main()
 
 	int tWorld[5] = { 0,0,1,0,2 };
 
-	CCharacter tCharacter;
+	CHero *tpHero=NULL;
+	tpHero = new CHero;
+	tpHero->SetX(0);
+	tpHero->SetHP(200);
+	tpHero->SetAP(50);
+
+	CSlime  *tpSlime=NULL;
+	tpSlime = new CSlime;
+	tpSlime->SetHP(100);
+	tpSlime->SetAP(10);
+
+	CKingSlime *tpKingSlime=NULL;
+	tpKingSlime = new CKingSlime;
+	tpKingSlime->SetHP(200);
+	tpKingSlime->SetAP(20);
 	
-	CHero tHero;
-	//tHero = new CCharacter;
-	tHero.SetX(0);
-	tHero.SetHP(200);
-	tHero.SetAP(50);
-
-	CSlime  tSlime;
-	tSlime.SetHP(100);
-	tSlime.SetAP(10);
-
-	CKingSlime tKingSlime;
-	tKingSlime.SetHP(200);
-	tKingSlime.SetAP(20);
-
-	/*
-	CCharacter *tHero = NULL;
-	tHero = new CHero();
-	tHero.GetX() = 0;
-	tHero.GetHP() = 200;
-	tHero.GetAP() = 50;
-
-	CCharacter *tSlime = NULL;
-	tSlime = new CCharacter();
-	tSlime->mX = 2;
-	tSlime.GetHP() = 100;
-	tSlime.GetAP() = 10;
-
-	CCharacter *tKingSlime;
-	tKingSlime = new CCharacter();
-
-	tKingSlime->mX = 4;
-	tKingSlime.GetHP() = 300;
-	tKingSlime.GetAP() = 20;
-	*/
-
 	//오프닝
 	cout << "================================================================================" << endl;
 	cout << "================================================================================" << endl;
@@ -122,34 +96,33 @@ int main()
 			cin >> tMoveDir;
 			cout << endl;
 
-			tHero.DoMoveFuction(tMoveDir);
-
-
+			tpHero->DoMoveFuction(tMoveDir);
+			
 			/////////////////매칭 및 전투 기능/////////////////////////
 			//맵 배열의 숫자 
 			//0 : 이벤트 없음
 			//1 : 슬라임 이벤트  - 주사위
 			//2 : 킹 슬라임 이벤트 - 가위바위보
 
-			int tAttrib = tWorld[tHero.GetX()];
+			int tAttrib = tWorld[tpHero->GetX()];
 			
-			tCharacter.EventMoveHero(tAttrib, &tHero, &tSlime, &tKingSlime); //이벤트 함수
+			EventMoveHero(tAttrib, tpHero, tpSlime, tpKingSlime); //이벤트 함수
 
-			if (0 >= tHero.GetHP())
+			if (0 >= tpHero->GetHP())
 			{
 				break;
 			}
-			else if (0 >= tKingSlime.GetHP())
+			else if (0 >= tpKingSlime->GetHP())
 			{
 				break;
 			}
 		}
-		if (0 >= tHero.GetHP())
+		if (0 >= tpHero->GetHP())
 		{
 			cout << "GAME OVER" << endl << endl;
 			break;
 		}
-		else if (0 >= tKingSlime.GetHP())
+		else if (0 >= tpKingSlime->GetHP())
 		{
 			cout << "보스를 물리쳤다. 세상이 평화로워졌다." << endl << endl;
 			break;
@@ -196,7 +169,7 @@ float CCharacter::GetHP()
 {
 	return mHP;
 }
-void CCharacter::EventMoveHero(int tAttrib, CHero *tHero, CSlime *tSlime, CKingSlime *tKingSlime)
+void EventMoveHero(int tAttrib, CHero *tHero, CSlime *tSlime, CKingSlime *tKingSlime)
 {
 	//맵 배열의 숫자 
 	//0 : 이벤트 없음
