@@ -25,9 +25,14 @@ protected:
 	virtual void tWeak();
 	virtual void tDead();
 
+
+
 public:
 	CUnit();
 	virtual ~CUnit();
+
+	void SetName(string tName);
+	string GetName();
 
 	void SetHP(float tHP);
 	float GetHP();
@@ -41,6 +46,8 @@ public:
 	STATE CStatus(float mHP);
 	//상태값을 받아 출력
 	void SetState(STATE mState);
+
+
 
 };
 class CHero :public CUnit
@@ -348,6 +355,13 @@ CUnit::~CUnit()
 {
 
 }
+/*
+void CUnit::SetName(string tName)
+{
+
+	string tName;
+}
+*/
 
 void CUnit::SetHP(float tHP)
 {
