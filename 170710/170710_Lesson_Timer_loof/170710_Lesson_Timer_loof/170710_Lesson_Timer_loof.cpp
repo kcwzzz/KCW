@@ -42,15 +42,8 @@ int main()
 			tCount++;
 
 			tDelay = tTemp;
-		}
-
-
-		//UpdateTick();
+		}			//UpdateTick();
 	}
-
-	 
-
-
     return 0;
 }
 
