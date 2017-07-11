@@ -10,13 +10,14 @@ void CEnemyBullet::  Setup() //액터의 X,Y 좌표
 {
 	mX = WIDTH / 2;
 	mY = 1;
-	tIsLife = false;
+	mIsLife = false;
 }
 void CEnemyBullet::Fire(CEnemy *tpEnemy)
 {
+	/*
 	srand((unsigned int)time(NULL));
 
-	if (false == tIsLife)
+	if (false == mIsLife)
 	{
 		mFire = rand() % 6 + 1;
 		if (1 == mFire)
@@ -26,22 +27,25 @@ void CEnemyBullet::Fire(CEnemy *tpEnemy)
 			mY = tpEnemy->GetY();
 
 			//발사됐는지 여부
-			tIsLife  = true;
+			mIsLife = true;
 		}
 	}
-
-	else if (true == tIsLife)
+	*/
+	if (true == mIsLife)
 	{
 		if (mY < HEIGHT - 1)
 		{
-			mY = mY + 1;
+			mDirY = 1;
+			mSpeedPower = 1;
+			mY = mY + mDirY*mSpeedPower;
 		}
 		else
 		{
 			mY = mY;
-			tIsLife = false;
+			mIsLife = false;
 		}
 	}
+	
 }
 void  CEnemyBullet::Clean(char *tpPixel) // 그래픽 클리어
 {
@@ -50,4 +54,14 @@ void  CEnemyBullet::Clean(char *tpPixel) // 그래픽 클리어
 void  CEnemyBullet::Display(char *tpPixel) // 그래픽 표시
 {
 	*(tpPixel + mY*WIDTH + mX) = '|';
+}
+
+void CEnemyBullet::SetPositionForFire(CEnemy *tpEnemy)
+{
+	mX = tpEnemy->GetX();
+	mY = 1;
+}
+void CEnemyBullet::SetIsLife(bool tIsLife)
+{
+	mIsLife = tIsLife;
 }

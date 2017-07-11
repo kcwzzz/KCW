@@ -24,11 +24,14 @@ void CActor::MoveWithInput(char tKey)
 	{
 		if (mX > 0)
 		{
-			mX = mX - 1;
+			mDirX = -1;
+			mSpeedPower = 1;
+			mX = mX + mDirX*mSpeedPower;
 		}
 		else
 		{
-			mX = mX;
+			mSpeedPower = 0;
+			mX = mX + mDirX*mSpeedPower;
 		}
 		break;
 	}
@@ -39,11 +42,14 @@ void CActor::MoveWithInput(char tKey)
 	{
 		if (mX < WIDTH - 1)
 		{
-			mX = mX + 1;
+			mDirX = 1;
+			mSpeedPower = 1;
+			mX = mX + mDirX*mSpeedPower;
 		}
 		else
 		{
-			mX = mX;
+			mSpeedPower = 0;
+			mX = mX + mDirX*mSpeedPower;
 		}
 		break;
 	}
@@ -53,11 +59,15 @@ void CActor::MoveWithInput(char tKey)
 	{
 		if (mY < HEIGHT - 1)
 		{
-			mY = mY + 1;
+			mDirY = 1;
+			mSpeedPower = 1;
+			mY = mY + mDirY*mSpeedPower;
 		}
 		else
 		{
-			mY = mY;
+			mDirY = 1;
+			mSpeedPower = 0;
+			mY = mY + mDirY*mSpeedPower;
 		}
 		break;
 	}
@@ -67,11 +77,15 @@ void CActor::MoveWithInput(char tKey)
 	{
 		if (mY < HEIGHT - 1)
 		{
-			mY = mY + 1;
+			mDirY = -1;
+			mSpeedPower = 1;
+			mY = mY + mDirY*mSpeedPower;
 		}
 		else
 		{
-			mY = mY;
+			mDirY = -1;
+			mSpeedPower = 0;
+			mY = mY + mDirY*mSpeedPower;
 		}
 		break;
 	}

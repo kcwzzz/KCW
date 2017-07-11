@@ -9,6 +9,10 @@ protected:
 	int mY = 0;
 	bool mIsLife = false;
 
+	int mDirX = 0;
+	int mDirY = 0;
+	int mSpeedPower = 0;
+
 public:
 	void Setup(); //액터의 X,Y 좌표
 	void Fire(char tKey, CActor *tpActor); //조정

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Enemy.h"
 #include "Define.h"
+#include <windows.h>
 
 
 void CEnemy::Setup() //액터의 X,Y 좌표
@@ -22,7 +23,9 @@ void CEnemy::MoveWithInput() //조정
 	{
 		if (mX< WIDTH - 1)
 		{
-			mX = mX + 15;
+			mDirX = 1;
+			mSpeedPower = 1;
+			mX = mX + mDirX*mSpeedPower;
 		}
 		else
 		{
@@ -34,7 +37,9 @@ void CEnemy::MoveWithInput() //조정
 	{
 		if (mX > 1)
 		{
-			mX = mX - 15;
+			mDirX = -1;
+			mSpeedPower = 1;
+			mX = mX + mDirX*mSpeedPower;
 		}
 		else
 		{
@@ -76,5 +81,35 @@ void CEnemy::Fire()
 	for (ti = 0; ti < 10; ti++)
 	{
 		tEnemyBullet[ti].Fire(this);
+	}
+}
+
+
+void CEnemy::Update()
+{
+	int ti = 0;
+	if (0 == tDelay)
+	{
+		tDelay = GetTickCount();
+	}
+
+	tTemp = GetTickCount();
+
+	if (tTemp - tDelay > 2000)
+	{
+
+		tEnemyBullet[mCurBulletIndex].SetPositionForFire(this);
+		tEnemyBullet[mCurBulletIndex].SetIsLife(this);
+
+		if (mCurBulletIndex < 10 - 1)
+		{
+			mCurBulletIndex++;
+		}
+		else
+		{
+			mCurBulletIndex = 0;
+		}
+
+		tDelay = tTemp;
 	}
 }

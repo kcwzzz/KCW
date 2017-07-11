@@ -36,12 +36,15 @@ void CActorBullet::Move() //Á¶Á¤
 	{
 		if (mY > 0)
 		{
-			mY = mY - 1;
+			mDirY = -1;
+			mSpeedPower = 1;
+			mY = mY + mDirY*mSpeedPower;
 		}
 		else
 		{
-			mY = mY;
-			mIsLife = false;
+			mDirY = -1;
+			mSpeedPower = 0;
+			mY = mY + mDirY*mSpeedPower;
 		}
 	}
 }

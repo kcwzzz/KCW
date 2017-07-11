@@ -9,6 +9,9 @@ protected:
 	CActorBullet tActorBullet[10];
 
 	int mCurBulletIndex = 0;
+	int mDirX = 0;
+	int mDirY = 0;
+	int mSpeedPower = 0;
 
 public:
 	void Setup(); //액터의 X,Y 좌표

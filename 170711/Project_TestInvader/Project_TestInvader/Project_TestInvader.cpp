@@ -58,7 +58,8 @@ int main()
 
 		tEnemy.MoveWithInput();
 		tEnemy.Fire();
-		
+		tEnemy.Update();
+
 		//조작 부분
 		if (0 != _kbhit())
 		{
@@ -69,7 +70,7 @@ int main()
 		}
 
 		tActor.Move();
-
+	
 		//Display
 		ClearScreen(0, 0);
 
