@@ -12,7 +12,6 @@
 #include <time.h>
 
 #include "Define.h"
-#include "Unit.h"
 #include "Actor.h"
 #include "Enemy.h"
 #include "ActorBullet.h"
@@ -31,15 +30,18 @@ int main()
 	//Create
 	char tPixel[HEIGHT][WIDTH] = { 0, };//화면 을 흉내내는거.
 
-	CActor tActor;
-	CEnemy tEnemy;
+	CActor *tpActor;
+	CEnemy *tpEnemy;
+	CActorBullet tpActorBullet[10];
+
+	CUnit *tpUnit;
 
 	int tRow = 0;
 	int tCol = 0;
 
 	//Setup : 초기화
-	tActor.Setup();
-	tEnemy.Setup();
+	tpActor->Setup();
+	tpEnemy->Setup();
 	
 	//Display Title
 	cout << "스타워즈" << endl;
@@ -52,29 +54,30 @@ int main()
 	while (true)
 	{
 		//Clean
-		tActor.Clean(&tPixel[0][0]);
-		tEnemy.Clean(&tPixel[0][0]);
+		tpActor->Clean(&tPixel[0][0]);
+		tpEnemy->Clean(&tPixel[0][0]);
 
-		tEnemy.MoveWithInput();
-		tEnemy.Fire();
-		tEnemy.Update();
+		tpEnemy->MoveWithInput();
+		tpEnemy->Fire();
+		tpEnemy->Update();
 
 		//조작 부분
 		if (0 != _kbhit())
 		{
 			tKey = _getch();
 
-			tActor.MoveWithInput(tKey, &tEnemy);
+			tpActor->MoveWithInput(tKey, tpEnemy); 
 			tIsEnd = GameQuit(tKey);
 		}
 
-		tActor.Move(&tEnemy);
+		tpActor->Move(tpEnemy);
 	
 		//Display
 		ClearScreen(0, 0);
-
-		tActor.Display(&tPixel[0][0]);
-		tEnemy.Display(&tPixel[0][0]);
+		
+		tpUnit->Display(&tPixel[0][0]);
+		//tpActor->Display(&tPixel[0][0]);
+		//tpEnemy->Display(&tPixel[0][0]);
 		
 		for (tRow = 0; tRow < HEIGHT; tRow++)
 		{

@@ -6,12 +6,14 @@
 #include <windows.h>
 
 
+
 void CEnemy::Setup() //액터의 X,Y 좌표
 {
 	mDir = DIR_LEFT;
 	mX = WIDTH / 2;
-	mX = 0;
+	mY = 0;
 
+	
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)
 	{
@@ -20,7 +22,6 @@ void CEnemy::Setup() //액터의 X,Y 좌표
 }
 void CEnemy::MoveWithInput() //조정
 {
-
 	if (DIR_RIGHT == mDir)
 	{
 		if (mX< WIDTH - 1)
@@ -49,34 +50,20 @@ void CEnemy::MoveWithInput() //조정
 		}
 	}
 }
-void CEnemy::Clean(char *tpPixel) // 그래픽 클리어
-{
-	*(tpPixel + mY*WIDTH + mX) = 0;
 
-	int ti = 0;
-	for (ti = 0; ti < 10; ti++)
-	{
-		tEnemyBullet[ti].Clean(tpPixel);
-	}
-}
 void CEnemy::Display(char *tpPixel) // 그래픽 표시
 {
-	*(tpPixel + mY*WIDTH + mX) = '#';
+	*(tpPixel + (int)mY*WIDTH + (int)mX) = '#';
+	
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)
 	{
 		tEnemyBullet[ti].Display(tpPixel);
 	}
 }
-int CEnemy::GetX()
-{
-	return mX;
-}
-int CEnemy::GetY()
-{
-	return mY;
-}
 
+
+/*
 void CEnemy::Fire()
 {
 	int ti = 0;
@@ -115,3 +102,4 @@ void CEnemy::Update()
 		tDelay = tTemp;
 	}
 }
+*/

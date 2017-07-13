@@ -16,6 +16,7 @@
 #include "Define.h"
 #include "Actor.h"
 #include "Enemy.h"
+#include "EnemyBoss.h"
 #include "ActorBullet.h"
 #include "EnemyBullet.h"
 
@@ -34,6 +35,7 @@ int main()
 
 	CActor tActor;
 	CEnemy tEnemy;
+	CEnemyBoss tEnemyBoss;
 
 	int tRow = 0;
 	int tCol = 0;
@@ -41,7 +43,7 @@ int main()
 	//Setup : 초기화
 	tActor.Setup();
 	tEnemy.Setup();
-	
+	tEnemyBoss.Setup();
 	//Display Title
 	cout << "스타워즈" << endl;
 	Sleep(1000);
@@ -55,10 +57,15 @@ int main()
 		//Clean
 		tActor.Clean(&tPixel[0][0]);
 		tEnemy.Clean(&tPixel[0][0]);
+		tEnemyBoss.Clean(&tPixel[0][0]);
 
 		tEnemy.MoveWithInput();
 		tEnemy.Fire();
 		tEnemy.Update();
+
+		tEnemyBoss.MoveWithInput();
+		tEnemyBoss.Fire();
+		tEnemyBoss.Update();
 
 		//조작 부분
 		if (0 != _kbhit())
@@ -76,7 +83,8 @@ int main()
 
 		tActor.Display(&tPixel[0][0]);
 		tEnemy.Display(&tPixel[0][0]);
-		
+		tEnemyBoss.Display(&tPixel[0][0]);
+
 		for (tRow = 0; tRow < HEIGHT; tRow++)
 		{
 			for (tCol = 0; tCol < WIDTH; tCol++)

@@ -1,8 +1,7 @@
 #include "stdafx.h"
 #include "Actor.h"
 #include "Define.h"
-//#include "Unit.h"
-//#include "Character.h"
+#include "ActorBullet.h"
 
 void CActor::Setup()
 {
@@ -10,14 +9,14 @@ void CActor::Setup()
 	mX = WIDTH / 2;
 	mY = HEIGHT - 1;
 
-	/*
+	
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)
 	{
 		tActorBullet[ti].Setup();
-	}
-	*/
+	}	
 }
+
 void CActor::MoveWithInput(char tKey, CEnemy *tpEnemy)
 {
 	switch (tKey)
@@ -96,7 +95,7 @@ void CActor::MoveWithInput(char tKey, CEnemy *tpEnemy)
 	case 'm':
 	{
 		//발사지점
-		tActorBullet[mCurBulletIndex].ReadyToFire(this, tpEnemy);
+		tActorBullet[mCurBulletIndex].ReadyToFire(this);
 		tActorBullet[mCurBulletIndex].SetIsLife(true);
 
 		if (mCurBulletIndex < 10 - 1)
@@ -112,6 +111,7 @@ void CActor::MoveWithInput(char tKey, CEnemy *tpEnemy)
 	}
 	}
 }
+
 void CActor::Move(CEnemy *tpEnemy)
 {
 	int ti = 0;
@@ -120,26 +120,15 @@ void CActor::Move(CEnemy *tpEnemy)
 		tActorBullet[ti].Move(tpEnemy);
 	}
 }
-void CActor::Clean(char *tpPixel)
-{
-	*(tpPixel + (int)mY*WIDTH + (int)mX) = 0;
 
-	int ti = 0;
-	for (ti = 0; ti < 10; ti++)
-	{
-		tActorBullet[ti].Clean(tpPixel);
-	}
-}
 void CActor::Display(char *tpPixel)
 {
 	*(tpPixel + (int)mY*WIDTH + (int)mX) = 'A';
 
+	
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)
 	{
-		tActorBullet[ti].Display(tpPixel);	}
-}
-int CActor::GetX()
-{
-	return (int)mX;
+		tActorBullet[ti].Display(tpPixel);	
+	}
 }

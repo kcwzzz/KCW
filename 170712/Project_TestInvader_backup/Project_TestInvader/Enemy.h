@@ -1,26 +1,24 @@
 #pragma once
 
+#include "Character.h"
 #include "EnemyBullet.h"
 
-class CEnemy : public CUnit
+class CEnemyBullet;
+
+class CEnemy : public CCharacter
 {
 protected :
 	int mDir = 0;
-
-	int mCurBulletIndex = 0;
 	unsigned int tDelay = 0;
 	unsigned int tTemp = 0;
-	int mSpeedPower = 0;
 
 	CEnemyBullet tEnemyBullet[10];
 
 public:
-
+	void Setup();
 	void MoveWithInput(); //Á¶Á¤
-
 	void Fire();
 	void Update();
 
-	int GetX();
-	int GetY();
+	void Display(char *tpPixel);
 };

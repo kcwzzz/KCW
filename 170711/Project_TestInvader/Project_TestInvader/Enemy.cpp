@@ -8,7 +8,7 @@ void CEnemy::Setup() //액터의 X,Y 좌표
 {
 	mDir = DIR_LEFT;
 	mX = WIDTH / 2;
-	mX = 0;
+	mY = 0;
 
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)

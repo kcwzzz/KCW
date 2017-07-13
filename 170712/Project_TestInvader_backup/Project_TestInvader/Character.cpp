@@ -1,13 +1,10 @@
 #include "stdafx.h"
 #include "Character.h"
 #include "Define.h"
-//#include "Unit.h"
-
 
 CCharacter::CCharacter()
 {
 }
-
 
 CCharacter::~CCharacter()
 {
@@ -21,9 +18,8 @@ int CCharacter::GetY()
 {
 	return mY;
 }
-/*
-void MoveWithInput() //조정
+
+void CCharacter:: MoveWithInput() //조정
 {
 
 }
-*/

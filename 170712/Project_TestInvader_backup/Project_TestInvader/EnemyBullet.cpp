@@ -1,37 +1,56 @@
+
 #include "stdafx.h"
 #include "EnemyBullet.h"
 #include "Define.h"
 #include "Enemy.h"
-#include "Unit.h"
+#include "Bullet.h"
 
 #include <stdlib.h>
 #include <time.h>
 
-void CEnemyBullet::  Setup() //액터의 X,Y 좌표
+void CEnemyBullet::Setup() //액터의 X,Y 좌표
 {
 	mX = WIDTH / 2;
 	mY = 1;
 	mIsLife = false;
 }
-void CEnemyBullet::Fire(CEnemy *tpEnemy)
-{
-	/*
-	srand((unsigned int)time(NULL));
 
+void CEnemyBullet::ReadyToFire(CEnemy *tpEnemy) //시작지점 세팅
+{
+	//switch (tKey)
+	//{
+	//case 'M':
+	//case 'm':
+	//{
+	//발사지점
+	mX = tpEnemy->GetX();
+	mY = tpEnemy->GetY() + 1;
+
+	//발사됐는지 여부
+
+	mIsLife = true;
+	//	break;
+	//}
+	//}	
+}
+
+
+void CEnemyBullet::Move(CEnemy *tpEnemy)
+{
+	//srand((unsigned int)time(NULL));
 	if (false == mIsLife)
 	{
-		mFire = rand() % 6 + 1;
-		if (1 == mFire)
-		{
+		//mFire = rand() % 6 + 1;
+		//if (1 == mFire)
+		//{
 			//발사지점
-			mX = tpEnemy->GetX();
-			mY = tpEnemy->GetY();
-
-			//발사됐는지 여부
-			mIsLife = true;
-		}
+		mX = tpEnemy->GetX();
+		mY = tpEnemy->GetY();
+		mIsLife = true;
+		//발사됐는지 여부			
+	//}
 	}
-	*/
+
 	if (true == mIsLife)
 	{
 		if (mY < HEIGHT - 1)
@@ -46,23 +65,10 @@ void CEnemyBullet::Fire(CEnemy *tpEnemy)
 			mIsLife = false;
 		}
 	}
-	
-}
-void  CEnemyBullet::Clean(char *tpPixel) // 그래픽 클리어
-{
-	*(tpPixel + mY*WIDTH + mX) = 0;
-}
-void  CEnemyBullet::Display(char *tpPixel) // 그래픽 표시
-{
-	*(tpPixel + mY*WIDTH + mX) = '|';
 }
 
-void CEnemyBullet::SetPositionForFire(CEnemy *tpEnemy)
+
+void  CEnemyBullet::Display(char *tpPixel) // 그래픽 표시
 {
-	mX = tpEnemy->GetX();
-	mY = 1;
-}
-void CEnemyBullet::SetIsLife(bool tIsLife)
-{
-	mIsLife = tIsLife;
+	*(tpPixel + (int)mY*WIDTH + (int)mX) = '|';
 }

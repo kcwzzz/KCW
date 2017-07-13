@@ -1,28 +1,23 @@
 #pragma once
+#include "Bullet.h"
+#include "Enemy.h"
+#include "Actor.h"
+
 class CActor;
 class CEnemy;
 
-class CActorBullet : public CActor
+class CActorBullet :public CBullet
 {
-
 protected:
-
-	bool mIsLife = false;
-
-	float mDirX = 0;
-	float mDirY = 0;
-	float mSpeedPower = 0;
 
 	float mTargetX = 0;
 	float mTargetY = 0;
 
 public:
 
-	void Fire(char tKey, CActor *tpActor); //조정
-	void ReadyToFire(CActor *tpActor, CEnemy *tpEnemy);
-	void Move(CEnemy *tpEnemy); //조정
-
-	void SetIsLife(bool tIsLife);
-
+	void Setup(); // 기본 위치 세팅
+	void ReadyToFire(CActor *tpActor); //시작 지점
+	void Move(CEnemy *tpEnemy); //총알의 움직임
+	void Display(char *tpPixel);
+	//void ReadyToFire(CActor *tpActor, CEnemy *tpEnemy);//총알의 움직임
 };
-
