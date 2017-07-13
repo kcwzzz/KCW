@@ -1,18 +1,22 @@
 #include "stdafx.h"
 #include "Actor.h"
 #include "Define.h"
-#include "Unit.h"
+//#include "Unit.h"
+//#include "Character.h"
 
 void CActor::Setup()
-{	
+{
+	
 	mX = WIDTH / 2;
 	mY = HEIGHT - 1;
 
+	/*
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)
 	{
 		tActorBullet[ti].Setup();
 	}
+	*/
 }
 void CActor::MoveWithInput(char tKey, CEnemy *tpEnemy)
 {

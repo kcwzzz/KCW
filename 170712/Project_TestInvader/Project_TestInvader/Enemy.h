@@ -1,6 +1,7 @@
 #pragma once
 
 #include "EnemyBullet.h"
+#include "Unit.h"
 
 class CEnemy : public CUnit
 {

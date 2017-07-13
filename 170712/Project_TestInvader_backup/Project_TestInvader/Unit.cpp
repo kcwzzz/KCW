@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Unit.h"
 
+/*
 void Setup()
 {
 
@@ -13,7 +14,7 @@ void Display(char *tpPixel) // 그래픽 표시
 {
 
 }
-
+*/
 
 CUnit ::CUnit()
 {
