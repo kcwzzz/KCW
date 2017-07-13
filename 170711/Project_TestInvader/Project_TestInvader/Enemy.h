@@ -1,23 +1,22 @@
 #pragma once
-
+#include "Character.h"
 #include "EnemyBullet.h"
 
-class CEnemy
+class CEnemy : public CCharacter
 {
 protected :
+	/*
 	int mX = 0;
 	int mY = 0;
-	int mDir = 0;
-
 	int mCurBulletIndex = 0;
-	unsigned int tDelay = 0;
-	unsigned int tTemp = 0;
-
 	int mDirX = 0;
 	int mDirY = 0;
 	int mSpeedPower = 0;
-
+	*/
+	int mDir = 0;
 	CEnemyBullet tEnemyBullet[10];
+	unsigned int tDelay = 0;
+	unsigned int tTemp = 0;
 
 public:
 	void Setup(); //액터의 X,Y 좌표
@@ -26,9 +25,6 @@ public:
 	void Display(char *tpPixel); // 그래픽 표시
 	void Fire();
 	void Update();
-
-	int GetX();
-	int GetY();
 };
 
 

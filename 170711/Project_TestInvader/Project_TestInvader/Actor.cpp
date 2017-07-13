@@ -2,8 +2,6 @@
 #include "Actor.h"
 #include "Define.h"
 
-
-
 void CActor::Setup()
 {
 	mX = WIDTH / 2;
@@ -119,7 +117,8 @@ void CActor::Move()
 }
 void CActor::Clean(char *tpPixel)
 {
-	*(tpPixel + mY*WIDTH + mX) = 0;
+	//*(tpPixel + mY*WIDTH + mX) = 0;
+	CCharacter::Clean(tpPixel);
 
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)
@@ -136,8 +135,4 @@ void CActor::Display(char *tpPixel)
 	{
 		tActorBullet[ti].Display(tpPixel);
 	}
-}
-int CActor::GetX()
-{
-	return mX;
 }

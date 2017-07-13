@@ -47,10 +47,12 @@ void CEnemyBullet::Fire(CEnemy *tpEnemy)
 	}
 	
 }
+/*
 void  CEnemyBullet::Clean(char *tpPixel) // 그래픽 클리어
 {
 	*(tpPixel + mY*WIDTH + mX) = 0;
 }
+*/
 void  CEnemyBullet::Display(char *tpPixel) // 그래픽 표시
 {
 	*(tpPixel + mY*WIDTH + mX) = '|';
@@ -61,7 +63,9 @@ void CEnemyBullet::SetPositionForFire(CEnemy *tpEnemy)
 	mX = tpEnemy->GetX();
 	mY = 1;
 }
+/*
 void CEnemyBullet::SetIsLife(bool tIsLife)
 {
 	mIsLife = tIsLife;
 }
+*/
