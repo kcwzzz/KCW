@@ -15,7 +15,7 @@
 #include "Define.h"
 #include "Actor.h"
 #include "Enemy.h"
-#include "EnemyBoss.h"
+#include "Enemy_2.h"
 #include "ActorBullet.h"
 #include "EnemyBullet.h"
 
@@ -32,23 +32,45 @@ int main()
 	//Create
 	char tPixel[HEIGHT][WIDTH] = { 0, };//화면 을 흉내내는거.
 
+	int tEnemyCount = 1;
+	int tEnemyCount_2 = 1;
+
+//	int tEnemyCount = 10;
+//	int tEnemyCount_2 = 3;
+
+
 	CActor tActor;
-	CEnemy tEnemy[5];
-	CEnemyBoss tEnemyBoss;
+	CEnemy tEnemy[1];
+	CEnemy_2 tEnemy_2[1];
 
 	int tRow = 0;
 	int tCol = 0;
 
-	//Setup : 초기화
+	/////Setup : 초기화
 	tActor.Setup();
-	for(int ti =0; ti <5; ti++)
+
+	for (int tj = 0; tj < tEnemyCount; tj++)
 	{
-		tEnemy[ti].Setup();
+		tEnemy[tj].Setup(WIDTH/10*tj);
 	}
-	tEnemyBoss.Setup();
+	for (int ti = 0; ti < tEnemyCount_2; ti++)
+	{
+		tEnemy_2[ti].Setup(WIDTH/4*ti);
+	}
+
+	//Setup : 초기화
+
+
+
+
+
 	//Display Title
 	cout << "스타워즈" << endl;
 	Sleep(1000);
+
+
+
+
 
 	//게임루프
 	bool tIsEnd = false;
@@ -56,18 +78,41 @@ int main()
 
 	while (true)
 	{
+
 		//Clean
 		tActor.Clean(&tPixel[0][0]);
-		tEnemy.Clean(&tPixel[0][0]);
-		tEnemyBoss.Clean(&tPixel[0][0]);
+		
+		for (int tj = 0; tj < tEnemyCount; tj++)
+		{
+			tEnemy[tj].Clean(&tPixel[0][0]);
+		}
+		for (int ti = 0; ti < tEnemyCount_2; ti++)
+		{
+			tEnemy_2[ti].Clean(&tPixel[0][0]);
+		}
+		//Clean
 
-		tEnemy.MoveWithInput();
-		tEnemy.Fire();
-		tEnemy.Update();
 
-		tEnemyBoss.MoveWithInput();
-		tEnemyBoss.Fire();
-		tEnemyBoss.Update();
+
+		//적 패턴
+		for (int tj = 0; tj < tEnemyCount; tj++)
+		{
+
+			tEnemy[tj].MoveWithInput();
+			tEnemy[tj].Fire();
+			tEnemy[tj].Update();
+		}
+
+		for (int ti = 0; ti < tEnemyCount_2; ti++)
+		{
+			tEnemy_2[ti].MoveWithInput();
+			tEnemy_2[ti].Fire();
+			tEnemy_2[ti].Update();
+		}
+		//적 패턴
+
+
+
 
 		//조작 부분
 		if (0 != _kbhit())
@@ -78,14 +123,29 @@ int main()
 			tIsEnd = GameQuit(tKey);
 		}
 
-		tActor.Move(&tActor);	
+		tActor.Move(&tActor);
 
 		//Display
 		ClearScreen(0, 0);
 
+
+
+
+		//출력부//////////////
 		tActor.Display(&tPixel[0][0]);
-		tEnemy.Display(&tPixel[0][0]);
-		tEnemyBoss.Display(&tPixel[0][0]);
+
+		for (int tj = 0; tj < tEnemyCount; tj++)
+		{
+
+			tEnemy[tj].Display(&tPixel[0][0]);
+		}
+		
+		for (int ti = 0; ti < tEnemyCount_2; ti++)
+		{
+			tEnemy_2[ti].Display(&tPixel[0][0]);
+		}
+		//출력부//////////////
+
 
 		for (tRow = 0; tRow < HEIGHT; tRow++)
 		{
@@ -94,7 +154,7 @@ int main()
 				cout << tPixel[tRow][tCol];
 			}
 		}
-
+	
 		if (true == tIsEnd)
 		{
 			break;

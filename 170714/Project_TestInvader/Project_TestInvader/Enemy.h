@@ -1,24 +1,26 @@
 #pragma once
 #include "Character.h"
-#include "EnemyBullet.h"
 
-class CCharacter;
+class CEnemyBullet;
 
 class CEnemy : public CCharacter
 {
 protected :
 	int mDir = 0;
-	CEnemyBullet tEnemyBullet[10];
+	CEnemyBullet *tEnemyBullet[10];
 	unsigned int tDelay = 0;
 	unsigned int tTemp = 0;
 
 public:
-	void Setup(); //액터의 X,Y 좌표
-	void MoveWithInput(); //조정
-	void Clean(char *tpPixel); // 그래픽 클리어
-	void Display(char *tpPixel); // 그래픽 표시
-	void Fire();
-	void Update();
+	CEnemy();
+	~CEnemy();
+	virtual void Setup(int tShift); //액터의 X,Y 좌표
+	virtual void MoveWithInput(); //조정
+	virtual void Clean(char *tpPixel); // 그래픽 클리어
+	virtual void Display(char *tpPixel); // 그래픽 표시
+
+	virtual void Fire();
+	virtual void Update();
 };
 
 

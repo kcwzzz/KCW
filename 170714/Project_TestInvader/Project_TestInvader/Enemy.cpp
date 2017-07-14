@@ -1,19 +1,45 @@
+
 #include "stdafx.h"
-#include "Enemy.h"
-#include "Define.h"
+
 #include <windows.h>
+#include "Define.h"
 
+#include "Enemy.h"
+#include "EnemyBullet.h"
 
-void CEnemy::Setup() //액터의 X,Y 좌표
+CEnemy::CEnemy() 
+{
+	int ti = 0;
+	for (ti = 0; ti < 10;ti++)
+	{
+		tEnemyBullet[ti] = new CEnemyBullet();
+	}
+}
+
+CEnemy ::~CEnemy()
+{
+	int  ti = 0;
+	for (ti = 0; ti < 10; ti++)
+	{
+		if (NULL != tEnemyBullet[ti])
+		{
+			delete tEnemyBullet[ti];
+			tEnemyBullet[ti] = NULL;
+		}
+	}
+}
+
+void CEnemy::Setup(int tShift) //액터의 X,Y 좌표
 {
 	mDir = DIR_LEFT;
-	mX = (WIDTH / 2);
-	mY = 0;
+	mX = (WIDTH / 10)+ tShift;
+	mY = 3;
 
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)
 	{
-		tEnemyBullet[ti].Setup();
+		//CEnemyBullet tEnemyBullet[ti].Setup();
+	 	tEnemyBullet[ti]->Setup();
 	}
 }
 void CEnemy::MoveWithInput() //조정
@@ -23,7 +49,7 @@ void CEnemy::MoveWithInput() //조정
 		if (mX< WIDTH - 1)
 		{
 			mDirX = 1;
-			mSpeedPower = 1;
+			mSpeedPower = 2;
 			mX = mX + mDirX*mSpeedPower;
 		}
 		else
@@ -37,7 +63,7 @@ void CEnemy::MoveWithInput() //조정
 		if (mX > 1)
 		{
 			mDirX = -1;
-			mSpeedPower = 1;
+			mSpeedPower = 2;
 			mX = mX + mDirX*mSpeedPower;
 		}
 		else
@@ -53,16 +79,18 @@ void CEnemy::Clean(char *tpPixel) // 그래픽 클리어
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)
 	{
-		tEnemyBullet[ti].Clean(tpPixel);
+		tEnemyBullet[ti]->Clean(tpPixel);
 	}
 }
+
 void CEnemy::Display(char *tpPixel) // 그래픽 표시
 {
 	*(tpPixel + mY*WIDTH + mX) = '#';
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)
 	{
-		tEnemyBullet[ti].Display(tpPixel);
+		tEnemyBullet[ti]->Display(tpPixel);
+
 	}
 }
 
@@ -71,7 +99,7 @@ void CEnemy::Fire()
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)
 	{
-		tEnemyBullet[ti].Fire(this);
+		tEnemyBullet[ti]->Fire(this);
 	}
 }
 
@@ -86,11 +114,11 @@ void CEnemy::Update()
 
 	tTemp = GetTickCount();
 
-	if (tTemp - tDelay > 2000)
+	if (tTemp - tDelay > 3000)
 	{
 
-		tEnemyBullet[mCurBulletIndex].SetPositionForFire(this);
-		tEnemyBullet[mCurBulletIndex].SetIsLife(this);
+		tEnemyBullet[mCurBulletIndex]->SetPositionForFire(this);
+		tEnemyBullet[mCurBulletIndex]->SetIsLife(this);
 
 		if (mCurBulletIndex < 10 - 1)
 		{

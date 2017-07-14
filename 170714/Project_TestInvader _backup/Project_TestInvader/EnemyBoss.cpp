@@ -1,7 +1,32 @@
 #include "stdafx.h"
-#include "EnemyBoss.h"
 #include "Define.h"
+
 #include <windows.h>
+
+#include "EnemyBoss.h"
+#include "EnemyBullet.h"
+
+CEnemyBoss::CEnemyBoss()
+{
+	int ti = 0;
+	for (ti = 0; ti < 10;ti++)
+	{
+		tEnemyBullet[ti] = new CEnemyBullet();
+	}
+}
+
+CEnemyBoss ::~CEnemyBoss()
+{
+	int  ti = 0;
+	for (ti = 0; ti < 10; ti++)
+	{
+		if (NULL != tEnemyBullet[ti])
+		{
+			delete tEnemyBullet[ti];
+			tEnemyBullet[ti] = NULL;
+		}
+	}
+}
 
 void CEnemyBoss::Setup() //액터의 X,Y 좌표
 {
@@ -12,7 +37,7 @@ void CEnemyBoss::Setup() //액터의 X,Y 좌표
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)
 	{
-		tEnemyBullet[ti].Setup();
+		tEnemyBullet[ti]->Setup();
 	}
 }
 /*
@@ -64,7 +89,7 @@ void CEnemyBoss::Display(char *tpPixel) // 그래픽 표시
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)
 	{
-		tEnemyBullet[ti].Display(tpPixel);
+		tEnemyBullet[ti]->Display(tpPixel);
 	}
 }
 /*

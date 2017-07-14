@@ -2,11 +2,9 @@
 #include "Unit.h"
 #include "Define.h"
 
-
 CUnit::CUnit()
 {
 }
-
 
 CUnit::~CUnit()
 {
