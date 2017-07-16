@@ -1,3 +1,7 @@
 ﻿  Project_TestInvader.cpp
+  Enemy.cpp
+c:\users\kcwzzz\documents\kcw\170714\project_testinvader\project_testinvader\enemy.cpp(153): warning C4244: 'return': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\kcwzzz\documents\kcw\170714\project_testinvader\project_testinvader\enemy.cpp(159): warning C4244: 'return': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  코드를 생성하고 있습니다...
   Project_TestInvader.vcxproj -> C:\Users\KCWzzz\Documents\KCW\170714\Project_TestInvader\x64\Debug\Project_TestInvader.exe
   Project_TestInvader.vcxproj -> C:\Users\KCWzzz\Documents\KCW\170714\Project_TestInvader\x64\Debug\Project_TestInvader.pdb (Partial PDB)

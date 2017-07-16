@@ -30,14 +30,21 @@ CEnemy_2 ::~CEnemy_2()
 
 void CEnemy_2::Setup(int tShift) //액터의 X,Y 좌표
 {
-	mDir = DIR_LEFT;
-	mX = (WIDTH / 4) +tShift;
-	mY = 0;
-
-	int ti = 0;
-	for (ti = 0; ti < 10; ti++)
+	if (STATE_DEAD == mState)
 	{
-		tEnemyBullet_2[ti]->Setup();
+
+	}
+	else
+	{
+		mDir = DIR_LEFT;
+		mX = (WIDTH / 4) + tShift;
+		mY = 0;
+
+		int ti = 0;
+		for (ti = 0; ti < 10; ti++)
+		{
+			tEnemyBullet_2[ti]->Setup();
+		}
 	}
 }
 
@@ -104,30 +111,36 @@ void CEnemy_2::Fire()
 
 void CEnemy_2::Update()
 {
-	int ti = 0;
-	if (0 == tDelay)
+	if (STATE_DEAD == mState)
 	{
-		tDelay = GetTickCount();
 	}
-
-	tTemp = GetTickCount();
-
-	if (tTemp - tDelay > 5000)
+	else
 	{
-
-		tEnemyBullet_2[mCurBulletIndex]->SetPositionForFire(this);
-		tEnemyBullet_2[mCurBulletIndex]->SetIsLife(this);
-
-		if (mCurBulletIndex < 10 - 1)
+		int ti = 0;
+		if (0 == tDelay)
 		{
-			mCurBulletIndex++;
-		}
-		else
-		{
-			mCurBulletIndex = 0;
+			tDelay = GetTickCount();
 		}
 
-		tDelay = tTemp;
+		tTemp = GetTickCount();
+
+		if (tTemp - tDelay > 5000)
+		{
+
+			tEnemyBullet_2[mCurBulletIndex]->SetPositionForFire(this);
+			tEnemyBullet_2[mCurBulletIndex]->SetIsLife(this);
+
+			if (mCurBulletIndex < 10 - 1)
+			{
+				mCurBulletIndex++;
+			}
+			else
+			{
+				mCurBulletIndex = 0;
+			}
+
+			tDelay = tTemp;
+		}
 	}
 }
 

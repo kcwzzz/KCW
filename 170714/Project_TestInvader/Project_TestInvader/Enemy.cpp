@@ -7,10 +7,10 @@
 #include "Enemy.h"
 #include "EnemyBullet.h"
 
-CEnemy::CEnemy() 
+CEnemy::CEnemy()
 {
 	int ti = 0;
-	for (ti = 0; ti < 10;ti++)
+	for (ti = 0; ti < 10; ti++)
 	{
 		tEnemyBullet[ti] = new CEnemyBullet();
 	}
@@ -32,23 +32,23 @@ CEnemy ::~CEnemy()
 void CEnemy::Setup(int tShift) //액터의 X,Y 좌표
 {
 	mDir = DIR_LEFT;
-	mX = (WIDTH / 10)+ tShift;
+	mX = (WIDTH / 10) + tShift;
 	mY = 3;
 
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)
 	{
-	 	tEnemyBullet[ti]->Setup();
+		tEnemyBullet[ti]->Setup();
 	}
 }
 void CEnemy::MoveWithInput() //조정
 {
 	if (DIR_RIGHT == mDir)
 	{
-		if (mX< WIDTH - 1)
+		if (mX < WIDTH - 1)
 		{
 			mDirX = 1;
-//			mSpeedPower = 2;
+			//			mSpeedPower = 2;
 			mSpeedPower = 0;
 
 			mX = mX + mDirX*mSpeedPower;
@@ -64,7 +64,7 @@ void CEnemy::MoveWithInput() //조정
 		if (mX > 1)
 		{
 			mDirX = -1;
-//			mSpeedPower = 2;
+			//			mSpeedPower = 2;
 
 			mSpeedPower = 0;
 			mX = mX + mDirX*mSpeedPower;
@@ -94,13 +94,13 @@ void CEnemy::Display(char *tpPixel) // 그래픽 표시
 	}
 	else
 	{
-	*(tpPixel + mY*WIDTH + mX) = '#';
-	int ti = 0;
-	for (ti = 0; ti < 10; ti++)
-	{
-		tEnemyBullet[ti]->Display(tpPixel);
+		*(tpPixel + mY*WIDTH + mX) = '#';
+		int ti = 0;
+		for (ti = 0; ti < 10; ti++)
+		{
+			tEnemyBullet[ti]->Display(tpPixel);
 
-	}
+		}
 	}
 }
 
@@ -116,29 +116,35 @@ void CEnemy::Fire()
 
 void CEnemy::Update()
 {
-	int ti = 0;
-	if (0 == tDelay)
+	if (STATE_DEAD == mState)
 	{
-		tDelay = GetTickCount();
 	}
-
-	tTemp = GetTickCount();
-
-	if (tTemp - tDelay > 3000)
+	else
 	{
-
-		tEnemyBullet[mCurBulletIndex]->SetPositionForFire(this);
-		tEnemyBullet[mCurBulletIndex]->SetIsLife(this);
-
-		if (mCurBulletIndex < 10 - 1)
+		int ti = 0;
+		if (0 == tDelay)
 		{
-			mCurBulletIndex++;
+			tDelay = GetTickCount();
 		}
-		else
+
+		tTemp = GetTickCount();
+
+		if (tTemp - tDelay > 3000)
 		{
-			mCurBulletIndex = 0;
+
+			tEnemyBullet[mCurBulletIndex]->SetPositionForFire(this);
+			tEnemyBullet[mCurBulletIndex]->SetIsLife(this);
+
+			if (mCurBulletIndex < 10 - 1)
+			{
+				mCurBulletIndex++;
+			}
+			else
+			{
+				mCurBulletIndex = 0;
+			}
+			tDelay = tTemp;
 		}
-		tDelay = tTemp;
 	}
 }
 
