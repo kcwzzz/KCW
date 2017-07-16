@@ -130,3 +130,14 @@ void CEnemy_2::Update()
 		tDelay = tTemp;
 	}
 }
+
+float CEnemy_2::EnemyBulletX(int tBulletNum)
+{
+	return tEnemyBullet_2[tBulletNum]->GetX();
+
+}
+
+float CEnemy_2::EnemyBulletY(int tBulletNum)
+{
+	return tEnemyBullet_2[tBulletNum]->GetY();
+}

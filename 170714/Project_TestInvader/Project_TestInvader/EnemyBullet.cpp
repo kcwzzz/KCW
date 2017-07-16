@@ -3,6 +3,7 @@
 
 #include "EnemyBullet.h"
 #include "Enemy.h"
+#include "Actor.h"
 
 void CEnemyBullet::  Setup() //액터의 X,Y 좌표
 {
@@ -26,6 +27,10 @@ void CEnemyBullet::Fire(CEnemy *tpEnemy)
 			mIsLife = false;
 		}
 	}
+	else
+	{
+		SetPositionForFire(tpEnemy);
+	}
 	
 }
 
@@ -37,5 +42,6 @@ void  CEnemyBullet::Display(char *tpPixel) // 그래픽 표시
 void CEnemyBullet::SetPositionForFire(CEnemy *tpEnemy)
 {
 	mX = tpEnemy->GetX();
-	mY = 1;
+	mY = tpEnemy->GetY()+1;
 }
+

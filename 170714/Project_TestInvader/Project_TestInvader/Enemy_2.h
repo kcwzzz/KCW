@@ -17,4 +17,7 @@ public:
 	void Display(char *tpPixel); // 그래픽 표시
 	void Update();
 	void Fire();
+	float CEnemy_2::EnemyBulletX(int tBulletNum);
+	float CEnemy_2::EnemyBulletY(int tBulletNum);
+
 };

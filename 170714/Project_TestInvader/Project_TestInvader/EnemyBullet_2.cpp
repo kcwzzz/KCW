@@ -31,6 +31,10 @@ void CEnemyBullet_2::Fire(CEnemy_2 *tpEnemy)
 			mIsLife = false;
 		}
 	}
+	else
+	{
+		SetPositionForFire(tpEnemy);
+	}
 }
 
 void CEnemyBullet_2::Clean(char *tpPixel)

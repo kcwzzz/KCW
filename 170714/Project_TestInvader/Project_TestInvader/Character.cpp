@@ -33,11 +33,3 @@ void CCharacter::Display(char *tpPixel)
 
 }
 
-int CCharacter::GetX()
-{
-	return mX;
-}
-int CCharacter::GetY()
-{
-	return mY;
-}

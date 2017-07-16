@@ -21,6 +21,11 @@ public:
 
 	virtual void Fire();
 	virtual void Update();
+
+	virtual float EnemyBulletX(int tBulletNum);
+	virtual float EnemyBulletY(int tBulletNum);
+
+
 };
 
 

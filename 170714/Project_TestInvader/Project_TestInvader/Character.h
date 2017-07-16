@@ -15,6 +15,5 @@ public:
 	virtual void Clean(char *tpPixel); // 그래픽 클리어
 	virtual void Display(char *tpPixel); // 그래픽 표시
 	
-	virtual int GetX();
-	virtual int GetY();
+
 };

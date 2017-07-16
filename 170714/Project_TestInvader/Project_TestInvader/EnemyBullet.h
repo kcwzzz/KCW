@@ -2,6 +2,7 @@
 #include "Bullet.h"
 
 class CEnemy;
+class CActor;
 
 class CEnemyBullet : public CBullet
 {
@@ -20,5 +21,6 @@ public :
 	void Fire(CEnemy *tpEnemy );
 	void Display(char *tpPixel); // 그래픽 표시
 	void SetPositionForFire(CEnemy *tpEnemy);
+
 };
 

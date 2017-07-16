@@ -37,7 +37,7 @@ void CActorBullet::ReadyToFire(CActor *tpActor)
 {
 
 	mX = tpActor->GetX();
-	mY = HEIGHT - 1 - 1;
+	mY = tpActor->GetY();
 }
 
 void CActorBullet::Display(char *tpPixel) // 그래픽 표시

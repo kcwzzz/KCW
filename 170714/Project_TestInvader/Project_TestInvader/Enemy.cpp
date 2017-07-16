@@ -38,7 +38,6 @@ void CEnemy::Setup(int tShift) //액터의 X,Y 좌표
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)
 	{
-		//CEnemyBullet tEnemyBullet[ti].Setup();
 	 	tEnemyBullet[ti]->Setup();
 	}
 }
@@ -49,7 +48,9 @@ void CEnemy::MoveWithInput() //조정
 		if (mX< WIDTH - 1)
 		{
 			mDirX = 1;
-			mSpeedPower = 2;
+//			mSpeedPower = 2;
+			mSpeedPower = 0;
+
 			mX = mX + mDirX*mSpeedPower;
 		}
 		else
@@ -63,7 +64,9 @@ void CEnemy::MoveWithInput() //조정
 		if (mX > 1)
 		{
 			mDirX = -1;
-			mSpeedPower = 2;
+//			mSpeedPower = 2;
+
+			mSpeedPower = 0;
 			mX = mX + mDirX*mSpeedPower;
 		}
 		else
@@ -85,12 +88,19 @@ void CEnemy::Clean(char *tpPixel) // 그래픽 클리어
 
 void CEnemy::Display(char *tpPixel) // 그래픽 표시
 {
+	if (STATE_DEAD == mState)
+	{
+		CCharacter::Clean(tpPixel);
+	}
+	else
+	{
 	*(tpPixel + mY*WIDTH + mX) = '#';
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)
 	{
 		tEnemyBullet[ti]->Display(tpPixel);
 
+	}
 	}
 }
 
@@ -128,7 +138,18 @@ void CEnemy::Update()
 		{
 			mCurBulletIndex = 0;
 		}
-
 		tDelay = tTemp;
 	}
 }
+
+float CEnemy::EnemyBulletX(int tBulletNum)
+{
+	return tEnemyBullet[tBulletNum]->GetX();
+
+}
+
+float CEnemy::EnemyBulletY(int tBulletNum)
+{
+	return tEnemyBullet[tBulletNum]->GetY();
+}
+

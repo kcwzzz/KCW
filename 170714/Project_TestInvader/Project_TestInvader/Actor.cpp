@@ -3,6 +3,7 @@
 
 #include "Actor.h"
 #include "ActorBullet.h"
+#include "EnemyBullet.h"
 
 CActor::CActor()
 {
@@ -34,13 +35,14 @@ void CActor::Setup() // 액터와 총알 배열의 위치 초기화
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)
 	{
-//		tActorBullet[ti].Setup();
-
 		tActorBullet[ti]->Setup();
 	}
 }
 void CActor::MoveWithInput(char tKey)
-{	//키를 입력했을 때 액터의 운동
+{
+//	CEnemyBullet tEnemyBullet;
+
+	//키를 입력했을 때 액터의 운동
 	//키를 입력하면 방향과 이동 거리를 변경하여 이동하게 한다. 
 	switch (tKey)
 	{
@@ -146,7 +148,6 @@ void CActor::Move(CActor *tpActor)
 }
 void CActor::Clean(char *tpPixel)
 {
-	//*(tpPixel + mY*WIDTH + mX) = 0;
 	CCharacter::Clean(tpPixel);
 
 	int ti = 0;
@@ -162,6 +163,17 @@ void CActor::Display(char *tpPixel)
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)
 	{
-		tActorBullet[ti]->Display(tpPixel);
+		tActorBullet[ti]->Display(tpPixel);		
 	}
+}
+
+float CActor::ActorBulletX(int tBulletNum)
+{
+	return tActorBullet[tBulletNum]->GetX();
+
+}
+
+float CActor::ActorBulletY(int tBulletNum)
+{
+	return tActorBullet[tBulletNum]->GetY();
 }

@@ -32,16 +32,16 @@ int main()
 	//Create
 	char tPixel[HEIGHT][WIDTH] = { 0, };//화면 을 흉내내는거.
 
-	int tEnemyCount = 1;
-	int tEnemyCount_2 = 1;
+	int tEnemyCount = 10;
+	int tEnemyCount_2 = 3;
 
-//	int tEnemyCount = 10;
-//	int tEnemyCount_2 = 3;
+	//	int tEnemyCount = 10;
+	//	int tEnemyCount_2 = 3;
 
 
 	CActor tActor;
-	CEnemy tEnemy[1];
-	CEnemy_2 tEnemy_2[1];
+	CEnemy tEnemy[10];
+	CEnemy_2 tEnemy_2[3];
 
 	int tRow = 0;
 	int tCol = 0;
@@ -51,11 +51,11 @@ int main()
 
 	for (int tj = 0; tj < tEnemyCount; tj++)
 	{
-		tEnemy[tj].Setup(WIDTH/10*tj);
+		tEnemy[tj].Setup(WIDTH / 10 * tj);
 	}
 	for (int ti = 0; ti < tEnemyCount_2; ti++)
 	{
-		tEnemy_2[ti].Setup(WIDTH/4*ti);
+		tEnemy_2[ti].Setup(WIDTH / 4 * ti);
 	}
 
 	//Setup : 초기화
@@ -69,9 +69,6 @@ int main()
 	Sleep(1000);
 
 
-
-
-
 	//게임루프
 	bool tIsEnd = false;
 	char tKey = 0;
@@ -81,7 +78,7 @@ int main()
 
 		//Clean
 		tActor.Clean(&tPixel[0][0]);
-		
+
 		for (int tj = 0; tj < tEnemyCount; tj++)
 		{
 			tEnemy[tj].Clean(&tPixel[0][0]);
@@ -97,7 +94,6 @@ int main()
 		//적 패턴
 		for (int tj = 0; tj < tEnemyCount; tj++)
 		{
-
 			tEnemy[tj].MoveWithInput();
 			tEnemy[tj].Fire();
 			tEnemy[tj].Update();
@@ -111,41 +107,80 @@ int main()
 		}
 		//적 패턴
 
-
-
-
 		//조작 부분
 		if (0 != _kbhit())
 		{
 			tKey = _getch();
-
 			tActor.MoveWithInput(tKey);
 			tIsEnd = GameQuit(tKey);
 		}
 
 		tActor.Move(&tActor);
 
+		if (1 == tActor.GetmState())
+		{
+			GameQuit('q');
+		}
+
 		//Display
 		ClearScreen(0, 0);
-
-
-
 
 		//출력부//////////////
 		tActor.Display(&tPixel[0][0]);
 
+		
 		for (int tj = 0; tj < tEnemyCount; tj++)
 		{
-
 			tEnemy[tj].Display(&tPixel[0][0]);
 		}
-		
+
 		for (int ti = 0; ti < tEnemyCount_2; ti++)
 		{
 			tEnemy_2[ti].Display(&tPixel[0][0]);
 		}
+		
 		//출력부//////////////
 
+		for (int tj = 0; tj < tEnemyCount; tj++)
+		{
+			for (int ti = 0; ti < 10; ti++)
+			{
+				if (tEnemy[tj].EnemyBulletX(ti) == tActor.GetX() && tEnemy[tj].EnemyBulletY(ti) == tActor.GetY())
+				{
+					cout << " 게임 오버" << endl;
+					tIsEnd = true;
+
+					int buff = 0;
+					cin >> buff;
+				}
+			}
+		}
+
+		for (int tj = 0; tj < tEnemyCount_2; tj++)
+		{
+			for (int ti = 0; ti < 10; ti++)
+			{
+				if (tEnemy_2[tj].EnemyBulletX(ti) == tActor.GetX() && tEnemy_2[tj].EnemyBulletY(ti) == tActor.GetY())
+
+				{
+					cout << " 게임 오버" << endl;
+					tIsEnd = true;
+
+					int buff = 0;
+					cin >> buff;
+				}
+			}
+		}
+		for (int tj = 0; tj < tEnemyCount; tj++)
+		{
+			for (int ti = 0; ti < 10; ti++)
+			{
+				if (tActor.ActorBulletX(ti) == tEnemy[tj].GetX() && tActor.ActorBulletY(ti) == tEnemy[tj].GetY())
+				{
+
+				}
+			}
+		}
 
 		for (tRow = 0; tRow < HEIGHT; tRow++)
 		{
@@ -154,7 +189,7 @@ int main()
 				cout << tPixel[tRow][tCol];
 			}
 		}
-	
+
 		if (true == tIsEnd)
 		{
 			break;
@@ -208,5 +243,6 @@ bool GameQuit(char tKey)
 		break;
 	}
 	}
+
 	return tIsEnd;
 }
