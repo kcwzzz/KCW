@@ -128,7 +128,7 @@ int main()
 		//출력부//////////////
 		tActor.Display(&tPixel[0][0]);
 
-		
+
 		for (int tj = 0; tj < tEnemyCount; tj++)
 		{
 			tEnemy[tj].Display(&tPixel[0][0]);
@@ -138,24 +138,40 @@ int main()
 		{
 			tEnemy_2[ti].Display(&tPixel[0][0]);
 		}
-		
-		//출력부//////////////
 
+		//출력부//////////////
+		
+		//충돌 처리/////////////////
+		for (int tj = 0; tj < tEnemyCount; tj++)
+		{
+			for (int ti = 0; ti < 10; ti++)
+			{
+				if (tActor.ActorBulletX(ti) == tEnemy[tj].GetX() && tActor.ActorBulletY(ti) == tEnemy[tj].GetY())
+				{
+					tEnemy[tj].SetmState(STATE_DEAD);
+				}
+			}
+		}
+		for (int tj = 0; tj < tEnemyCount_2; tj++)
+		{
+			for (int ti = 0; ti < 10; ti++)
+			{
+				if (tActor.ActorBulletX(ti) == tEnemy_2[tj].GetX() && tActor.ActorBulletY(ti) == tEnemy_2[tj].GetY())
+				{
+					tEnemy_2[tj].SetmState(STATE_DEAD);
+				}
+			}
+		}
 		for (int tj = 0; tj < tEnemyCount; tj++)
 		{
 			for (int ti = 0; ti < 10; ti++)
 			{
 				if (tEnemy[tj].EnemyBulletX(ti) == tActor.GetX() && tEnemy[tj].EnemyBulletY(ti) == tActor.GetY())
 				{
-					cout << " 게임 오버" << endl;
 					tIsEnd = true;
-
-					int buff = 0;
-					cin >> buff;
 				}
 			}
 		}
-
 		for (int tj = 0; tj < tEnemyCount_2; tj++)
 		{
 			for (int ti = 0; ti < 10; ti++)
@@ -163,24 +179,12 @@ int main()
 				if (tEnemy_2[tj].EnemyBulletX(ti) == tActor.GetX() && tEnemy_2[tj].EnemyBulletY(ti) == tActor.GetY())
 
 				{
-					cout << " 게임 오버" << endl;
 					tIsEnd = true;
-
-					int buff = 0;
-					cin >> buff;
 				}
 			}
-		}
-		for (int tj = 0; tj < tEnemyCount; tj++)
-		{
-			for (int ti = 0; ti < 10; ti++)
-			{
-				if (tActor.ActorBulletX(ti) == tEnemy[tj].GetX() && tActor.ActorBulletY(ti) == tEnemy[tj].GetY())
-				{
 
-				}
-			}
 		}
+		//충돌 처리/////////////////
 
 		for (tRow = 0; tRow < HEIGHT; tRow++)
 		{
@@ -192,9 +196,23 @@ int main()
 
 		if (true == tIsEnd)
 		{
+
 			break;
 		}
 	}
+	for (tRow = 0; tRow < HEIGHT; tRow++)
+	{
+		for (tCol = 0; tCol < WIDTH; tCol++)
+		{
+			tPixel[tRow][tCol] = 0;
+			cout << tPixel[tRow][tCol];
+		}
+	}
+	cout << "Game Over" << endl;
+
+	int buff = 0;
+	cin >> buff;
+
 	//Destroy
 	return 0;
 }

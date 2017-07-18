@@ -37,3 +37,8 @@ int CUnit::GetY()
 {
 	return mY;
 }
+
+void CUnit::SetmState(int tState)
+{
+	mState = tState;
+}
