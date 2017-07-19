@@ -75,16 +75,14 @@ bool HelloWorld::init()
 
 
 	auto tpMenuForTest = Menu::create(tpBtnDoAction, NULL);
-
 	tpMenuForTest->alignItemsVertically();
-
 	tpMenuForTest->setPosition(Vec2(240, 50));
-
 	this->addChild(tpMenuForTest);
-
+	
+	
+	
 	mpSprBall = Sprite::create("CloseNormal.png");
 	mpSprBall->retain();
-
 	mpSprBall->setPosition(Vec2(50, 240));
 	this->addChild(mpSprBall);
 	
