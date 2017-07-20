@@ -11,6 +11,7 @@ class HelloWorld : public cocos2d::Scene
 private : 
 	Sprite *mpSprBall = NULL;
 
+
 public:
     static cocos2d::Scene* createScene();
     virtual bool init();
