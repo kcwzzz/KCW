@@ -35,10 +35,21 @@ bool HelloWorld::init()
 	DoSetupTitle();
 	BeginTitleAction();
 	CreateSlime();			// 슬라임을 생성하는 함수
-
+	//SlimeAnimation();
+	SlimeInfo();
 
 	return true;
 }
+
+void HelloWorld::SlimeInfo()
+{
+	mplblTest = Label::createWithTTF("Slime HP : ", "fonts/Marker Felt.ttf", 18);
+	mplblTest->setPosition(Vec2(400, 400));
+	this->addChild(mplblTest, 1);
+
+	DoSlimeInvisible();
+}
+
 
 void HelloWorld::DoSetupTitle()
 {
@@ -72,6 +83,17 @@ void HelloWorld::CreateSlime()
 
 	DoSlimeInvisible();							//슬라임을 생성과 동시에 사라지게한다.
 }
+void HelloWorld::CreateSlimeKing()
+{
+	mpSprSlime->setVisible(false);
+	mpSprSlimeKing = Sprite::create("slime_boss.png");
+	mpSprSlimeKing->setPosition(Vec2(400, 240));
+	this->addChild(mpSprSlimeKing);
+
+	//DoSlimeInvisible();	//슬라임을 생성과 동시에 사라지게한다.		
+	RCPGame();;
+}
+
 void HelloWorld::DoSlimeInvisible()
 {
 	mpSprSlime->setVisible(false);
@@ -81,17 +103,18 @@ void HelloWorld::OnCompleteEndTileAction()
 	mpSprSlime->setVisible(true);
 }
 
-
 void HelloWorld::onEnter()
 {
 	Scene::onEnter();// 장면 진입
 
 	mpListener = EventListenerTouchOneByOne::create();
+
+
 	mpListener->onTouchBegan = CC_CALLBACK_2(HelloWorld::onTouchBegan, this);
+	mpListener->onTouchEnded = CC_CALLBACK_2(HelloWorld::onTouchEnded, this);
 
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(mpListener, this);
 }
-
 void HelloWorld::onExit()
 {
 	//마우스 이벤트 등록 해지
@@ -103,28 +126,44 @@ void HelloWorld::onExit()
 bool HelloWorld::onTouchBegan(cocos2d::Touch *touch, cocos2d::Event *unused_event)
 {
 	auto tTouchPos = touch->getLocation();
+	bool tIsTouch = mpSprSlime->getBoundingBox().containsPoint(tTouchPos);
 
 	char tszTemp[512];
 	memset(tszTemp, 0, 512);
-	sprintf(tszTemp, "x: %f, y: %f, ID: %d", tTouchPos.x, tTouchPos.y, touch->getID());
+	sprintf(tszTemp, "%d", SlimeHP);
 
-	std::string tString = "onTouchBegan ";
-	tString = tString + tszTemp;
+	if (true == tIsTouch)
+	{
+		if (SlimeHP > 0)
+		{
+			SlimeHP = SlimeHP - 10;
+			mpSprSlime = Sprite::create("slime_p.png");
+			mpSprSlime->setPosition(Vec2(400, 240));
+			this->addChild(mpSprSlime);
+		}
+	}
+	return true;
+}
 
+void HelloWorld::onTouchEnded(cocos2d::Touch *touch, cocos2d::Event *unused_event)
+{
+	auto tTouchPos = touch->getLocation();
 	bool tIsTouch = mpSprSlime->getBoundingBox().containsPoint(tTouchPos);
 
 	if (true == tIsTouch)
 	{
-		tString = tString + ", sprite is touched.";
+		if (SlimeHP > 0)
+		{
+			mpSprSlime->setVisible(false);
+			mpSprSlime = Sprite::create("slime.png");
+			mpSprSlime->setPosition(Vec2(400, 240));
+			this->addChild(mpSprSlime);
+		}
+		else
+		{
+			CreateSlimeKing();
+		}
 	}
-	else
-	{
-		tString = tString + ", sprite is NOT touched.";
-	}
-
-	mplblTest->setString(tString);
-
-	return true;
 }
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
@@ -139,4 +178,34 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 	/*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() and exit(0) as given above,instead trigger a custom event created in RootViewController.mm as below*/
 	//EventCustom customEndEvent("game_scene_close_event");
 	//_eventDispatcher->dispatchEvent(&customEndEvent);
+}
+
+void HelloWorld::RCPGame()
+{
+	int RCP = random(0, 2);
+	switch (RCP)
+	{
+	case 0:
+	{
+		mpRock->setVisible(false);
+		mpRock = Sprite::create("Rock.png");
+		mpRock->setPosition(Vec2(200, 240));
+		this->addChild(mpRock);
+	}
+	case 1:
+	{
+		mpScissors->setVisible(false);
+		mpScissors = Sprite::create("Scissors.png");
+		mpScissors->setPosition(Vec2(200, 240));
+		this->addChild(mpScissors);
+	}
+	case 2:
+	{
+		mpPaper->setVisible(false);
+		mpPaper = Sprite::create("Paper.png");
+		mpPaper->setPosition(Vec2(200, 240));
+		this->addChild(mpPaper);
+	}
+	}
+
 }
