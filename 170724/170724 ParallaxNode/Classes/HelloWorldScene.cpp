@@ -79,7 +79,7 @@ bool HelloWorld::init()
 	tpBg_0->getTexture()->setAntiAliasTexParameters();
 	tpBg_1->getTexture()->setAntiAliasTexParameters();
 
-	tpNode->addChild(tpBg_0, 0, Vec2(1.0f, 0.0f), Vec2(0,00));
+	tpNode->addChild(tpBg_0, 0, Vec2(1.0f, 0.0f), Vec2(0,00));	
 	tpNode->addChild(tpBg_1, 0, Vec2(2.0f, 0.0f), Vec2(512, 0));
 	
 	auto go = MoveBy::create(4, Vec2(-512, 0));
