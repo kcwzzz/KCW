@@ -52,7 +52,9 @@ bool HelloWorld::init()
 	mCount_2 = 0;
 		
 	this->schedule(schedule_selector(HelloWorld::callEveryFrame));
+
 	this->schedule(schedule_selector(HelloWorld::myTick),1.0f);
+
 	this->scheduleOnce(schedule_selector(HelloWorld::myTickOnce),3.0f);
 
 	return true;

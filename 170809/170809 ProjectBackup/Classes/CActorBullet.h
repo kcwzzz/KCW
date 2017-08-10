@@ -37,6 +37,4 @@ public:
 
 	
 	bool IsColision();
-
-
 };
