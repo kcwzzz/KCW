@@ -99,7 +99,6 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 //손가락이 닫는 순간 호출된다.
 bool HelloWorld::onTouchBegan(Touch *touch, Event *event)
 {
-
 	return true;
 }
 

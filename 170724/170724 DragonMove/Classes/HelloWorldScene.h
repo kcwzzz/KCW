@@ -30,7 +30,7 @@ protected:
 	bool isRightPressed;
 
 	void CreateBackgroundParallax();
-	void CreateDragon();
+	void CreateDragon();	
 	void CreateVoidArrowButtons();
 
 	virtual void onEnter();

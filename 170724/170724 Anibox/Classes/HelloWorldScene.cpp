@@ -80,11 +80,11 @@ bool HelloWorld::init()
 	//mpAniIdle->SetScene(this);
 	mpAniIdle->SetScene(static_cast<Node *>(this)); //암묵적으로 형변환을 해주지만, 명시적으로 하는 습관을 갖자.
 	mpAniIdle->Build();
-
-
+	
 	mpAniIdle->SetPosition(Vec2(400, 240));
-
 	mpAniIdle->RunAni();
+
+
 
 	mpAniIdle_1 = new CRyuAniBox();
 	mpAniIdle_1->Create("grossini", 14, 0.1);
@@ -93,10 +93,9 @@ bool HelloWorld::init()
 	mpAniIdle_1->SetScene(static_cast<Node *>(this)); //암묵적으로 형변환을 해주지만, 명시적으로 하는 습관을 갖자.
 	mpAniIdle_1->Build();
 
-
 	mpAniIdle_1->SetPosition(Vec2(440, 240));
-
 	mpAniIdle_1->RunAni();
+
 
 	mpAniIdle_2 = new CRyuAniBox();
 	mpAniIdle_2->Create("grossini", 14, 1);
@@ -107,13 +106,11 @@ bool HelloWorld::init()
 
 
 	mpAniIdle_2->SetPosition(Vec2(400, 180));
-
 	mpAniIdle_2->RunAni();
 
 
 	//감춰놨던 게임루프를 활성화한다.
 	this->scheduleUpdate();
-
 
 	return true;
 }
