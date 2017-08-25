@@ -13,6 +13,7 @@
 
 USING_NS_CC;
 
+//갱신이 되냐
 
 
 Scene* GameScene::createScene()
