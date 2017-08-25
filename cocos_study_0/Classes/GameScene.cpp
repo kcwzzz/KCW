@@ -10,7 +10,6 @@
 
 #include "Define.h"
 
-//이제 쓸 수 있는가??
 
 USING_NS_CC;
 
