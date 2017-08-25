@@ -10,7 +10,6 @@
 
 #include "Define.h"
 
-
 USING_NS_CC;
 
 Scene* GameScene::createScene()
