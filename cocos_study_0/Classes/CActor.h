@@ -1,15 +1,11 @@
 #pragma once
 
 #include "cocos2d.h"
+#include "Define.h"
 
 USING_NS_CC;
 
 using namespace std;
-
-#define Idle 0
-#define Move 1
-#define Attack 2
-#define Dead 3
 
 class GameScene;
 class CBackgroundLayer;
@@ -43,10 +39,12 @@ protected:
 
 	Vec2 mVec;
 
-	int mState = Move;
-	
-	int mDir = 0;		//0:up, 1: down, 2: left, 3: right
-	int mCurDir = 0;
+	int mState = IDLE;
+	int mCurState = IDLE;
+
+	int mDir = Up_Dir  ;		//0:up, 1: down, 2: left, 3: right
+	int mCurDir = Up_Dir;
+
 	
 	float mDirX = 0.0f;
 	float mDirY = 0.0f;
@@ -86,10 +84,19 @@ public:
 	float GetDirectionX();
 	float GetDirectionY();
 
-	void AttackDirSelector();
-
 	Sprite* GetSprite();
 
+	void IdleState();
+	void MoveState();
+	void AttackState();
+	void AttackEndState();
+	void DeadState();
+	int GetDir();
+
+
+
+	void OnCompleteAni();
+	
 public:
 	CActor();
 	virtual ~CActor();

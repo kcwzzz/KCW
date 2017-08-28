@@ -8,9 +8,12 @@ using namespace std;
 using namespace cocos2d;
 
 class CVirtualPad;
+class GameScene;
 
 class CUILayer : public Layer
 {
+protected:
+	GameScene *mpScene = NULL;
 
 protected:
 	Layer *mpUILayer = NULL;
@@ -24,13 +27,17 @@ public:
 
 	void CreateLayer();
 	void VirtualPad();
-	void CloseGame();
+	void CreateBtnClose();
 	void menuCloseCallback(Ref* pSender);
 	void GameOver();
 
 	CVirtualPad* GetVirtualPad();
 	void SetUpListener();
 	void RemoveListener();
+
+
+	void SetScene(GameScene *tpScene);
+	
 
 	int GetDir();
 

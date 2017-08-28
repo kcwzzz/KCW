@@ -4,14 +4,10 @@
 
 #include "CActor.h"
 
-
 #include "CBackgroundLayer.h"
 #include "CUILayer.h"
 
 #include "Define.h"
-
-
-//아아아아아이아아
 
 USING_NS_CC;
 
@@ -35,11 +31,10 @@ bool GameScene::init()
 	CreateUILayer();
 	CreateBackgroundLayer();
 	
-	CreateActor();
-
-
+	CreateActor();	
 	this->scheduleUpdate();
-	//ScheduleUpdate를 init에서 하자.
+
+	
 
 	return true;
 }
@@ -50,8 +45,10 @@ void GameScene::CreateUILayer()
 	mpUILayer = CUILayer::create();
 	mpUILayer->CreateLayer();
 	mpUILayer->VirtualPad();
-	mpUILayer->CloseGame();
+	mpUILayer->CreateBtnClose();
 	mpUILayer->GetDir();
+
+	mpUILayer->SetScene(this);
 
 	this->addChild(mpUILayer, 100);
 }
@@ -77,16 +74,21 @@ void GameScene::CreateActor()
 	mpActor->SetVirtualPad(mpUILayer->GetVirtualPad());
 
 	mpActor->FollowActor();
-	mpActor->setPosition(Vec2(60, 60));
+	mpActor->setPosition(Vec2(300, 300));
 	mpActor->Build();
+
+
 }
 
 void GameScene::update(float dt)
 {
-	//mpActor->FSM_Selector();
+
 	mpActor->Dir_Selector();
 	mpActor->MoveActor(dt);
-	//mpActor->AttackDirSelector();
+	mpActor->FSM_Selector();
+
+
+	
 }
 
 void GameScene::onEnter()
@@ -101,4 +103,10 @@ void GameScene::onExit()
 
 	mpUILayer->RemoveListener();
 	Scene::onExit();
+}
+
+//ryu
+void GameScene::TestActorBehavior()
+{
+	mpActor->AttackState();
 }

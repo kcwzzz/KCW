@@ -1,13 +1,12 @@
 #pragma once
 
 #include "cocos2d.h"
+#include "Define.h"
 
 #define PADSIZE 1
 
 using namespace cocos2d;
 USING_NS_CC;
-
-//class CActor;
 
 class CVirtualPad 
 {
@@ -26,10 +25,11 @@ public:
 	Sprite* mpSprJoystic;
 	Sprite* mpSprJoysticPad;
 
-	Sprite* mpAttackButton_0;
+	MenuItemImage* mpAttackButton_0;
 
 	bool mpJoysticTouched = false;
-	bool mpAttackButtonTouched = false;
+
+	int mActorFSM = IDLE;
 
 //	CActor *mpActor = NULL;
 
@@ -45,8 +45,6 @@ public:
 	float GetResultDistance();
 
 	bool GetStateJoyStic();
-	bool GetAttackButton();
-
 	Vec2 GetVecResult();
 
 	//--------touch events
@@ -56,5 +54,8 @@ public:
 	virtual void TouchesCancelled(const std::vector<Touch*>&touches, Event *unused_event);
 
 	int GetDir();
+	void GetIsAttack();
+	void GetIsIdle();
+	int GetActorFSM();
 };
 

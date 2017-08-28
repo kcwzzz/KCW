@@ -15,8 +15,6 @@ protected:
 	float mDelayTime = 0.0f;
 	Vec2 mVec;
 	int mFrameCount = 0;
-
-
 	int mDir = 0;
 
 	Sprite *mpSprite = NULL;
@@ -37,10 +35,15 @@ public:
 	void SetPosition(Vec2 tVec);
 
 	void CreateAniObject(int tWidth, int tHeight, float tSetDelay, int tFrameCount);
-	void RunAniObject();
-	void Build();
+		
 
-	//void RotateUp();
+
+	void RunAniObject();
+	void RunAniWithCallback(CallFunc *tpFunc);
+		//void OnCompleteAni();
+
+	void Build();
+	void Rotation(int tAngle);
 
 	void StopAnimation();
 

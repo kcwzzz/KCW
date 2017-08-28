@@ -34,15 +34,19 @@ void CVirtualPad::create(Layer* layer, Vec2 tVec)
 	mVecStart = tVec;
 	mpJoysticTouched = false;
 
-	sprite = Sprite::create("coin.png");
-	sprite->setPosition(Vec2(800, 200));
-	sprite->setScale(PADSIZE);
-	layer->addChild(sprite, 20);
-	mpAttackButton_0 = sprite;
 
-	//mpActor = new CActor();
-	//mpActor->Create();
 
+	mpAttackButton_0 = MenuItemImage::create(
+		"CloseNormal.png",
+		"CloseSelected.png",
+		CC_CALLBACK_0(CVirtualPad::GetIsAttack, this));
+
+	mpAttackButton_0->setPosition(Vec2(800, 200));
+	mpAttackButton_0->setScale(PADSIZE);
+
+	auto menu = Menu::create(mpAttackButton_0, NULL);
+	menu->setPosition(Vec2::ZERO);
+	layer->addChild(menu, 20);
 }
 
 float CVirtualPad::GetPadScale()
@@ -96,11 +100,6 @@ void CVirtualPad::TouchesBegan(const std::vector<Touch *> &touches, cocos2d::Eve
 				mpJoysticTouched = true;
 			}
 
-			if (mpAttackButton_0->getBoundingBox().containsPoint(tap))
-			{
-				mpAttackButtonTouched = true;
-				//	log("Under Attack");
-			}
 		}
 		it++;
 	}
@@ -115,6 +114,7 @@ void CVirtualPad::TouchesMoved(const std::vector<Touch *> &touches, cocos2d::Eve
 	float theta = 0.0f;
 
 	if (mpJoysticTouched) {
+		mActorFSM = MOVE;
 		for (int i = 0; i < touches.size(); i++)
 		{
 
@@ -153,14 +153,10 @@ void CVirtualPad::TouchesMoved(const std::vector<Touch *> &touches, cocos2d::Eve
 				}
 
 				mpSprJoystic->setPosition(mVecResult);
-				//GetDir();
-
 			}
 			it++;
 		}
-
 	}
-
 }
 
 void CVirtualPad::TouchesEnded(const std::vector<Touch *> &touches, cocos2d::Event *unused_event)
@@ -168,7 +164,8 @@ void CVirtualPad::TouchesEnded(const std::vector<Touch *> &touches, cocos2d::Eve
 
 	mpSprJoystic->setPosition(mVecStart);
 	mpJoysticTouched = false;
-	mpAttackButtonTouched = false;
+	mActorFSM = IDLE;
+	
 }
 
 void CVirtualPad::TouchesCancelled(const std::vector<Touch *> &touches, cocos2d::Event *unused_event)
@@ -176,7 +173,6 @@ void CVirtualPad::TouchesCancelled(const std::vector<Touch *> &touches, cocos2d:
 
 	mpSprJoystic->setPosition(mVecStart);
 	mpJoysticTouched = false;
-	mpAttackButtonTouched = false;
 }
 
 Vec2 CVirtualPad::GetVecResult()
@@ -204,11 +200,6 @@ bool CVirtualPad::GetStateJoyStic()
 	return mpJoysticTouched;
 }
 
-bool CVirtualPad::GetAttackButton()
-{
-	return mpAttackButtonTouched;
-}
-
 int CVirtualPad::GetDir()
 {
 	float tVecX = mVecResult.x - mVecStart.x;
@@ -234,4 +225,19 @@ int CVirtualPad::GetDir()
 		mDir = 3;
 	}
 	return mDir;
+}
+
+void CVirtualPad::GetIsAttack()
+{
+	mActorFSM = ATTACK;
+}
+
+void CVirtualPad::GetIsIdle()
+{
+	mActorFSM = IDLE;
+}
+
+int CVirtualPad::GetActorFSM()
+{
+	return mActorFSM;
 }

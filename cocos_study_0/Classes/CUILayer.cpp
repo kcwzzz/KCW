@@ -2,6 +2,7 @@
 #include "cocos2d.h"
 #include "CVirtualPad.h"
 
+#include "GameScene.h"
 
 CUILayer *CUILayer::create()
 {
@@ -37,8 +38,9 @@ void CUILayer::VirtualPad()
 
 }
 
-void CUILayer::CloseGame()
+void CUILayer::CreateBtnClose()
 {
+	
 	auto closeItem = MenuItemImage::create(
 		"CloseNormal.png",
 		"CloseSelected.png",
@@ -49,16 +51,21 @@ void CUILayer::CloseGame()
 	auto menu = Menu::create(closeItem, NULL);
 	menu->setPosition(Vec2::ZERO);
 	this->addChild(menu, 5);
+	
 }
 
 void CUILayer::menuCloseCallback(Ref* pSender)
 {
+	mpScene->TestActorBehavior();
+
+	/*
 	//Close the cocos2d-x game scene and quit the application
 	Director::getInstance()->end();
 
 #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
 	exit(0);
 #endif
+*/
 }
 
 void CUILayer::SetUpListener()
@@ -120,4 +127,9 @@ CVirtualPad* CUILayer::GetVirtualPad()
 int CUILayer::GetDir()
 {
 	return mpVirtualPad->GetDir();
+}
+
+void CUILayer::SetScene(GameScene *tpScene)
+{
+	mpScene = tpScene;
 }

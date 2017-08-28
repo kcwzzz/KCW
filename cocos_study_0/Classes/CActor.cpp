@@ -3,7 +3,6 @@
 #include "GameScene.h"
 #include "CVirtualPad.h"
 #include "CBackgroundLayer.h"
-#include "Define.h"
 #include "CActorAniBox.h"
 #include "CObjectAniBox.h"
 
@@ -53,37 +52,150 @@ void CActor::SetScene(Node *tpScene)
 
 void CActor::FSM_Selector()
 {
-	switch (mState)
-	{
-	case Idle:			//mstate 가 0
-	{
-		mpActorAniBox->Show();
-		mpActorAniBox->StopMoveAnimation();
-	}
-	break;
+	
 
-	case Move:			//mstate 가 1
+
+	/*
+	mState = mpVirtualPad->GetActorFSM();
+
+	if (mCurState == mState)
 	{
 
 	}
-	break;
-
-	case Attack:
+	else
 	{
-		mpObjectAniBox->Show();
-		mpObjectAniBox->StopAnimation();
-		mpObjectAniBox->RunAniObject();
-	}
-	break;
 
-	case Dead:
-	{
-		mpActorAniBox->StopMoveAnimation();
-		mpActorAniBox->Hide();
-	}
-	}
+		switch (mState)
+		{
+		case IDLE:			//mstate 가 0
+		{
+			IdleState();
+		}
+		break;
 
+		case MOVE:			//mstate 가 1
+		{
+			MoveState();
+		}
+		break;
+
+		case ATTACK:
+		{
+			AttackState();
+		}
+		break;
+
+		case DEAD:
+		{
+			DeadState();
+		}
+		}
+	}
+	*/
+	
 }
+
+void CActor::IdleState()
+{
+	mpActorAniBox->Show();
+	mpActorAniBox->StopMoveAnimation();
+	log("Idle");
+	mCurState = IDLE;
+}
+
+void CActor::MoveState()
+{
+	log("Move");
+	mCurState = MOVE;
+}
+
+void CActor::AttackState()
+{
+	Vec2 tVec = Vec2(0, 0);
+	mpObjectAniBox->Show();
+
+	switch (mDir)
+	{
+	case Up_Dir:
+	{
+		tVec.x = mVec.x;
+		tVec.y = mVec.y + 64;
+		mpObjectAniBox->Rotation(-90);
+	}
+	break;
+
+	case Down_Dir:
+	{
+		tVec.x = mVec.x;
+		tVec.y = mVec.y - 64;
+		mpObjectAniBox->Rotation(90);
+	}
+	break;
+
+	case Left_Dir:
+	{
+		tVec.x = mVec.x - 64;
+		tVec.y = mVec.y;
+		mpObjectAniBox->Rotation(180);
+	}
+	break;
+
+	case Right_Dir:
+	{
+		tVec.x = mVec.x + 64;
+		tVec.y = mVec.y;
+		mpObjectAniBox->Rotation(0);
+	}
+	break;
+
+	}
+
+	mpObjectAniBox->SetPosition(tVec);
+	//ryu
+	//mpObjectAniBox->RunAniObject();
+	//mpObjectAniBox->RunAniWithCallback();
+	mpObjectAniBox->RunAniWithCallback(
+		CallFunc::create(CC_CALLBACK_0(CActor::OnCompleteAni, this))
+	);
+
+	log("Attack");
+	mCurState = ATTACK;
+}
+
+
+
+
+void CActor::OnCompleteAni()
+{	
+	//SetState
+	mCurState = IDLE;
+
+
+	//DoitWithState
+	mpObjectAniBox->Hide();
+	
+}
+
+
+
+
+void CActor::AttackEndState()
+{
+	mpObjectAniBox->Hide();
+	mpObjectAniBox->StopAnimation();
+	log("Attack");
+	mCurState = IDLE;
+}
+
+void CActor::DeadState()
+{
+
+	mpActorAniBox->StopMoveAnimation();
+	mpActorAniBox->Hide();
+	log("Dead");
+	mCurState = DEAD;
+}
+
 
 void CActor::Dir_Selector()
 {
@@ -139,46 +251,6 @@ void CActor::SetmDir(int tDir)
 void CActor::SetFsm(int tFsm)
 {
 	mState = tFsm;
-}
-
-
-void CActor::AttackDirSelector()
-{
-
-	if (true == mpVirtualPad->GetAttackButton())
-	{
-		
-		mpObjectAniBox->RunAniObject();
-
-		mState = Attack;
-
-		/*
-		switch (mDir)
-		{
-		case Up_Dir:
-		{
-
-		}
-		break;
-
-		case Down_Dir:
-		{
-		}
-		break;
-
-		case Left_Dir:
-		{
-		}
-		break;
-
-		case Right_Dir:
-		{
-		}
-
-		break;
-		}
-		*/
-	}
 }
 
 void CActor::setPosition(Vec2 tVec)
@@ -267,7 +339,6 @@ void CActor::MoveActor(float dt)
 	setPosition(mVec);
 }
 
-
 float CActor::IncreaseSpeed(float dt)
 {
 	while (true)
@@ -301,6 +372,10 @@ void CActor::SetVirtualPad(CVirtualPad *tpVirtualPad)
 
 void CActor::FollowActor()
 {
-	//mpScene->runAction(Follow::create(mpActor, Rect(0, 0, 1024, 768)));
 	mpScene->runAction(Follow::create(mpActorAniBox->GetSprite(), Rect(0, 0, Map_Width, Map_Height)));
+}
+
+int CActor::GetDir()
+{
+	return mDir;
 }

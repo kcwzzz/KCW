@@ -5,8 +5,8 @@
 
 void CObjectAniBox::CreateAniBox(string tAniName, Vec2 tVec, int tWidth, int tHeight, float tSetDelay, int tFrameCount )
 {
-	this->CreateTexture(tAniName, tWidth, tHeight);
 
+	this->CreateTexture(tAniName, tWidth, tHeight);
 	this->SetPosition(tVec);
 	this->CreateAniObject(tWidth, tHeight, tSetDelay, tFrameCount);
 	this->Hide();
@@ -33,10 +33,8 @@ void CObjectAniBox::CreateTexture(string tAniName, int tWidth, int tHeight)
 void CObjectAniBox::SetPosition(Vec2 tVec)
 {
 	mVec = tVec;
-
 	mpSprite->setPosition(mVec);
 }
-
 
 void CObjectAniBox::CreateAniObject(int tWidth, int tHeight, float tSetDelay, int tFrameCount)
 {
@@ -56,36 +54,42 @@ void CObjectAniBox::CreateAniObject(int tWidth, int tHeight, float tSetDelay, in
 	mpAnimateObject->retain();
 }
 
+void CObjectAniBox::Rotation(int tAngle)
+{
+	mpSprite->setRotation(tAngle);
+}
+
 void CObjectAniBox::RunAniObject()
 {
 	mpSprite->runAction(mpAnimateObject);
 }
 
-/*
-void CObjectAniBox::RotateUp()
+void CObjectAniBox::RunAniWithCallback(CallFunc *tpFunc)
 {
-	mpSprite->
+	//mpSprite->runAction(mpAnimateObject);
+
+	auto tSeq = Sequence::create(
+		mpAnimateObject,
+		tpFunc,
+		NULL);
+
+	auto tRepeat = Repeat::create(tSeq, 1);
+
+	mpSprite->runAction(tRepeat);
+
 }
 
-void CObjectAniBox::RunAniDown()
-{
-	mpSprite->runAction(RepeatForeverDown);
-}
-void CObjectAniBox::RunAniLeft()
-{
+	/*
+	void CObjectAniBox::OnCompleteAni()
+	{
+		int tA = 0;
+	}
+	*/
 
-	mpSprite->runAction(RepeatForeverLeft);
-}
 
-void CObjectAniBox::RunAniRight()
-{
-
-	mpSprite->runAction(RepeatForeverRight);
-}
-*/
 void CObjectAniBox::StopAnimation()
 {
-
+	mpSprite->stopAction(mpAnimateObject);	
 }
 
 void CObjectAniBox::Show()

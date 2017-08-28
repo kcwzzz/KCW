@@ -10,10 +10,10 @@ USING_NS_CC;
 
 class CBackgroundLayer;
 class CUILayer;
-//class CGameSceneLayer;
 
 class CActor;
 class CAniBox;
+
 
 class GameScene : public cocos2d::Scene
 {
@@ -23,6 +23,7 @@ private:
 protected:
 	CUILayer *mpUILayer = NULL;
 	CBackgroundLayer *mpBackgroundLayer = NULL;
+
 
 	ActionCamera *mpCamera = NULL;
 	CActor *mpActor = NULL;			//√ ±‚»≠
@@ -46,6 +47,10 @@ public:
 
 	void update(float dt);
 	
+
+
+	//ryu
+	void TestActorBehavior();
 
 public:
 
