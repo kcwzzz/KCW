@@ -28,13 +28,11 @@ bool GameScene::init()
 	
 	winSize = Director::getInstance()->getWinSize();
 
-	CreateUILayer();
 	CreateBackgroundLayer();
-	
-	CreateActor();	
-	this->scheduleUpdate();
+	CreateUILayer();
+	CreateActor();
 
-	
+	this->scheduleUpdate();
 
 	return true;
 }
@@ -45,8 +43,9 @@ void GameScene::CreateUILayer()
 	mpUILayer = CUILayer::create();
 	mpUILayer->CreateLayer();
 	mpUILayer->VirtualPad();
-	mpUILayer->CreateBtnClose();
+	mpUILayer->CreateBtnAttack();
 	mpUILayer->GetDir();
+	mpUILayer->CreateBtnTestDamaged();
 
 	mpUILayer->SetScene(this);
 
@@ -70,19 +69,18 @@ void GameScene::CreateActor()
 	mpActor = new CActor();
 	mpActor->SetScene(mpBackgroundLayer);
 	mpActor->Create();
-
+	mpActor->ActorHPGauge(mpUILayer);
 	mpActor->SetVirtualPad(mpUILayer->GetVirtualPad());
 
 	mpActor->FollowActor();
 	mpActor->setPosition(Vec2(300, 300));
 	mpActor->Build();
-
-
 }
 
 void GameScene::update(float dt)
 {
 	mpActor->MoveActor(dt);	
+
 }
 
 void GameScene::onEnter()
@@ -99,10 +97,6 @@ void GameScene::onExit()
 	Scene::onExit();
 }
 
-//ryu
-
-
-
 
 
 void GameScene::AttackBehavior()
@@ -118,4 +112,10 @@ void GameScene::MoveBehavior()
 void GameScene::IdleBehavior()
 {
 	mpActor->IdleState();
+}
+
+void GameScene::DamagedActor()
+{
+	mpActor->SetDamaged(5);
+
 }

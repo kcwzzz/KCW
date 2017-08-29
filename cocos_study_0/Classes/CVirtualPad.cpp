@@ -33,20 +33,6 @@ void CVirtualPad::create(Layer* layer, Vec2 tVec)
 
 	mVecStart = tVec;
 	mpJoysticTouched = false;
-
-
-
-	mpAttackButton_0 = MenuItemImage::create(
-		"CloseNormal.png",
-		"CloseSelected.png",
-		CC_CALLBACK_0(CVirtualPad::GetIsAttack, this));
-
-	mpAttackButton_0->setPosition(Vec2(800, 200));
-	mpAttackButton_0->setScale(PADSIZE);
-
-	auto menu = Menu::create(mpAttackButton_0, NULL);
-	menu->setPosition(Vec2::ZERO);
-	layer->addChild(menu, 20);
 }
 
 float CVirtualPad::GetPadScale()

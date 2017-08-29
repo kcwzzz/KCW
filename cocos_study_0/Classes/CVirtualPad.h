@@ -25,13 +25,8 @@ public:
 	Sprite* mpSprJoystic;
 	Sprite* mpSprJoysticPad;
 
-	MenuItemImage* mpAttackButton_0;
-
 	bool mpJoysticTouched = false;
-
 	int mActorFSM = IDLE;
-
-//	CActor *mpActor = NULL;
 
 	//--------handle direct
 

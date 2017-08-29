@@ -1,8 +1,8 @@
 #include "CUILayer.h"
 #include "cocos2d.h"
 #include "CVirtualPad.h"
-
 #include "GameScene.h"
+#include "CGuageHP.h"
 
 CUILayer *CUILayer::create()
 {
@@ -38,15 +38,15 @@ void CUILayer::VirtualPad()
 
 }
 
-void CUILayer::CreateBtnClose()
+void CUILayer::CreateBtnAttack()
 {
 	
 	auto closeItem = MenuItemImage::create(
 		"CloseNormal.png",
 		"CloseSelected.png",
-		CC_CALLBACK_1(CUILayer::menuCloseCallback, this));
+		CC_CALLBACK_1(CUILayer::menuAttackCallback, this));
 
-	closeItem->setPosition(Vec2(450, 25));
+	closeItem->setPosition(Vec2(800, 300));
 
 	auto menu = Menu::create(closeItem, NULL);
 	menu->setPosition(Vec2::ZERO);
@@ -54,9 +54,31 @@ void CUILayer::CreateBtnClose()
 	
 }
 
-void CUILayer::menuCloseCallback(Ref* pSender)
+void CUILayer::menuAttackCallback(Ref* pSender)
 {
 	mpScene->AttackBehavior();
+}
+
+
+void CUILayer::CreateBtnTestDamaged()
+{
+
+	auto closeItem = MenuItemImage::create(
+		"CloseNormal.png",
+		"CloseSelected.png",
+		CC_CALLBACK_1(CUILayer::menuAttackdCallback, this));
+
+	closeItem->setPosition(Vec2(450, 25));
+
+	auto menu = Menu::create(closeItem, NULL);
+	menu->setPosition(Vec2::ZERO);
+	this->addChild(menu, 5);
+
+}
+
+void CUILayer::menuAttackdCallback(Ref* pSender)
+{
+	mpScene->DamagedActor();
 }
 
 void CUILayer::SetUpListener()

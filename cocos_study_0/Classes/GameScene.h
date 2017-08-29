@@ -44,10 +44,11 @@ public:
 	void CreateActor();
 	void update(float dt);
 	
-	//ryu
+	//Actor
 	void AttackBehavior();
 	void MoveBehavior();
 	void IdleBehavior();
+	void DamagedActor();
 
 public:
 

@@ -5,6 +5,7 @@
 #include "CBackgroundLayer.h"
 #include "CActorAniBox.h"
 #include "CObjectAniBox.h"
+#include "CGuageHP.h"
 
 
 USING_NS_CC;
@@ -22,12 +23,13 @@ CActor::~CActor()
 void CActor::Clear()
 {
 	mState = 0;			//Actor ป๓ลย FSM
-	mLevel = 0;
+	mLevel = 1;
 	mEXP = 0;
-	mHP = 0;
-	mAP = 0;
-	mDefence = 0;
-	mSpeed = 0;
+	mMaxHP = 100;
+	mCurHP = mMaxHP;
+	mAP = 10;
+	mDefence = 5;
+	mSpeed = 10;
 	mSpeedRatio = 1.0f;
 	mVec = Vec2(0, 0);
 }
@@ -41,8 +43,16 @@ void CActor::Create()
 	mpObjectAniBox = new CObjectAniBox();
 	mpObjectAniBox->SetScene(mpScene);
 	mpObjectAniBox->CreateAniBox("Attack.png", Vec2(0, 0), 153, 153, 0.05f, 5);
+}
 
-	mSpeed = 10.0f;
+void CActor::ActorHPGauge(Node *tpNode)
+{
+	mpGuageHP = new CGuageHP();
+	mpGuageHP->Create(mCurHP, mMaxHP);
+	mpGuageHP->SetScene(tpNode);
+	mpGuageHP->SetPosition(Vec2(50, 730));
+	mpGuageHP->AddToScene();
+	
 }
 
 void CActor::SetScene(Node *tpScene)
@@ -144,6 +154,7 @@ void CActor::Dir_Selector()
 
 	if (mCurDir == mDir)
 	{
+		log("COntinue");
 
 	}
 	else
@@ -156,6 +167,7 @@ void CActor::Dir_Selector()
 		{
 			mpActorAniBox->RunMoveAniUp();
 			mCurDir = 0;
+			log("up");
 		}
 		break;
 
@@ -163,6 +175,7 @@ void CActor::Dir_Selector()
 		{
 			mpActorAniBox->RunMoveAniDown();
 			mCurDir = 1;
+			log("down");
 		}
 		break;
 
@@ -319,4 +332,20 @@ void CActor::FollowActor()
 int CActor::GetDir()
 {
 	return mDir;
+}
+
+float CActor::GetMaxHP()
+{
+	return mMaxHP;
+}
+
+float CActor::GetCurHP()
+{
+	return mCurHP;
+}
+
+void CActor::SetDamaged(int tint)
+{
+	mCurHP = mCurHP - tint;
+	mpGuageHP->BuildGuageWithDamage(tint);
 }

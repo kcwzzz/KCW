@@ -8,6 +8,7 @@ using namespace std;
 using namespace cocos2d;
 
 class CVirtualPad;
+
 class GameScene;
 
 class CUILayer : public Layer
@@ -16,6 +17,7 @@ protected:
 	GameScene *mpScene = NULL;
 
 protected:
+
 	Layer *mpUILayer = NULL;
 	CVirtualPad	*mpVirtualPad = NULL;
 	Label *mpGameOverLabel = NULL;
@@ -25,15 +27,21 @@ public:
 
 	static CUILayer *create();
 
+
 	void CreateLayer();
 	void VirtualPad();
-	void CreateBtnClose();
-	void menuCloseCallback(Ref* pSender);
+	void CreateBtnAttack();
+	void menuAttackCallback(Ref* pSender);
+	
+	void CreateBtnTestDamaged();
+	void menuAttackdCallback(Ref* pSender);
+	
 	void GameOver();
 
 	CVirtualPad* GetVirtualPad();
 	void SetUpListener();
 	void RemoveListener();
+
 
 
 	void SetScene(GameScene *tpScene);
