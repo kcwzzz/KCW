@@ -14,10 +14,8 @@ class CUILayer;
 class CActor;
 class CAniBox;
 
-
 class GameScene : public cocos2d::Scene
 {
-
 private:
 	
 protected:
@@ -44,13 +42,12 @@ public:
 	void onExit();				//터치 기능 Off
 
 	void CreateActor();
-
 	void update(float dt);
 	
-
-
 	//ryu
-	void TestActorBehavior();
+	void AttackBehavior();
+	void MoveBehavior();
+	void IdleBehavior();
 
 public:
 

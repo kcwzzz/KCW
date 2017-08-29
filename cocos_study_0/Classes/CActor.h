@@ -29,9 +29,6 @@ protected:
 	float mSpeed = 0.0f;
 	float mSpeedRatio = 1.0f;
 	
-	//Sprite *mpActor = NULL;
-	//Sprite *mpAttackEffect;
-
 	CActorAniBox *mpActorAniBox = NULL;
 	CObjectAniBox *mpObjectAniBox = NULL;
 	Node *mpScene = NULL;
@@ -48,9 +45,6 @@ protected:
 	
 	float mDirX = 0.0f;
 	float mDirY = 0.0f;
-			
-
-
 
 public:
 	virtual void Clear();
@@ -92,10 +86,6 @@ public:
 	void AttackEndState();
 	void DeadState();
 	int GetDir();
-
-
-
-	void OnCompleteAni();
 	
 public:
 	CActor();

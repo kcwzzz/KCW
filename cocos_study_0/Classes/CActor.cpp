@@ -52,51 +52,12 @@ void CActor::SetScene(Node *tpScene)
 
 void CActor::FSM_Selector()
 {
-	
-
-
-	/*
-	mState = mpVirtualPad->GetActorFSM();
-
-	if (mCurState == mState)
-	{
-
-	}
-	else
-	{
-
-		switch (mState)
-		{
-		case IDLE:			//mstate °¡ 0
-		{
-			IdleState();
-		}
-		break;
-
-		case MOVE:			//mstate °¡ 1
-		{
-			MoveState();
-		}
-		break;
-
-		case ATTACK:
-		{
-			AttackState();
-		}
-		break;
-
-		case DEAD:
-		{
-			DeadState();
-		}
-		}
-	}
-	*/
-	
+		
 }
 
 void CActor::IdleState()
 {
+	mpObjectAniBox->Hide();
 	mpActorAniBox->Show();
 	mpActorAniBox->StopMoveAnimation();
 	log("Idle");
@@ -107,6 +68,7 @@ void CActor::MoveState()
 {
 	log("Move");
 	mCurState = MOVE;
+	Dir_Selector();
 }
 
 void CActor::AttackState()
@@ -151,33 +113,14 @@ void CActor::AttackState()
 	}
 
 	mpObjectAniBox->SetPosition(tVec);
-	//ryu
-	//mpObjectAniBox->RunAniObject();
-	//mpObjectAniBox->RunAniWithCallback();
 	mpObjectAniBox->RunAniWithCallback(
-		CallFunc::create(CC_CALLBACK_0(CActor::OnCompleteAni, this))
+		CallFunc::create(CC_CALLBACK_0(CActor::IdleState, this))
 	);
+
 
 	log("Attack");
 	mCurState = ATTACK;
 }
-
-
-
-
-void CActor::OnCompleteAni()
-{	
-	//SetState
-	mCurState = IDLE;
-
-
-	//DoitWithState
-	mpObjectAniBox->Hide();
-	
-}
-
-
-
 
 void CActor::AttackEndState()
 {
@@ -189,13 +132,11 @@ void CActor::AttackEndState()
 
 void CActor::DeadState()
 {
-
 	mpActorAniBox->StopMoveAnimation();
 	mpActorAniBox->Hide();
 	log("Dead");
 	mCurState = DEAD;
 }
-
 
 void CActor::Dir_Selector()
 {

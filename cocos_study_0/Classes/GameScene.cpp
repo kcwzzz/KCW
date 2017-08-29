@@ -82,13 +82,7 @@ void GameScene::CreateActor()
 
 void GameScene::update(float dt)
 {
-
-	mpActor->Dir_Selector();
-	mpActor->MoveActor(dt);
-	mpActor->FSM_Selector();
-
-
-	
+	mpActor->MoveActor(dt);	
 }
 
 void GameScene::onEnter()
@@ -106,7 +100,22 @@ void GameScene::onExit()
 }
 
 //ryu
-void GameScene::TestActorBehavior()
+
+
+
+
+
+void GameScene::AttackBehavior()
 {
 	mpActor->AttackState();
+}
+
+void GameScene::MoveBehavior()
+{
+	mpActor->MoveState();
+}
+
+void GameScene::IdleBehavior()
+{
+	mpActor->IdleState();
 }

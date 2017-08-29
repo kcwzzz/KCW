@@ -56,16 +56,7 @@ void CUILayer::CreateBtnClose()
 
 void CUILayer::menuCloseCallback(Ref* pSender)
 {
-	mpScene->TestActorBehavior();
-
-	/*
-	//Close the cocos2d-x game scene and quit the application
-	Director::getInstance()->end();
-
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-	exit(0);
-#endif
-*/
+	mpScene->AttackBehavior();
 }
 
 void CUILayer::SetUpListener()
@@ -102,7 +93,7 @@ void  CUILayer::onTouchesBegan(const vector<Touch*>&touches, cocos2d::Event *unu
 
 void CUILayer::onTouchesMoved(const vector<Touch*>&touches, cocos2d::Event *unused_event)
 {
-
+	mpScene->MoveBehavior();
 	mpVirtualPad->TouchesMoved(touches, unused_event);
 	this->GetDir();
 
@@ -110,6 +101,7 @@ void CUILayer::onTouchesMoved(const vector<Touch*>&touches, cocos2d::Event *unus
 
 void CUILayer::onTouchesEnded(const vector<Touch*>&touches, cocos2d::Event* unused_event)
 {
+	mpScene->IdleBehavior();
 	this->unscheduleUpdate();
 	mpVirtualPad->TouchesEnded(touches, unused_event);
 }
