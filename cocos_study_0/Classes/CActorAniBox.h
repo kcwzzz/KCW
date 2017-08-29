@@ -43,26 +43,26 @@ protected:
 
 public:
 
-	void SetScene(Node *tpNode);
+	virtual void SetScene(Node *tpNode);
 
-	void CreateAniBox(string tAniName, Vec2 tVec, int tWidth, int tHeight, float tSetDelay);
+	virtual void CreateAniBox(string tAniName, Vec2 tVec, int tWidth, int tHeight, float tSetDelay);
 
-	void CreateTexture(string tAniName, int tWidth, int tHeight);
-	void SetPosition(Vec2 tVec);
+	virtual void CreateTexture(string tAniName, int tWidth, int tHeight);
+	virtual void SetPosition(Vec2 tVec);
 		
-	void CreateAniMoveUp(int tWidth, int tHeight, float tSetDelay);
-	void CreateAniMoveDown(int tWidth, int tHeight, float tSetDelay);
-	void CreateAniMoveLeft(int tWidth, int tHeight, float tSetDelay);
-	void CreateAniMoveRight(int tWidth, int tHeight, float tSetDelay);
+	virtual void CreateAniMoveUp(int tWidth, int tHeight, float tSetDelay);
+	virtual void CreateAniMoveDown(int tWidth, int tHeight, float tSetDelay);
+	virtual void CreateAniMoveLeft(int tWidth, int tHeight, float tSetDelay);
+	virtual void CreateAniMoveRight(int tWidth, int tHeight, float tSetDelay);
 	
-	void CreateAniDamaged();
+	virtual void CreateAniDamaged();
 
-	void Build();
+	virtual void Build();
 
-	void RunMoveAniUp();
-	void RunMoveAniDown();
-	void RunMoveAniLeft();
-	void RunMoveAniRight();
+	virtual void RunMoveAniUp();
+	virtual void RunMoveAniDown();
+	virtual void RunMoveAniLeft();
+	virtual void RunMoveAniRight();
 	
 	void StopMoveAnimation();
 

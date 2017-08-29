@@ -25,6 +25,8 @@ protected:
 	ParallaxNode *mpParallaxNode = NULL;
 
 	Node *tpNodeMap = NULL;
+
+	TMXTiledMap *mpTiledMap = NULL;
 	
 public:
 	void Create();

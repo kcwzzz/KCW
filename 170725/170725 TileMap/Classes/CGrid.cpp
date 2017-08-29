@@ -20,7 +20,6 @@ void CGrid::Clear()
 
 	memset(mImgTile, 0, 4 * 6 * sizeof(int));
 	memset(mAttrib, 0, 4 * 6 * sizeof(int));
-
 }
 
 void CGrid::Create()
