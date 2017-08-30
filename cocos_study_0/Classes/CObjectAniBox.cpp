@@ -54,7 +54,7 @@ void CObjectAniBox::CreateAniObject(int tWidth, int tHeight, float tSetDelay, in
 	mpAnimateObject->retain();
 }
 
-void CObjectAniBox::Rotation(int tAngle)
+void CObjectAniBox::setRotation(int tAngle)
 {
 	mpSprite->setRotation(tAngle);
 }

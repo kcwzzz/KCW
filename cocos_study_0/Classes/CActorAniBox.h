@@ -62,15 +62,14 @@ public:
 	virtual void RunMoveAniUp();
 	virtual void RunMoveAniDown();
 	virtual void RunMoveAniLeft();
-	virtual void RunMoveAniRight();
-	
-	void StopMoveAnimation();
+	virtual void RunMoveAniRight();	
+	virtual void StopMoveAnimation();
 
-	void RunAttack();
-	void Show();
-	void Hide();
-	void UnBuild();
-	void Damaged();
+	virtual void RunAttack();
+	virtual void Show();
+	virtual void Hide();
+	virtual void UnBuild();
+	virtual void Damaged();
 
 	Sprite* GetSprite();
 

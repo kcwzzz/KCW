@@ -6,7 +6,7 @@
 
 using namespace cocos2d;
 
-void CBackgroundLayer:: Create()
+void CBackgroundLayer::Create()
 {
 	mpTiledMap = TMXTiledMap::create("Dungeon_0.tmx");
 	mpTiledMap->retain();
@@ -28,10 +28,12 @@ void CBackgroundLayer::ParallaxBackground()
 	mpParallaxNode = ParallaxNode::create();
 	mpParallaxNode->addChild(mpTiledMap, 1, Vec2(1.0f, 1.0f), Vec2(0, 0));
 }
+
 void CBackgroundLayer::Build()
 {
 	this->addChild(mpParallaxNode, 0);
 	mpScene->addChild(this);
+
 }
 
 void CBackgroundLayer::MoveBackground(CActor *tpActor)

@@ -80,6 +80,7 @@ void GameScene::CreateActor()
 void GameScene::update(float dt)
 {
 	mpActor->MoveActor(dt);	
+	mpActor->Dir_Selector();
 
 }
 

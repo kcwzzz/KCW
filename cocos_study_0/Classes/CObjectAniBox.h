@@ -43,7 +43,7 @@ public:
 		//void OnCompleteAni();
 
 	void Build();
-	void Rotation(int tAngle);
+	void setRotation(int tAngle);
 
 	void StopAnimation();
 

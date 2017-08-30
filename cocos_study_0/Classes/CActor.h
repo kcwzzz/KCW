@@ -31,12 +31,14 @@ protected:
 	float mSpeed = 0.0f;
 	float mSpeedRatio = 1.0f;
 	
+	Sprite *mpColisionBox = NULL;
 	CActorAniBox *mpActorAniBox = NULL;
 	CObjectAniBox *mpObjectAniBox = NULL;
 	Node *mpScene = NULL;
 	CGuageHP *mpGuageHP = NULL;
 	CVirtualPad *mpVirtualPad = NULL;
 
+	Vec2 mAttackVec;
 	Vec2 mVec;
 
 	int mState = IDLE;
@@ -64,6 +66,7 @@ public:
 	void SetmDir(int tDir);
 	void SetFsm(int tFsm);
 	void SetDamaged(int tint);
+	void FollowObject();
 
 	virtual void SetVirtualPad(CVirtualPad *tpVirtualPad);
 	///////////////////////////////////////////////////
