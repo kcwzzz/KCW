@@ -65,11 +65,6 @@ void CActor::SetScene(Node *tpScene)
 	mpScene = tpScene;
 }
 
-void CActor::FSM_Selector()
-{
-
-}
-
 void CActor::IdleState()
 {
 	mpObjectAniBox->Hide();
@@ -305,6 +300,10 @@ void CActor::MoveActor(float dt)
 	}
 	*/
 	
+	setPosition(mVec);
+	mpColisionBox->setPosition(mAttackVec);
+	mpObjectAniBox->SetPosition(mAttackVec);
+
 	if (mVec.x > 0 && mVec.x < Map_Width)
 	{
 		mVec.x = mVec.x + mDirX * mSpeed * IncreaseSpeed(dt);// *dt;
@@ -335,11 +334,11 @@ void CActor::MoveActor(float dt)
 	{
 		mVec.y = Map_Height - 1;
 	}
-
+	/*
 	setPosition(mVec);
 	mpColisionBox->setPosition(mAttackVec);
 	mpObjectAniBox->SetPosition(mAttackVec);
-
+	*/
 }
 
 void CActor::FollowObject()
@@ -374,7 +373,6 @@ void CActor::FollowObject()
 		mAttackVec.y = mVec.y;
 	}
 	break;
-
 	}
 }
 
@@ -433,4 +431,9 @@ void CActor::SetDamaged(int tint)
 {
 	mCurHP = mCurHP - tint;
 	mpGuageHP->BuildGuageWithDamage(tint);
+}
+
+Sprite* CActor::GetColisionBox()
+{
+	return mpColisionBox;
 }

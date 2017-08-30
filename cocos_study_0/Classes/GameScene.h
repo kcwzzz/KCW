@@ -50,6 +50,8 @@ public:
 	void IdleBehavior();
 	void DamagedActor();
 
+	Vec2 ColisionGeometry();
+
 public:
 
 	static cocos2d::Scene *createScene();

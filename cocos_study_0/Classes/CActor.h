@@ -61,7 +61,6 @@ public:
 
 	void ActorHPGauge(Node *tpNode);
 
-	void FSM_Selector();
 	void Dir_Selector();
 	void SetmDir(int tDir);
 	void SetFsm(int tFsm);
@@ -99,6 +98,8 @@ public:
 	int GetDir();
 	float GetMaxHP();
 	float GetCurHP();
+	Sprite* GetColisionBox();
+
 	
 public:
 	CActor();

@@ -50,3 +50,19 @@ void CBackgroundLayer::SetActor(CActor *tpActor)
 {
 	mpActor = tpActor;
 }
+
+int CBackgroundLayer::GetAttributeWith(int tRow, int tCol)
+{
+	int tResult = 0;
+
+	int tGID = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol, tRow));
+	Value tValue = mpTiledMap->getPropertiesForGID(tGID);
+
+	if (false == tValue.isNull())
+	{
+		tResult = tValue.asValueMap()["Attribute"].asInt();
+		log("tAttrib : %d", tResult);
+	}
+
+	return tResult;
+}

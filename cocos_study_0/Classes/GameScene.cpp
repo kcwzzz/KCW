@@ -120,3 +120,60 @@ void GameScene::DamagedActor()
 	mpActor->SetDamaged(5);
 
 }
+
+Vec2 GameScene::ColisionGeometry()
+{
+	int tDir = 0;
+	Vec2 tVec = Vec2(0,0);
+	tDir = mpActor->GetDir();
+
+	switch (tDir)
+	{
+	case Up_Dir:
+	case Down_Dir:
+	{
+		if(mpActor->GetColisionBox()->getBoundingBox() && 
+
+	}
+	break;
+
+	case Left_Dir:
+	case Right_Dir:
+	{
+
+
+	}
+	break;
+	}
+
+	return tVec;
+}
+
+/*
+
+//터치를 받아서 tcol, trow를 구하는 것임.
+//Actor의 위치에 따라서 tCol, tRow를 구하면 될 것 같다.
+//트리거는 Move
+
+//auto tPos = tMap->convertTouchToNodeSpace(touch);
+
+float tTileW = tMap->getTileSize().width;
+float tTileH = tMap->getTileSize().height;
+
+float tTotalRowCount = tMap->getMapSize().height;
+
+int tCol = tPos.x / tTileW;
+int tRow = tTotalRowCount - tPos.y / tTileH;
+
+log("Row : %d, Col : %d ", tRow, tCol);
+log("tTileW : %f, tTileH : %f ", tTileW, tTileH);
+
+int tResult = GetAttributeWith(tRow, tCol);
+log("GetAttributeWith : %d", tResult);
+
+return true;
+}
+
+
+
+*/
