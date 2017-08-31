@@ -38,7 +38,10 @@ protected:
 	CGuageHP *mpGuageHP = NULL;
 	CVirtualPad *mpVirtualPad = NULL;
 
-	Vec2 mAttackVec;
+	CBackgroundLayer *mpBGLayer = NULL;
+	TMXTiledMap *mpTiledMap = NULL;
+
+	Vec2 mAttackVec;//충돌박스의 위치
 	Vec2 mVec;
 
 	int mState = IDLE;
@@ -79,6 +82,7 @@ public:
 	virtual Vec2 GetVec();
 	virtual void SetVec(Vec2 tVec);
 	virtual float GetSpeedPower();
+	int ColisionGeometry();
 
 	virtual void MoveActor(float dt);
 	virtual float IncreaseSpeed(float dt);
@@ -98,6 +102,8 @@ public:
 	int GetDir();
 	float GetMaxHP();
 	float GetCurHP();
+
+	Vec2 GetAttackVec();
 	Sprite* GetColisionBox();
 
 	

@@ -22,6 +22,7 @@ protected:
 	CUILayer *mpUILayer = NULL;
 	CBackgroundLayer *mpBackgroundLayer = NULL;
 
+	TMXTiledMap *mpTilemap = NULL;
 
 	ActionCamera *mpCamera = NULL;
 	CActor *mpActor = NULL;			//√ ±‚»≠
@@ -50,7 +51,9 @@ public:
 	void IdleBehavior();
 	void DamagedActor();
 
-	Vec2 ColisionGeometry();
+	//Vec2 ColisionGeometry();
+	//int ColisionGeometry();
+
 
 public:
 

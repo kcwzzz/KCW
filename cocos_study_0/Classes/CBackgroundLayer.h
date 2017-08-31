@@ -41,4 +41,7 @@ public:
 	void SetActor(CActor *tpActor);
 
 	int GetAttributeWith(int tRow, int tCol);
+
+	TMXTiledMap* GetTileMap();
+
 };

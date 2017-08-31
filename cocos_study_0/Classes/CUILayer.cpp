@@ -35,7 +35,6 @@ void CUILayer::VirtualPad()
 {
 	mpVirtualPad = new CVirtualPad();
 	mpVirtualPad->create(mpUILayer, Vec2(200, 200));
-
 }
 
 void CUILayer::CreateBtnAttack()

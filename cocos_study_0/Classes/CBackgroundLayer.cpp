@@ -10,7 +10,6 @@ void CBackgroundLayer::Create()
 {
 	mpTiledMap = TMXTiledMap::create("Dungeon_0.tmx");
 	mpTiledMap->retain();
-
 }
 
 void CBackgroundLayer::SetAnchorPoint(Vec2 tVec)
@@ -54,15 +53,28 @@ void CBackgroundLayer::SetActor(CActor *tpActor)
 int CBackgroundLayer::GetAttributeWith(int tRow, int tCol)
 {
 	int tResult = 0;
+	int tGID = 0;
+	Value tValue;
 
-	int tGID = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol, tRow));
-	Value tValue = mpTiledMap->getPropertiesForGID(tGID);
+	if (tCol < 0 && tCol >Map_Width && tRow <0 && tRow > Map_Height)
+	{
+		
+	}
+	else
+	{
+		tGID = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol, tRow));
+		tValue = mpTiledMap->getPropertiesForGID(tGID);
+	}
 
 	if (false == tValue.isNull())
 	{
 		tResult = tValue.asValueMap()["Attribute"].asInt();
-		log("tAttrib : %d", tResult);
 	}
 
 	return tResult;
+}
+
+TMXTiledMap* CBackgroundLayer::GetTileMap()
+{
+	return mpTiledMap;
 }
