@@ -44,9 +44,9 @@ void CActor::Create()
 	mpObjectAniBox->SetScene(mpScene);
 	mpObjectAniBox->CreateAniBox("Attack.png", Vec2(0, 0), 153, 153, 0.05f, 5);
 
-	mpColisionBox = Sprite::create("CloseSelected.png");
+	mpColisionBox = Sprite::create("ColisionCheckBar.png");
 	mpColisionBox->retain();
-	mpColisionBox->setPosition(mVec);
+	mpColisionBox->setPosition(mAttackVec);
 
 	mpBGLayer = new CBackgroundLayer();
 	mpBGLayer->Create();
@@ -232,44 +232,11 @@ void CActor::MoveActor(float dt)
 	int tValueX = 0;
 	int tValueY = 0;
 
-	/*
-	if (mVec.x > 0 && mVec.x < Map_Width)
-	{
-		mVec.x = mVec.x + mDirX * mSpeed * IncreaseSpeed(dt);// *dt;
-	}
-
-	else if (mVec.x <= 0)
-	{
-		mVec.x = 1;
-	}
-
-	else
-	{
-		mVec.x = Map_Width - 1;
-	}
-
-	if (mVec.y > 0 && mVec.y < Map_Height)
-	{
-
-		mVec.y = mVec.y + mDirY * mSpeed * IncreaseSpeed(dt);// *dt;
-	}
-
-	else if (mVec.y <= 0)
-	{
-		mVec.y = 1;
-	}
-
-	else
-	{
-		mVec.y = Map_Height - 1;
-	}
-	*/
-	
 	setPosition(mVec);
 	mpColisionBox->setPosition(mAttackVec);
 	mpObjectAniBox->SetPosition(mAttackVec);
 
-	if (mAttackVec.x > 0 && mAttackVec.x < Map_Width)
+	if (mVec.x > 0 && mVec.x < Map_Width)
 	{
 		
 		if(1 != ColisionGeometry())
@@ -284,7 +251,7 @@ void CActor::MoveActor(float dt)
 		mVec.x = mVec.x + mDirX * mSpeed * IncreaseSpeed(dt)*tValueX;// *dt;
 	}
 
-	else if (mAttackVec.x <= 0)
+	else if (mVec.x <= 0)
 	{
 		mVec.x = 1;
 	}
@@ -294,7 +261,7 @@ void CActor::MoveActor(float dt)
 		mVec.x = Map_Width - 1;
 	}
 
-	if (mAttackVec.y > 0 && mAttackVec.y < Map_Height)
+	if (mVec.y > 0 && mVec.y < Map_Height)
 	{
 		if (1 != ColisionGeometry())
 		{
@@ -308,7 +275,7 @@ void CActor::MoveActor(float dt)
 		mVec.y = mVec.y + mDirY * mSpeed * IncreaseSpeed(dt)*tValueY;// *dt;
 	}
 
-	else if (mAttackVec.y <= 0)
+	else if (mVec.y <= 0)
 	{
 		mVec.y = 1;
 	}
@@ -423,6 +390,8 @@ Vec2 CActor::GetAttackVec()
 
 int CActor::ColisionGeometry()
 {
+	//충돌 관련해서는 세부 좌표를 맞출 필요가 있어보인다.
+	//정확한 이유는 찍히는 위치와 타일이나 이런게 올림, 내림 판정 문제일듯
 	mpTiledMap = mpBGLayer->GetTileMap();
 
 	float tTileW = mpTiledMap->getTileSize().width;
@@ -430,11 +399,11 @@ int CActor::ColisionGeometry()
 
 	float tTotalRowCount = mpTiledMap->getMapSize().height;
 
-	int tCol = mAttackVec.x / tTileW;
-	int tRow = tTotalRowCount -mAttackVec.y / tTileH;
+	int tCol = mpColisionBox->getPosition().x / tTileW;
+	int tRow = mpColisionBox->getPosition().y / tTileH;
 
 	int tResult = mpBGLayer->GetAttributeWith(tRow, tCol);
-	log("%d %d %d", tResult, tCol, tRow);
+	//log("%d %f %f", tResult, tTileW, tTileH);
 
 	return tResult;
 }

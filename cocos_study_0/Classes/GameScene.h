@@ -13,6 +13,7 @@ class CUILayer;
 
 class CActor;
 class CAniBox;
+class CEnemy;
 
 class GameScene : public cocos2d::Scene
 {
@@ -26,12 +27,15 @@ protected:
 
 	ActionCamera *mpCamera = NULL;
 	CActor *mpActor = NULL;			//초기화
+	CEnemy *mpEnemy = NULL;
+
+
 	CAniBox *mpAniBox = NULL;			//초기화
 	Size winSize;
 
 	Vec2 mVec;
 	int mState = 0;
-
+	
 	typedef void (GameScene::*CallFuncState)(void);
 
 public:
@@ -43,7 +47,10 @@ public:
 	void onExit();				//터치 기능 Off
 
 	void CreateActor();
+	void CreateEnemy();
 	void update(float dt);
+	void TestMoving(float f);
+
 	
 	//Actor
 	void AttackBehavior();

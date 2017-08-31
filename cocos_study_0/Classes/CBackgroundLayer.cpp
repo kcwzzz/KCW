@@ -55,16 +55,9 @@ int CBackgroundLayer::GetAttributeWith(int tRow, int tCol)
 	int tResult = 0;
 	int tGID = 0;
 	Value tValue;
-
-	if (tCol < 0 && tCol >Map_Width && tRow <0 && tRow > Map_Height)
-	{
-		
-	}
-	else
-	{
-		tGID = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol, tRow));
-		tValue = mpTiledMap->getPropertiesForGID(tGID);
-	}
+	
+	tGID = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol, tRow));
+	tValue = mpTiledMap->getPropertiesForGID(tGID);
 
 	if (false == tValue.isNull())
 	{

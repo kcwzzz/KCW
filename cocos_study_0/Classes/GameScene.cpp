@@ -3,6 +3,7 @@
 #include "SimpleAudioEngine.h"
 
 #include "CActor.h"
+#include "CEnemy.h"
 
 #include "CBackgroundLayer.h"
 #include "CUILayer.h"
@@ -31,6 +32,7 @@ bool GameScene::init()
 	CreateBackgroundLayer();
 	CreateUILayer();
 	CreateActor();
+	CreateEnemy();
 
 	this->scheduleUpdate();
 
@@ -77,11 +79,20 @@ void GameScene::CreateActor()
 	mpActor->Build();
 }
 
+void GameScene::CreateEnemy()
+{
+	mpEnemy = new CEnemy();
+	mpEnemy->SetScene(mpBackgroundLayer);
+	mpEnemy->Create();
+	mpEnemy->setPosition(Vec2(300, 300));
+	mpEnemy->Build();
+}
+
 void GameScene::update(float dt)
 {
 	mpActor->MoveActor(dt);	
-	mpActor->Dir_Selector();	
-	//mpActor->ColisionGeometry();
+	mpActor->Dir_Selector();
+	mpEnemy->MovePatten(dt);
 }
 
 void GameScene::onEnter()
@@ -120,32 +131,3 @@ void GameScene::DamagedActor()
 	mpActor->SetDamaged(5);
 
 }
-/*
-Vec2 GameScene::ColisionGeometry()
-{
-	int tDir = 0;
-	Vec2 tVec = Vec2(0,0);
-	tDir = mpActor->GetDir();
-
-	switch (tDir)
-	{
-	case Up_Dir:
-	case Down_Dir:
-	{
-
-	}
-	break;
-
-	case Left_Dir:
-	case Right_Dir:
-	{
-
-
-	}
-	break;
-	}
-
-	return tVec;
-}
-*/
-
