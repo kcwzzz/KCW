@@ -30,33 +30,34 @@ protected:
 	float mSpeed = 0.0f;
 	float mSpeedRatio = 1.0f;
 	
-	Sprite *mpColisionBox = NULL;
 	CActorAniBox *mpActorAniBox = NULL;
-	CObjectAniBox *mpObjectAniBox = NULL;
-	Node *mpScene = NULL;
-	CGuageHP *mpGuageHP = NULL;
-	CVirtualPad *mpVirtualPad = NULL;
-
-	CBackgroundLayer *mpBGLayer = NULL;
-	TMXTiledMap *mpTiledMap = NULL;
-
-	Vec2 mAttackVec;//충돌박스의 위치
 	Vec2 mVec;
 
+
+	CObjectAniBox *mpObjectAniBox = NULL;
+	Sprite *mpColisionBox = NULL;
+	Vec2 mAttackVec;//충돌박스의 위치
+
+
+	CVirtualPad *mpVirtualPad = NULL;
+	CGuageHP *mpGuageHP = NULL;
+
+	Node *mpScene = NULL;
+	TMXTiledMap *mpTiledMap = NULL;
+	CBackgroundLayer *mpBGLayer = NULL;
+	
 	int mState = IDLE;
 	int mCurState = IDLE;
 
 	int mDir = Up_Dir  ;		//0:up, 1: down, 2: left, 3: right
 	int mCurDir = Up_Dir;
-
-	
+		
 	float mDirX = 0.0f;
 	float mDirY = 0.0f;
 
 public:
 	virtual void Clear();
 	
-
 	/////////////////AniBox 관련한 곳//////////////////
 	void Create();
 
@@ -77,33 +78,24 @@ public:
 	void FollowActor();
 
 	virtual void setPosition(Vec2 tVec);
-	virtual Vec2 GetVec();
-	virtual void SetVec(Vec2 tVec);
-	virtual float GetSpeedPower();
 	int ColisionGeometry();
 
 	virtual void MoveActor(float dt);
 	virtual float IncreaseSpeed(float dt);
-
-
-
+	
 	Sprite* GetSprite();
-
+	
+	//Actor FSM에 사용(예정)
 	void IdleState();
 	void MoveState();
 	void AttackState();
 	void AttackEndState();
 	void DeadState();
+	//
 
-	float GetDirectionX();
-	float GetDirectionY();
-	int GetDir();
+	//CGuageHP : HP bar 노출에 사용
 	float GetMaxHP();
 	float GetCurHP();
-
-	Vec2 GetAttackVec();
-	Sprite* GetColisionBox();
-
 	
 public:
 	CActor();

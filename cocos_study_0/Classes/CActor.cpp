@@ -8,8 +8,6 @@
 #include "CGuageHP.h"
 #include "CSound.h"
 
-
-
 USING_NS_CC;
 
 CActor::CActor()
@@ -36,6 +34,8 @@ void CActor::Clear()
 	mVec = Vec2(0, 0);
 }
 
+//积己
+
 void CActor::Create()
 {
 	mpActorAniBox = new CActorAniBox();
@@ -53,7 +53,6 @@ void CActor::Create()
 	mpBGLayer = new CBackgroundLayer();
 	mpBGLayer->Create();
 	mpBGLayer->retain();
-
 }
 
 void CActor::ActorHPGauge(Node *tpNode)
@@ -63,7 +62,6 @@ void CActor::ActorHPGauge(Node *tpNode)
 	mpGuageHP->SetScene(tpNode);
 	mpGuageHP->SetPosition(Vec2(50, 730));
 	mpGuageHP->AddToScene();
-
 }
 
 void CActor::SetScene(Node *tpScene)
@@ -71,43 +69,22 @@ void CActor::SetScene(Node *tpScene)
 	mpScene = tpScene;
 }
 
-void CActor::IdleState()
+void CActor::setPosition(Vec2 tVec)
 {
-	mpObjectAniBox->Hide();
-	mpActorAniBox->Show();
-	mpActorAniBox->StopMoveAnimation();
-	mCurState = IDLE;
+	mVec.x = tVec.x;
+	mVec.y = tVec.y;
+	mpActorAniBox->GetSprite()->setPosition(mVec);
 }
 
-void CActor::MoveState()
+void CActor::Build()
 {
-	mCurState = MOVE;
-	Dir_Selector();
+	mpActorAniBox->Build();
+	mpObjectAniBox->Build();
+	mpScene->addChild(mpColisionBox, 5);
 }
+// 积己
 
-void CActor::AttackState()
-{
-	mpObjectAniBox->Show();
-	mpObjectAniBox->RunAniWithCallback(
-		CallFunc::create(CC_CALLBACK_0(CActor::IdleState, this))
-	);
-	mCurState = ATTACK;
-	CSound::Getinstance()->PlayEffect(0);
-}
 
-void CActor::AttackEndState()
-{
-	mpObjectAniBox->Hide();
-	mpObjectAniBox->StopAnimation();
-	mCurState = IDLE;
-}
-
-void CActor::DeadState()
-{
-	mpActorAniBox->StopMoveAnimation();
-	mpActorAniBox->Hide();
-	mCurState = DEAD;
-}
 
 void CActor::Dir_Selector()
 {
@@ -178,12 +155,6 @@ void CActor::SetFsm(int tFsm)
 	mState = tFsm;
 }
 
-void CActor::setPosition(Vec2 tVec)
-{
-	mVec.x = tVec.x;
-	mVec.y = tVec.y;
-	mpActorAniBox->GetSprite()->setPosition(mVec);
-}
 
 void CActor::CalcDir()
 {
@@ -199,32 +170,9 @@ void CActor::CalcDir()
 	}
 }
 
-void CActor::Build()
-{
-	mpActorAniBox->Build();
-	mpObjectAniBox->Build();
-	mpScene->addChild(mpColisionBox, 5);	
-}
-
-Vec2 CActor::GetVec()
-{
-	return mVec;
-}
-
 Sprite* CActor::GetSprite()
 {
-
 	return mpActorAniBox->GetSprite();
-}
-
-void CActor::SetVec(Vec2 tVec)
-{
-	mVec = tVec;
-}
-
-float CActor::GetSpeedPower()
-{
-	return mSpeed;
 }
 
 void CActor::MoveActor(float dt)
@@ -240,8 +188,7 @@ void CActor::MoveActor(float dt)
 	mpObjectAniBox->SetPosition(mAttackVec);
 
 	if (mVec.x > 0 && mVec.x < Map_Width)
-	{
-		
+	{		
 		if(1 != ColisionGeometry())
 		{
 			tValueX = 1;
@@ -297,7 +244,6 @@ void CActor::FollowObject()
 	{
 		mAttackVec.x = mVec.x;
 		mAttackVec.y = mVec.y + 64;
-
 	}
 	break;
 
@@ -340,16 +286,6 @@ float CActor::IncreaseSpeed(float dt)
 	}
 }
 
-float CActor::GetDirectionX()
-{
-	return mDirX;
-}
-
-float CActor::GetDirectionY()
-{
-	return mDirY;
-}
-
 void CActor::SetVirtualPad(CVirtualPad *tpVirtualPad)
 {
 	mpVirtualPad = tpVirtualPad;
@@ -358,11 +294,6 @@ void CActor::SetVirtualPad(CVirtualPad *tpVirtualPad)
 void CActor::FollowActor()
 {
 	mpScene->runAction(Follow::create(mpActorAniBox->GetSprite(), Rect(0, 0, Map_Width, Map_Height)));
-}
-
-int CActor::GetDir()
-{
-	return mDir;
 }
 
 float CActor::GetMaxHP()
@@ -379,16 +310,6 @@ void CActor::SetDamaged(int tint)
 {
 	mCurHP = mCurHP - tint;
 	mpGuageHP->BuildGuageWithDamage(tint);
-}
-
-Sprite* CActor::GetColisionBox()
-{
-	return mpColisionBox;
-}
-
-Vec2 CActor::GetAttackVec()
-{
-	return mAttackVec;
 }
 
 int CActor::ColisionGeometry()
@@ -409,4 +330,44 @@ int CActor::ColisionGeometry()
 	//log("%d %f %f", tResult, tTileW, tTileH);
 
 	return tResult;
+}
+
+// FSM 惑怕 葛澜
+
+void CActor::IdleState()
+{
+	mpObjectAniBox->Hide();
+	mpActorAniBox->Show();
+	mpActorAniBox->StopMoveAnimation();
+	mCurState = IDLE;
+}
+
+void CActor::MoveState()
+{
+	mCurState = MOVE;
+	Dir_Selector();
+}
+
+void CActor::AttackState()
+{
+	mpObjectAniBox->Show();
+	mpObjectAniBox->RunAniWithCallback(
+		CallFunc::create(CC_CALLBACK_0(CActor::IdleState, this))
+	);
+	mCurState = ATTACK;
+	CSound::Getinstance()->PlayEffect(0);
+}
+
+void CActor::AttackEndState()
+{
+	mpObjectAniBox->Hide();
+	mpObjectAniBox->StopAnimation();
+	mCurState = IDLE;
+}
+
+void CActor::DeadState()
+{
+	mpActorAniBox->StopMoveAnimation();
+	mpActorAniBox->Hide();
+	mCurState = DEAD;
 }
