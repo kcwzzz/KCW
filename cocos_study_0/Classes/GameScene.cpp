@@ -100,6 +100,7 @@ void GameScene::update(float dt)
 {
 	mpActor->MoveActor(dt);	
 	mpActor->Dir_Selector();
+
 	mpEnemy->MovePatten(dt);
 }
 

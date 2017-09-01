@@ -1,4 +1,4 @@
-#include "CActor.h"
+	#include "CActor.h"
 #include "cocos2d.h"
 #include "GameScene.h"
 #include "CVirtualPad.h"
@@ -323,8 +323,11 @@ int CActor::ColisionGeometry()
 
 	float tTotalRowCount = mpTiledMap->getMapSize().height;
 
+	//int tCol = mVec.x;
+	//int tRow = mVec.y;
+
 	int tCol = mpColisionBox->getPosition().x / tTileW;
-	int tRow = mpColisionBox->getPosition().y / tTileH;
+	int tRow = tTotalRowCount - mpColisionBox->getPosition().y / tTileH;
 
 	int tResult = mpBGLayer->GetAttributeWith(tRow, tCol);
 	//log("%d %f %f", tResult, tTileW, tTileH);

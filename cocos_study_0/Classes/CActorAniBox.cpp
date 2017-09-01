@@ -6,13 +6,18 @@
 void CActorAniBox::CreateAniBox(string tAniName, Vec2 tVec, int tWidth, int tHeight, float tSetDelay)
 {
 	this->CreateTexture(tAniName, tWidth, tHeight);
-
 	this->SetPosition(tVec);
-
 	this->CreateAniMoveDown(tWidth, tHeight, tSetDelay);
 	this->CreateAniMoveUp(tWidth, tHeight, tSetDelay);
 	this->CreateAniMoveLeft(tWidth, tHeight, tSetDelay);
 	this->CreateAniMoveRight(tWidth, tHeight, tSetDelay);	
+}
+
+void CActorAniBox::CreateTexture(string tAniName, int tWidth, int tHeight)
+{
+	mAniName = tAniName;
+	mpTexture = Director::getInstance()->getTextureCache()->addImage(mAniName);
+	mpSprite = Sprite::createWithTexture(mpTexture, Rect(0, 0, tWidth, tHeight));
 }
 
 void CActorAniBox::SetScene(Node *tpNode)
@@ -25,21 +30,11 @@ void  CActorAniBox::Build()
 	mpScene->addChild(mpSprite, 10);
 }
 
-void CActorAniBox::CreateTexture(string tAniName, int tWidth, int tHeight)
-{
-	mAniName = tAniName;
-	mpTexture = Director::getInstance()->getTextureCache()->addImage(mAniName);
-	mpSprite = Sprite::createWithTexture(mpTexture, Rect(0, 0, tWidth, tHeight));
-}
-
 void CActorAniBox::SetPosition(Vec2 tVec)
 {
 	mVec = tVec;
-
 	mpSprite->setPosition(mVec);
-
 }
-
 
 void CActorAniBox::CreateAniMoveDown(int tWidth, int tHeight, float tSetDelay)
 {
