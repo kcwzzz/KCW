@@ -25,9 +25,7 @@ public:
 	void Execute();
 
 };
-
-
-
+/*
 void CUnit::CStatus(float mHP)
 {
 	if (mHP >= 50)
@@ -43,6 +41,8 @@ void CUnit::CStatus(float mHP)
 		mState = STATE::DEAD;
 	}
 }
+*/
+
 void CUnit::SetState(STATE mState)
 {
 	switch (mState)

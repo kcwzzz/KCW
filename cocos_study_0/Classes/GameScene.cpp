@@ -1,14 +1,18 @@
 
 #include "GameScene.h"
 #include "SimpleAudioEngine.h"
+#include "CSound.h"
 
 #include "CActor.h"
 #include "CEnemy.h"
 
 #include "CBackgroundLayer.h"
 #include "CUILayer.h"
-
 #include "Define.h"
+
+#include "rapidjson\document.h"
+#include "rapidjson\reader.h"
+
 
 USING_NS_CC;
 
@@ -33,6 +37,10 @@ bool GameScene::init()
 	CreateUILayer();
 	CreateActor();
 	CreateEnemy();
+
+	CSound::Getinstance()->Create();
+	CSound::Getinstance()->PlayBGM(0);
+	
 
 	this->scheduleUpdate();
 

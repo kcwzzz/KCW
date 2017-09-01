@@ -10,17 +10,16 @@ using namespace std;
 class GameScene;
 class CBackgroundLayer;
 class CVirtualPad;
-
 class CActorAniBox;
 class CObjectAniBox;
 class CGuageHP;
 
 class CActor
-{	
+{
+
 private :
 
 protected:	
-
 	//Actor Status
 	int mLevel = 0;
 	float mEXP = 0.0f;
@@ -60,10 +59,9 @@ public:
 
 	/////////////////AniBox 관련한 곳//////////////////
 	void Create();
+
 	void SetScene(Node *tpScene);
-
 	void ActorHPGauge(Node *tpNode);
-
 	void Dir_Selector();
 	void SetmDir(int tDir);
 	void SetFsm(int tFsm);

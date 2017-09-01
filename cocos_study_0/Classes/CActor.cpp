@@ -6,6 +6,8 @@
 #include "CActorAniBox.h"
 #include "CObjectAniBox.h"
 #include "CGuageHP.h"
+#include "CSound.h"
+
 
 
 USING_NS_CC;
@@ -90,6 +92,7 @@ void CActor::AttackState()
 		CallFunc::create(CC_CALLBACK_0(CActor::IdleState, this))
 	);
 	mCurState = ATTACK;
+	CSound::Getinstance()->PlayEffect(0);
 }
 
 void CActor::AttackEndState()
