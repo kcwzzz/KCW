@@ -1,4 +1,4 @@
-	#include "CActor.h"
+#include "CActor.h"
 #include "cocos2d.h"
 #include "GameScene.h"
 #include "CVirtualPad.h"
@@ -7,6 +7,9 @@
 #include "CObjectAniBox.h"
 #include "CGuageHP.h"
 #include "CSound.h"
+#include "DataDriven.h"
+#include "CActorInfoList.h"
+#include "CActorStatus.h"
 
 USING_NS_CC;
 
@@ -22,18 +25,32 @@ CActor::~CActor()
 
 void CActor::Clear()
 {
-	mState = 0;			//Actor 상태 FSM
-	mLevel = 1;
-	mEXP = 0;
-	mMaxHP = 100;
-	mCurHP = mMaxHP;
-	mAP = 10;
-	mDefence = 5;
-	mSpeed = 10;
-	mSpeedRatio = 1.0f;
-	mVec = Vec2(0, 0);
-}
+	CActorInfoList *tpInfo = NULL;
+	tpInfo = DataDriven::GetInstance()->GetCurActorInfo();
 
+	if (NULL != tpInfo)
+	{
+		int tCount = 0;
+		tCount = tpInfo->mActorStatusVec.size();
+
+		for (int ti = 0; ti < tCount; ti++)
+		{
+			mState = 0;
+
+			mLevel = tpInfo->mActorStatusVec[ti]->mLevel;
+			mEXP = tpInfo->mActorStatusVec[ti]->mExp;
+			mMaxHP = tpInfo->mActorStatusVec[ti]->mMaxHP;
+			mAP = tpInfo->mActorStatusVec[ti]->mAP;
+			mSpeed = tpInfo->mActorStatusVec[ti]->mSpeed;;
+			mSpeedRatio = tpInfo->mActorStatusVec[ti]->mSpeedRatio;
+					
+			mCurHP = mMaxHP;
+			mDefence = 5;
+
+			mVec = Vec2(0, 0);
+		}
+	}
+}
 //생성
 
 void CActor::Create()
@@ -89,7 +106,7 @@ void CActor::Build()
 void CActor::Dir_Selector()
 {
 	mDir = mpVirtualPad->GetDir();
-	
+
 	if (mCurDir == mDir)
 	{
 	}
@@ -97,7 +114,7 @@ void CActor::Dir_Selector()
 	else
 	{
 		mpActorAniBox->StopMoveAnimation();
-		
+
 		switch (mDir)
 		{
 		case Up_Dir:
@@ -188,16 +205,18 @@ void CActor::MoveActor(float dt)
 	mpObjectAniBox->SetPosition(mAttackVec);
 
 	if (mVec.x > 0 && mVec.x < Map_Width)
-	{		
-		if(1 != ColisionGeometry())
+	{
+		if (1 != ColisionGeometry())
 		{
 			tValueX = 1;
 		}
 		else
 		{
-			tValueX = 0;
+			if (mDir == Left_Dir || mDir == Right_Dir)
+			{
+				tValueX = 0;
+			}
 		}
-
 		mVec.x = mVec.x + mDirX * mSpeed * IncreaseSpeed(dt)*tValueX;// *dt;
 	}
 
@@ -216,10 +235,17 @@ void CActor::MoveActor(float dt)
 		if (1 != ColisionGeometry())
 		{
 			tValueY = 1;
+
 		}
 		else
 		{
-			tValueY = 0;
+			if (mDir == Up_Dir || mDir == Down_Dir)
+			{
+
+				tValueY = 0;
+
+
+			}
 		}
 
 		mVec.y = mVec.y + mDirY * mSpeed * IncreaseSpeed(dt)*tValueY;// *dt;

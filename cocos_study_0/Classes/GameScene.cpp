@@ -9,7 +9,6 @@
 #include "CBackgroundLayer.h"
 #include "CUILayer.h"
 #include "Define.h"
-
 #include "rapidjson\document.h"
 #include "rapidjson\reader.h"
 
@@ -37,10 +36,9 @@ bool GameScene::init()
 	CreateUILayer();
 	CreateActor();
 	CreateEnemy();
-
-	CSound::Getinstance()->Create();
-	CSound::Getinstance()->PlayBGM(0);
 	
+	CSound::Getinstance()->Create();
+	CSound::Getinstance()->PlayBGM(0);	
 
 	this->scheduleUpdate();
 
@@ -113,12 +111,9 @@ void GameScene::onEnter()
 
 void GameScene::onExit()
 {
-
 	mpUILayer->RemoveListener();
 	Scene::onExit();
 }
-
-
 
 void GameScene::AttackBehavior()
 {
