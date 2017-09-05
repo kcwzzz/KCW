@@ -25,8 +25,11 @@ CActor::~CActor()
 
 void CActor::Clear()
 {
+
 	CActorInfoList *tpInfo = NULL;
-	tpInfo = DataDriven::GetInstance()->GetCurActorInfo();
+	tpInfo = DataDriven::GetInstance()->GetCurActorInfo();	
+
+	mImageSpriteFile = tpInfo->mImageFileName;
 
 	if (NULL != tpInfo)
 	{
@@ -36,6 +39,8 @@ void CActor::Clear()
 		for (int ti = 0; ti < tCount; ti++)
 		{
 			mState = 0;
+			mDefence = 5;
+			mVec = Vec2(0, 0);
 
 			mLevel = tpInfo->mActorStatusVec[ti]->mLevel;
 			mEXP = tpInfo->mActorStatusVec[ti]->mExp;
@@ -43,13 +48,10 @@ void CActor::Clear()
 			mAP = tpInfo->mActorStatusVec[ti]->mAP;
 			mSpeed = tpInfo->mActorStatusVec[ti]->mSpeed;;
 			mSpeedRatio = tpInfo->mActorStatusVec[ti]->mSpeedRatio;
-					
-			mCurHP = mMaxHP;
-			mDefence = 5;
 
-			mVec = Vec2(0, 0);
+			mCurHP = mMaxHP;
 		}
-	}
+	}	
 }
 //»ý¼º
 
@@ -57,13 +59,13 @@ void CActor::Create()
 {
 	mpActorAniBox = new CActorAniBox();
 	mpActorAniBox->SetScene(mpScene);
-	mpActorAniBox->CreateAniBox("Hero_1.png", Vec2(0, 0), 64, 64, 0.1f);
-
+	mpActorAniBox->CreateAniBox(mImageSpriteFile, Vec2(0, 0), 64, 64, 0.1f);
+	
 	mpObjectAniBox = new CObjectAniBox();
 	mpObjectAniBox->SetScene(mpScene);
 	mpObjectAniBox->CreateAniBox("Attack.png", Vec2(0, 0), 153, 153, 0.05f, 5);
 
-	mpColisionBox = Sprite::create("ColisionCheckBar.png");
+	mpColisionBox = Sprite::create("Coin.png");
 	mpColisionBox->retain();
 	mpColisionBox->setPosition(mAttackVec);
 
@@ -206,6 +208,7 @@ void CActor::MoveActor(float dt)
 
 	if (mVec.x > 0 && mVec.x < Map_Width)
 	{
+
 		if (1 != ColisionGeometry())
 		{
 			tValueX = 1;
@@ -241,10 +244,7 @@ void CActor::MoveActor(float dt)
 		{
 			if (mDir == Up_Dir || mDir == Down_Dir)
 			{
-
 				tValueY = 0;
-
-
 			}
 		}
 
@@ -349,14 +349,14 @@ int CActor::ColisionGeometry()
 
 	float tTotalRowCount = mpTiledMap->getMapSize().height;
 
-	//int tCol = mVec.x;
-	//int tRow = mVec.y;
-
 	int tCol = mpColisionBox->getPosition().x / tTileW;
 	int tRow = tTotalRowCount - mpColisionBox->getPosition().y / tTileH;
 
-	int tResult = mpBGLayer->GetAttributeWith(tRow, tCol);
-	//log("%d %f %f", tResult, tTileW, tTileH);
+	int tWidth = 64;
+	int tHeight = 64;
+
+	int tResult = mpBGLayer->GetAttributeWith(tRow, tCol, tWidth, tHeight);
+	//log("%d %d %d", tResult, tCol, tRow);
 
 	return tResult;
 }

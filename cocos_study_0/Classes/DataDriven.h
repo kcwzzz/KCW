@@ -24,4 +24,5 @@ public:
 	void CreateActor();
 	CActorInfoList *GetCurActorInfo();
 	static DataDriven *GetInstance();
+	void SetCurActorInfo(unsigned int tActorInfo);
 };

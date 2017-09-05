@@ -57,7 +57,7 @@ void DataDriven::CreateActor()
 			int tLevel = tActorStatus[j].GetObject()["Level"].GetInt();
 			int tExp = tActorStatus[j].GetObject()["EXP"].GetInt();
 			int tMaxHP = tActorStatus[j].GetObject()["MaxHP"].GetInt();
-			int tAP = tActorStatus[j].GetObject()["AP"].GetInt();
+			int tAP = tActorStatus[j].GetObject()["Ap"].GetInt();
 			int tSpeed = tActorStatus[j].GetObject()["Speed"].GetInt();
 			int tSpeedRatio = tActorStatus[j].GetObject()["SpeedRatio"].GetInt();
 	
@@ -87,4 +87,9 @@ CActorInfoList* DataDriven::GetCurActorInfo()
 	{
 		return NULL;
 	}
+}
+
+void DataDriven::SetCurActorInfo(unsigned int tActorInfo)
+{
+	mCurActorIndex = tActorInfo;
 }

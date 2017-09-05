@@ -29,6 +29,7 @@ protected:
 	float mDefence = 0.0f;
 	float mSpeed = 0.0f;
 	float mSpeedRatio = 1.0f;
+	string mImageSpriteFile;
 	
 	CActorAniBox *mpActorAniBox = NULL;
 	Vec2 mVec;

@@ -8,7 +8,7 @@ using namespace cocos2d;
 
 void CBackgroundLayer::Create()
 {
-	mpTiledMap = TMXTiledMap::create("Dungeon_0.tmx");
+	mpTiledMap = TMXTiledMap::create("untitled.tmx");
 	mpTiledMap->retain();
 }
 
@@ -50,7 +50,8 @@ void CBackgroundLayer::SetActor(CActor *tpActor)
 	mpActor = tpActor;
 }
 
-int CBackgroundLayer::GetAttributeWith(int tRow, int tCol)
+//int CBackgroundLayer::GetAttributeWith(int tRow, int tCol)
+int CBackgroundLayer::GetAttributeWith(int tRow, int tCol, int tWidth, int tHeight)
 {
 	int tResult = 0;
 	int tGID = 0;
@@ -58,12 +59,12 @@ int CBackgroundLayer::GetAttributeWith(int tRow, int tCol)
 	
 	tGID = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol, tRow));
 	tValue = mpTiledMap->getPropertiesForGID(tGID);
-
+	
 	if (false == tValue.isNull())
 	{
 		tResult = tValue.asValueMap()["Attribute"].asInt();
 	}
-
+	log("%d %d %d", tResult, tCol, tRow);
 	return tResult;
 }
 

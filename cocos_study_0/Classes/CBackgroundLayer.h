@@ -40,7 +40,7 @@ public:
 	void SetScene(GameScene *tpScene);
 	void SetActor(CActor *tpActor);
 
-	int GetAttributeWith(int tRow, int tCol);
+	int GetAttributeWith(int tRow, int tCol,int tWidth, int tHeight);
 
 	TMXTiledMap* GetTileMap();
 
