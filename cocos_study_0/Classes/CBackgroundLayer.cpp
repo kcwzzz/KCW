@@ -54,17 +54,83 @@ void CBackgroundLayer::SetActor(CActor *tpActor)
 int CBackgroundLayer::GetAttributeWith(int tRow, int tCol, int tWidth, int tHeight)
 {
 	int tResult = 0;
-	int tGID = 0;
-	Value tValue;
-	
-	tGID = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol, tRow));
-	tValue = mpTiledMap->getPropertiesForGID(tGID);
-	
-	if (false == tValue.isNull())
+	int tResult_1 = 0;
+	int tResult_2 = 0;
+	int tResult_3 = 0;
+	int tResult_4 = 0;
+
+
+	int tGID_1 = 0;
+	int tGID_2 = 0;
+	int tGID_3 = 0;
+	int tGID_4 = 0;
+
+	Value tValue_1;
+	Value tValue_2;
+	Value tValue_3;
+	Value tValue_4;
+
+	tGID_1 = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol + tWidth / 2, tRow + tHeight / 2));
+	tValue_1 = mpTiledMap->getPropertiesForGID(tGID_1);
+
+	tGID_2 = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol + tWidth / 2, tRow - tHeight / 2));
+	tValue_2 = mpTiledMap->getPropertiesForGID(tGID_2);
+
+	tGID_3 = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol - tWidth / 2, tRow + tHeight / 2));
+	tValue_3 = mpTiledMap->getPropertiesForGID(tGID_3);
+
+	tGID_4 = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol - tWidth / 2, tRow - tHeight / 2));
+	tValue_4 = mpTiledMap->getPropertiesForGID(tGID_4);
+
+	if (false == tValue_1.isNull())
 	{
-		tResult = tValue.asValueMap()["Attribute"].asInt();
+		tResult_1 = tValue_1.asValueMap()["Attribute"].asInt();
 	}
-	log("%d %d %d", tResult, tCol, tRow);
+
+	if (false == tValue_2.isNull())
+	{
+		tResult_2 = tValue_2.asValueMap()["Attribute"].asInt();
+	}
+
+	if (false == tValue_3.isNull())
+	{
+		tResult_3 = tValue_3.asValueMap()["Attribute"].asInt();
+	}
+
+	if (false == tValue_4.isNull())
+	{
+		tResult_4 = tValue_4.asValueMap()["Attribute"].asInt();
+	}
+
+	if (false == tResult_1 && false == tResult_2 && false == tResult_3 && false == tResult_4)
+	{
+		tResult = 0;
+	}
+	else if (true == tResult_1 || true == tResult_2)
+	{
+		tResult = 1;
+	}
+
+	else if (true == tResult_3 || true == tResult_4)
+	{
+		tResult = 2;
+	}
+	else
+	{
+		tResult = 3;
+	}
+
+	/*
+	if (true == tResult_1 || true == tResult_2 || true == tResult_3 || true == tResult_4)
+	{
+		tResult = 1;
+	}
+	else
+	{
+		tResult = 0;
+	}
+	*/
+	log("%d %d %d %d %d", tResult_1, tResult_2, tResult_3, tResult_4,tResult);
 	return tResult;
 }
 
