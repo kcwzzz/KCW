@@ -79,14 +79,6 @@ void CObjectAniBox::RunAniWithCallback(CallFunc *tpFunc)
 
 }
 
-	/*
-	void CObjectAniBox::OnCompleteAni()
-	{
-		int tA = 0;
-	}
-	*/
-
-
 void CObjectAniBox::StopAnimation()
 {
 	mpSprite->stopAction(mpAnimateObject);	
@@ -100,4 +92,9 @@ void CObjectAniBox::Show()
 void CObjectAniBox::Hide()
 {
 	mpSprite->setVisible(false);
+}
+
+Sprite* CObjectAniBox::GetSprite()
+{
+	return mpSprite;
 }

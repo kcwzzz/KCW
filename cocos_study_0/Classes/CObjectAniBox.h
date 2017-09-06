@@ -50,5 +50,5 @@ public:
 	void Show();
 	void Hide();
 
-
+	Sprite* GetSprite();
 };

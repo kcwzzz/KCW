@@ -58,9 +58,7 @@ public:
 	void IdleBehavior();
 	void DamagedActor();
 
-	//Vec2 ColisionGeometry();
-	//int ColisionGeometry();
-
+	void Colision();
 
 public:
 

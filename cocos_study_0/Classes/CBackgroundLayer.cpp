@@ -8,7 +8,7 @@ using namespace cocos2d;
 
 void CBackgroundLayer::Create()
 {
-	mpTiledMap = TMXTiledMap::create("untitled.tmx");
+	mpTiledMap = TMXTiledMap::create("Dungeon_0.tmx");
 	mpTiledMap->retain();
 }
 
@@ -70,18 +70,19 @@ int CBackgroundLayer::GetAttributeWith(int tRow, int tCol, int tWidth, int tHeig
 	Value tValue_3;
 	Value tValue_4;
 
-	tGID_1 = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol + tWidth / 2, tRow + tHeight / 2));
+	
+	tGID_1 = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol, tRow + tHeight / 2));
 	tValue_1 = mpTiledMap->getPropertiesForGID(tGID_1);
-
-	tGID_2 = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol + tWidth / 2, tRow - tHeight / 2));
+	
+	tGID_2 = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol, tRow - tHeight / 2));
 	tValue_2 = mpTiledMap->getPropertiesForGID(tGID_2);
-
-	tGID_3 = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol - tWidth / 2, tRow + tHeight / 2));
+	
+	tGID_3 = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol -  tWidth /2 , tRow));
 	tValue_3 = mpTiledMap->getPropertiesForGID(tGID_3);
 
-	tGID_4 = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol - tWidth / 2, tRow - tHeight / 2));
+	tGID_4 = mpTiledMap->getLayer("Layer1")->getTileGIDAt(Vec2(tCol +  tWidth /2 , tRow));
 	tValue_4 = mpTiledMap->getPropertiesForGID(tGID_4);
-
+	
 	if (false == tValue_1.isNull())
 	{
 		tResult_1 = tValue_1.asValueMap()["Attribute"].asInt();
@@ -106,31 +107,34 @@ int CBackgroundLayer::GetAttributeWith(int tRow, int tCol, int tWidth, int tHeig
 	{
 		tResult = 0;
 	}
-	else if (true == tResult_1 || true == tResult_2)
+	else if (true == tResult_1)
 	{
+		// 위 충돌
 		tResult = 1;
 	}
 
-	else if (true == tResult_3 || true == tResult_4)
+	else if (true == tResult_2)
 	{
+		//아래 충돌
 		tResult = 2;
 	}
-	else
+	else if (true == tResult_3)
 	{
+		//좌 충돌
 		tResult = 3;
 	}
 
-	/*
-	if (true == tResult_1 || true == tResult_2 || true == tResult_3 || true == tResult_4)
+	else if (true == tResult_4)
 	{
-		tResult = 1;
+		//우 충돌
+		tResult = 4;
 	}
 	else
 	{
-		tResult = 0;
+		tResult = 5;
 	}
-	*/
-	log("%d %d %d %d %d", tResult_1, tResult_2, tResult_3, tResult_4,tResult);
+
+	//log("%d %d %d %d %d", tResult_1, tResult_2, tResult_3, tResult_4,tResult);
 	return tResult;
 }
 

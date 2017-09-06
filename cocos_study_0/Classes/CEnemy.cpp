@@ -27,7 +27,7 @@ void CEnemy::Create()
 	mpObjectAniBox = new CObjectAniBox();
 	mpObjectAniBox->SetScene(mpScene);
 	mpObjectAniBox->CreateAniBox("Attack.png", Vec2(0, 0), 153, 153, 0.05f, 5);
-
+	mpAttSprite = mpObjectAniBox->GetSprite();
 
 	mpColisionBox = Sprite::create("ColisionCheckBar.png");
 	mpColisionBox->retain();
@@ -114,4 +114,9 @@ void CEnemy::MovePatten(float f)
 	}
 
 	setPosition(mVec);
+}
+
+Sprite* CEnemy::GetAttackSprite()
+{
+	return mpAttSprite;
 }

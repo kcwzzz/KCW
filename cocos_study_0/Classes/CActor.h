@@ -36,6 +36,7 @@ protected:
 
 
 	CObjectAniBox *mpObjectAniBox = NULL;
+	Sprite *mpAttSprite = NULL;
 	Sprite *mpColisionBox = NULL;
 	Vec2 mAttackVec;//충돌박스의 위치
 
@@ -60,15 +61,15 @@ public:
 	virtual void Clear();
 	
 	/////////////////AniBox 관련한 곳//////////////////
-	void Create();
+	virtual void Create();
 
-	void SetScene(Node *tpScene);
-	void ActorHPGauge(Node *tpNode);
-	void Dir_Selector();
-	void SetmDir(int tDir);
-	void SetFsm(int tFsm);
-	void SetDamaged(int tint);
-	void FollowObject();
+	virtual void SetScene(Node *tpScene);
+	virtual void ActorHPGauge(Node *tpNode);
+	virtual void Dir_Selector();
+	virtual void SetmDir(int tDir);
+	virtual void SetFsm(int tFsm);
+	virtual void SetDamaged(int tint);
+	virtual void FollowObject();
 
 	virtual void SetVirtualPad(CVirtualPad *tpVirtualPad);
 	///////////////////////////////////////////////////
@@ -87,16 +88,17 @@ public:
 	Sprite* GetSprite();
 	
 	//Actor FSM에 사용(예정)
-	void IdleState();
-	void MoveState();
-	void AttackState();
-	void AttackEndState();
-	void DeadState();
+	virtual void IdleState();
+	virtual void MoveState();
+	virtual void AttackState();
+	virtual void AttackEndState();
+	virtual void DeadState();
 	//
 
 	//CGuageHP : HP bar 노출에 사용
-	float GetMaxHP();
-	float GetCurHP();
+	virtual float GetMaxHP();
+	virtual float GetCurHP();
+	virtual Sprite* GetAttackSprite();
 	
 public:
 	CActor();

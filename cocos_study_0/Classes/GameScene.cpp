@@ -29,16 +29,16 @@ bool GameScene::init()
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
-	
+
 	winSize = Director::getInstance()->getWinSize();
 
 	CreateBackgroundLayer();
 	CreateUILayer();
 	CreateActor();
 	CreateEnemy();
-	
+
 	CSound::Getinstance()->Create();
-	CSound::Getinstance()->PlayBGM(0);	
+	//CSound::Getinstance()->PlayBGM(0);
 
 	this->scheduleUpdate();
 
@@ -96,10 +96,11 @@ void GameScene::CreateEnemy()
 
 void GameScene::update(float dt)
 {
-	mpActor->MoveActor(dt);	
+	mpActor->MoveActor(dt);
 	mpActor->Dir_Selector();
 
 	mpEnemy->MovePatten(dt);
+	this->Colision();
 }
 
 void GameScene::onEnter()
@@ -133,5 +134,47 @@ void GameScene::IdleBehavior()
 void GameScene::DamagedActor()
 {
 	mpActor->SetDamaged(5);
+
+}
+
+void GameScene::Colision()
+{
+	CActor *tpActor = NULL;
+	tpActor = mpActor;
+
+	CEnemy *tpEnemy = NULL;
+	tpEnemy = mpEnemy;
+
+	Rect tRectActor = tpActor->GetSprite()->getBoundingBox();
+	Rect tRectActorAttack = tpActor->GetAttackSprite()->getBoundingBox();
+	Rect tRectEnemy = tpEnemy->GetSprite()->getBoundingBox();
+	Rect tRectEnemyAttack = tpEnemy->GetAttackSprite()->getBoundingBox();
+
+	// Actor의 공격이 Enemy를 맞출 경우
+	if (true == mpActor->GetAttackSprite()->isVisible())
+	{
+		if (true == tRectActorAttack.intersectsRect(tRectEnemy))
+		{
+			log("good");
+		}
+		else
+		{
+			log("fuck");
+		}
+	}
+	else
+	{
+		log("invisible");
+	}
+
+	// Actor와 Enemy가 부딫히는 경우
+	if (true == tRectActor.intersectsRect(tRectEnemy))
+	{
+		log("crush");
+	}
+	else
+	{
+		log("normal");
+	}
 
 }

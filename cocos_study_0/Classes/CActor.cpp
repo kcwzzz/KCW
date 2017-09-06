@@ -27,7 +27,7 @@ void CActor::Clear()
 {
 
 	CActorInfoList *tpInfo = NULL;
-	tpInfo = DataDriven::GetInstance()->GetCurActorInfo();	
+	tpInfo = DataDriven::GetInstance()->GetCurActorInfo();
 
 	mImageSpriteFile = tpInfo->mImageFileName;
 
@@ -51,7 +51,7 @@ void CActor::Clear()
 
 			mCurHP = mMaxHP;
 		}
-	}	
+	}
 }
 //持失
 
@@ -60,14 +60,16 @@ void CActor::Create()
 	mpActorAniBox = new CActorAniBox();
 	mpActorAniBox->SetScene(mpScene);
 	mpActorAniBox->CreateAniBox(mImageSpriteFile, Vec2(0, 0), 64, 64, 0.1f);
-	
+
 	mpObjectAniBox = new CObjectAniBox();
 	mpObjectAniBox->SetScene(mpScene);
 	mpObjectAniBox->CreateAniBox("Attack.png", Vec2(0, 0), 153, 153, 0.05f, 5);
+	mpAttSprite = mpObjectAniBox->GetSprite();
 
 	mpColisionBox = Sprite::create("Coin_1.png");
 	mpColisionBox->retain();
 	mpColisionBox->setPosition(mAttackVec);
+	mpColisionBox->setVisible(0);
 
 	mpBGLayer = new CBackgroundLayer();
 	mpBGLayer->Create();
@@ -102,8 +104,6 @@ void CActor::Build()
 	mpScene->addChild(mpColisionBox, 5);
 }
 // 持失
-
-
 
 void CActor::Dir_Selector()
 {
@@ -208,75 +208,14 @@ void CActor::MoveActor(float dt)
 
 	if (mVec.x > 0 && mVec.x < Map_Width)
 	{
-
-		if (1 != ColisionGeometry())
-		{
-			tValueX = 1;
-		}
-		else
+		if (1 == ColisionGeometry() || 2 == ColisionGeometry())
 		{
 			tValueX = 0;
 		}
-		mVec.x = mVec.x + mDirX * mSpeed * IncreaseSpeed(dt)*tValueX;// *dt;
-	}
-
-	else if (mVec.x <= 0)
-	{
-		mVec.x = 1;
-	}
-
-	else
-	{
-		mVec.x = Map_Width - 1;
-	}
-
-	if (mVec.y > 0 && mVec.y < Map_Height)
-	{
-		if (1 != ColisionGeometry())
-		{
-			tValueY = 1;
-
-		}
 		else
-		{
-
-			tValueY = 0;
-
-		}
-
-		mVec.y = mVec.y + mDirY * mSpeed * IncreaseSpeed(dt)*tValueY;// *dt;
-	}
-
-	else if (mVec.y <= 0)
-	{
-		mVec.y = 1;
-	}
-
-	else
-	{
-		mVec.y = Map_Height - 1;
-	}
-
-
-	/*
-	if (mVec.x > 0 && mVec.x < Map_Width)
-	{
-
-		if (1 != ColisionGeometry())
 		{
 			tValueX = 1;
 		}
-		else
-		{
-			if (mDir == Left_Dir || mDir == Right_Dir)
-			{
-				tValueX = 1;
-			}
-			else
-			{
-				tValueX = 0;
-			}
-		}
 		mVec.x = mVec.x + mDirX * mSpeed * IncreaseSpeed(dt)*tValueX;// *dt;
 	}
 
@@ -292,21 +231,16 @@ void CActor::MoveActor(float dt)
 
 	if (mVec.y > 0 && mVec.y < Map_Height)
 	{
-		if (1 != ColisionGeometry())
+		if (1 == ColisionGeometry() || 2 == ColisionGeometry())
 		{
-			tValueY = 1;
+			tValueY = 0;
 
 		}
 		else
 		{
-			if (mDir == Up_Dir || mDir == Down_Dir)
-			{
-				tValueY = 1;
-			}
-			else
-			{
-				tValueY = 0;
-			}
+
+			tValueY = 1;
+
 		}
 
 		mVec.y = mVec.y + mDirY * mSpeed * IncreaseSpeed(dt)*tValueY;// *dt;
@@ -321,8 +255,6 @@ void CActor::MoveActor(float dt)
 	{
 		mVec.y = Map_Height - 1;
 	}
-
-	*/
 }
 
 void CActor::FollowObject()
@@ -415,11 +347,10 @@ int CActor::ColisionGeometry()
 	int tCol = mpColisionBox->getPosition().x / tTileW;
 	int tRow = tTotalRowCount - mpColisionBox->getPosition().y / tTileH;
 
-	int tWidth = 64/tTileW;
-	int tHeight = 64/tTileH;
+	int tWidth = 64 / tTileW;
+	int tHeight = 64 / tTileH;
 
 	int tResult = mpBGLayer->GetAttributeWith(tRow, tCol, tWidth, tHeight);
-	log("%d %d %d", tResult, tWidth, tHeight);
 
 	return tResult;
 }
@@ -462,4 +393,9 @@ void CActor::DeadState()
 	mpActorAniBox->StopMoveAnimation();
 	mpActorAniBox->Hide();
 	mCurState = DEAD;
+}
+
+Sprite* CActor::GetAttackSprite()
+{
+	return mpAttSprite;
 }

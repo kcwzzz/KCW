@@ -13,10 +13,12 @@ class CEnemy : public CActor
 
 protected:
 	int mCountClock = 0;
+	Sprite *mpAttSprite = NULL;
 
 public:
 	void Clear();
 	void Create();
 	void MovePatten(float f);
 	void Dir_Selector();
+	Sprite* GetAttackSprite();
 };
