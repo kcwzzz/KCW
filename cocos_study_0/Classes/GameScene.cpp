@@ -96,6 +96,7 @@ void GameScene::CreateEnemy()
 
 void GameScene::update(float dt)
 {
+	mpActor-> FSM_Selector();
 	mpActor->MoveActor(dt);
 	mpActor->Dir_Selector();
 
@@ -155,26 +156,26 @@ void GameScene::Colision()
 	{
 		if (true == tRectActorAttack.intersectsRect(tRectEnemy))
 		{
-			log("good");
+			//log("good");
 		}
 		else
 		{
-			log("fuck");
+			//log("fuck");
 		}
 	}
 	else
 	{
-		log("invisible");
+		//log("invisible");
 	}
 
 	// Actor와 Enemy가 부딫히는 경우
 	if (true == tRectActor.intersectsRect(tRectEnemy))
 	{
-		log("crush");
+		//log("crush");
 	}
 	else
 	{
-		log("normal");
+		//log("normal");
 	}
 
 }

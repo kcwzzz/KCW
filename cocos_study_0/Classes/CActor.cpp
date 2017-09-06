@@ -10,6 +10,7 @@
 #include "DataDriven.h"
 #include "CActorInfoList.h"
 #include "CActorStatus.h"
+#include "FSM_Manager.h"
 
 USING_NS_CC;
 
@@ -174,7 +175,6 @@ void CActor::SetFsm(int tFsm)
 	mState = tFsm;
 }
 
-
 void CActor::CalcDir()
 {
 	if (true == mpVirtualPad->GetStateJoyStic())
@@ -194,7 +194,7 @@ Sprite* CActor::GetSprite()
 	return mpActorAniBox->GetSprite();
 }
 
-void CActor::MoveActor(float dt)
+void CActor::MoveActor()
 {
 	this->CalcDir();
 	this->FollowObject();
@@ -216,7 +216,7 @@ void CActor::MoveActor(float dt)
 		{
 			tValueX = 1;
 		}
-		mVec.x = mVec.x + mDirX * mSpeed * IncreaseSpeed(dt)*tValueX;// *dt;
+		mVec.x = mVec.x + mDirX * mSpeed * IncreaseSpeed()*tValueX;// *dt;
 	}
 
 	else if (mVec.x <= 0)
@@ -243,7 +243,7 @@ void CActor::MoveActor(float dt)
 
 		}
 
-		mVec.y = mVec.y + mDirY * mSpeed * IncreaseSpeed(dt)*tValueY;// *dt;
+		mVec.y = mVec.y + mDirY * mSpeed * IncreaseSpeed()*tValueY;// *dt;
 	}
 
 	else if (mVec.y <= 0)
@@ -291,7 +291,7 @@ void CActor::FollowObject()
 	}
 }
 
-float CActor::IncreaseSpeed(float dt)
+float CActor::IncreaseSpeed()
 {
 	while (true)
 	{
@@ -357,19 +357,96 @@ int CActor::ColisionGeometry()
 
 // FSM 상태 모음
 
+void CActor::FSM_Selector()
+{
+	int tState = FSM_Manager::Getinstance()->GetNowState();
+
+	if (tState ==mCurState)
+	{
+
+	}
+	else
+	{
+		switch (tState)
+		{
+		case IDLE:
+		{
+			IdleState();
+		}
+		break;
+		case MOVE:
+		{
+			MoveState();
+		}
+		break;
+		case ATTACK:
+		{
+			AttackState();
+		}
+
+		break;
+		}
+	}
+}
+
 void CActor::IdleState()
 {
-	mpObjectAniBox->Hide();
+	auto action = Sequence::create(
+		CallFunc ::create(CC_CALLBACK_0(CActor ::IdleStateStart,this)),
+		CallFunc::create(CC_CALLBACK_0(CActor::IdleStateExcute, this)),
+		CallFunc::create(CC_CALLBACK_0(CActor::IdleStateEnd, this)), NULL	);
+
+	mpScene->runAction(action);
+}	
+
+void CActor::IdleStateStart()
+{
 	mpActorAniBox->Show();
+	//mpObjectAniBox->Hide();
 	mpActorAniBox->StopMoveAnimation();
+	log("idle start");
+}
+
+void CActor::IdleStateExcute()
+{
+	log("idle Excute");
+
+}
+void CActor::IdleStateEnd()
+{
+	log("idle End");
 	mCurState = IDLE;
 }
 
 void CActor::MoveState()
 {
-	mCurState = MOVE;
-	Dir_Selector();
+	auto action = Sequence::create(
+		CallFunc::create(CC_CALLBACK_0(CActor::MoveStateStart, this)),
+		CallFunc::create(CC_CALLBACK_0(CActor::MoveStateExcute, this)),
+		CallFunc::create(CC_CALLBACK_0(CActor::MoveStateEnd, this)), NULL);
+
+	mpScene->runAction(action);
 }
+
+
+void CActor::MoveStateStart()
+{
+	mpActorAniBox->StopMoveAnimation();
+}
+
+
+void CActor::MoveStateExcute()
+{
+	this->Dir_Selector();
+	this->MoveActor();
+}
+
+
+void CActor::MoveStateEnd()
+{
+	mCurState = MOVE;
+}
+
 
 void CActor::AttackState()
 {

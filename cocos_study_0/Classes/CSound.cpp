@@ -40,7 +40,6 @@ void CSound::Create()
 	{
 		SimpleAudioEngine::getInstance()->preloadEffect(mStringEffectArray[ti].c_str());
 	}
-
 }
 
 void CSound::Destroy()

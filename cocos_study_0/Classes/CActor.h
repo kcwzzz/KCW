@@ -82,14 +82,32 @@ public:
 	virtual void setPosition(Vec2 tVec);
 	int ColisionGeometry();
 
-	virtual void MoveActor(float dt);
-	virtual float IncreaseSpeed(float dt);
+	virtual void MoveActor();
+	virtual float IncreaseSpeed();
 	
 	Sprite* GetSprite();
 	
 	//Actor FSM에 사용(예정)
+
+	virtual void FSM_Selector();
+
 	virtual void IdleState();
+	virtual void IdleStateStart();
+	virtual void IdleStateExcute();
+	virtual void IdleStateEnd();
+		
 	virtual void MoveState();
+	virtual void MoveStateStart();
+	virtual void MoveStateExcute();
+//	virtual void MoveStateExcute();
+
+	virtual void MoveStateEnd();
+
+
+
+
+
+
 	virtual void AttackState();
 	virtual void AttackEndState();
 	virtual void DeadState();
