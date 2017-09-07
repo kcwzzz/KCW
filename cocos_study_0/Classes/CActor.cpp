@@ -11,6 +11,7 @@
 #include "CActorInfoList.h"
 #include "CActorStatus.h"
 #include "FSM_Manager.h"
+#include "Define.h"
 
 USING_NS_CC;
 
@@ -361,11 +362,7 @@ void CActor::FSM_Selector()
 {
 	int tState = FSM_Manager::Getinstance()->GetNowState();
 
-	if (tState ==mCurState)
-	{
-
-	}
-	else
+	if (tState !=mCurState)
 	{
 		switch (tState)
 		{
@@ -374,16 +371,29 @@ void CActor::FSM_Selector()
 			IdleState();
 		}
 		break;
+		
 		case MOVE:
 		{
 			MoveState();
 		}
 		break;
+		
 		case ATTACK:
 		{
 			AttackState();
 		}
+		break;
+		
+		case DAMAGED:
+		{
+			DamagedState();
+		}
+		break;
 
+		case DEAD:
+		{
+			DeadState();
+		}
 		break;
 		}
 	}
@@ -394,15 +404,16 @@ void CActor::IdleState()
 	auto action = Sequence::create(
 		CallFunc ::create(CC_CALLBACK_0(CActor ::IdleStateStart,this)),
 		CallFunc::create(CC_CALLBACK_0(CActor::IdleStateExcute, this)),
-		CallFunc::create(CC_CALLBACK_0(CActor::IdleStateEnd, this)), NULL	);
+		CallFunc::create(CC_CALLBACK_0(CActor::IdleStateEnd, this)), NULL);
 
 	mpScene->runAction(action);
 }	
 
 void CActor::IdleStateStart()
 {
-	mpActorAniBox->Show();
-	//mpObjectAniBox->Hide();
+	mpObjectAniBox->Hide();
+	mpObjectAniBox->StopAnimation();
+	mpActorAniBox->Show();	
 	mpActorAniBox->StopMoveAnimation();
 	log("idle start");
 }
@@ -428,17 +439,15 @@ void CActor::MoveState()
 	mpScene->runAction(action);
 }
 
-
 void CActor::MoveStateStart()
 {
-	mpActorAniBox->StopMoveAnimation();
-}
 
+}
 
 void CActor::MoveStateExcute()
 {
 	this->Dir_Selector();
-	this->MoveActor();
+	log("move");
 }
 
 
@@ -447,22 +456,40 @@ void CActor::MoveStateEnd()
 	mCurState = MOVE;
 }
 
-
 void CActor::AttackState()
 {
-	mpObjectAniBox->Show();
-	mpObjectAniBox->RunAniWithCallback(
-		CallFunc::create(CC_CALLBACK_0(CActor::IdleState, this))
-	);
-	mCurState = ATTACK;
-	CSound::Getinstance()->PlayEffect(0);
+	auto action = Sequence::create(
+		CallFunc::create(CC_CALLBACK_0(CActor::AttackStateStart, this)),
+		CallFunc::create(CC_CALLBACK_0(CActor::AttackStateExcute, this)),
+		CallFunc::create(CC_CALLBACK_0(CActor::AttackStateEnd, this)), NULL);
+
+	mpScene->runAction(action);
 }
 
-void CActor::AttackEndState()
+void CActor::AttackStateStart()
 {
-	mpObjectAniBox->Hide();
+	mpObjectAniBox->Show();
+}
+
+void CActor::AttackStateExcute()
+{
+	mpObjectAniBox->RunAniObject();
+	CSound::Getinstance()->PlayEffect(0);
+	log("attack");
+}
+
+void CActor::AttackStateEnd()
+{
 	mpObjectAniBox->StopAnimation();
-	mCurState = IDLE;
+	mCurState = ATTACK;	
+	mpObjectAniBox->RunAniWithCallback(
+		CallFunc::create(CC_CALLBACK_0(CActor ::ChangeIdleState, this))
+	);
+}
+
+void CActor::ChangeIdleState()
+{
+	FSM_Manager::Getinstance()->SetNowState(IDLE);
 }
 
 void CActor::DeadState()
@@ -472,7 +499,29 @@ void CActor::DeadState()
 	mCurState = DEAD;
 }
 
+void CActor::DamagedState()
+{
+	FSM_Manager::Getinstance()->SetNowState(IDLE);
+	mpActorAniBox->ChangeColorDamaged();
+	//색이 변하도록
+}
+
+int CActor::GetmDir()
+{
+	return mDir;
+}
+
 Sprite* CActor::GetAttackSprite()
 {
 	return mpAttSprite;
+}
+
+int CActor::GetAP()
+{
+	return mAP;
+}
+
+Vec2 CActor::GetVec()
+{
+	return mVec;
 }

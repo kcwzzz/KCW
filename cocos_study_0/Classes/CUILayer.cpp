@@ -3,11 +3,10 @@
 #include "CVirtualPad.h"
 #include "GameScene.h"
 #include "CGuageHP.h"
+#include "FSM_Manager.h"
 
 CUILayer *CUILayer::create()
-{
-
-	
+{	
 	CUILayer *ret = new (std::nothrow) CUILayer();
 		if (ret && ret->init())
 		{
@@ -28,6 +27,8 @@ void CUILayer::CreateLayer()
 	mpUILayer->setAnchorPoint(Vec2(0, 0));
 	mpUILayer->setPosition(Vec2(0, 0));
 	this->addChild(mpUILayer, 10);
+
+	CGuageHP::Getinstance()->Create;
 }
 
 
@@ -55,7 +56,9 @@ void CUILayer::CreateBtnAttack()
 
 void CUILayer::menuAttackCallback(Ref* pSender)
 {
-	mpScene->AttackBehavior();
+	//mpScene->AttackBehavior();
+	FSM_Manager::Getinstance()->SetNowState(ATTACK);
+
 }
 
 

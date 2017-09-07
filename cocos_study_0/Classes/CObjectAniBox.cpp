@@ -76,7 +76,6 @@ void CObjectAniBox::RunAniWithCallback(CallFunc *tpFunc)
 	auto tRepeat = Repeat::create(tSeq, 1);
 
 	mpSprite->runAction(tRepeat);
-
 }
 
 void CObjectAniBox::StopAnimation()
@@ -98,3 +97,4 @@ Sprite* CObjectAniBox::GetSprite()
 {
 	return mpSprite;
 }
+

@@ -10,7 +10,6 @@ USING_NS_CC;
 
 class CBackgroundLayer;
 class CUILayer;
-
 class CActor;
 class CAniBox;
 class CEnemy;
@@ -53,7 +52,6 @@ public:
 
 	
 	//Actor
-	void AttackBehavior();
 	void MoveBehavior();
 	void IdleBehavior();
 	void DamagedActor();

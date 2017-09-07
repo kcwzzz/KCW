@@ -21,4 +21,5 @@
 #define IDLE 0
 #define MOVE 1
 #define ATTACK 2
-#define DEAD 3
+#define DAMAGED 3
+#define DEAD 4

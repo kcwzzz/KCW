@@ -175,3 +175,10 @@ Sprite* CActorAniBox::GetSprite()
 {
 	return mpSprite;
 }
+
+void CActorAniBox::ChangeColorDamaged()
+{
+	auto action = Sequence::create(TintTo::create(0.1, 127, 0, 0), TintTo::create(0.1, 255, 255, 255), NULL);
+
+	mpSprite->runAction(action);
+}

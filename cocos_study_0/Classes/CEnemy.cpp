@@ -120,3 +120,4 @@ Sprite* CEnemy::GetAttackSprite()
 {
 	return mpAttSprite;
 }
+

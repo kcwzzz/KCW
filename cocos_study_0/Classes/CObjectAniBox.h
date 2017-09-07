@@ -35,7 +35,7 @@ public:
 	void SetPosition(Vec2 tVec);
 
 	void CreateAniObject(int tWidth, int tHeight, float tSetDelay, int tFrameCount);
-		
+
 
 
 	void RunAniObject();

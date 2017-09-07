@@ -71,6 +71,8 @@ public:
 	virtual void UnBuild();
 	virtual void Damaged();
 
+	void ChangeColorDamaged();
+
 	Sprite* GetSprite();
 
 

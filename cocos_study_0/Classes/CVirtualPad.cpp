@@ -1,6 +1,7 @@
 #include "CVirtualPad.h"
 #include "GameScene.h"
 #include "CActor.h"
+#include "FSM_Manager.h"
 
 USING_NS_CC;
 using namespace cocos2d;
@@ -100,7 +101,8 @@ void CVirtualPad::TouchesMoved(const std::vector<Touch *> &touches, cocos2d::Eve
 	float theta = 0.0f;
 
 	if (mpJoysticTouched) {
-		mActorFSM = MOVE;
+		FSM_Manager::Getinstance()->SetNowState(MOVE);
+		//mActorFSM = MOVE;
 		for (int i = 0; i < touches.size(); i++)
 		{
 
@@ -150,7 +152,7 @@ void CVirtualPad::TouchesEnded(const std::vector<Touch *> &touches, cocos2d::Eve
 
 	mpSprJoystic->setPosition(mVecStart);
 	mpJoysticTouched = false;
-	mActorFSM = IDLE;
+	FSM_Manager::Getinstance()->SetNowState(IDLE);
 	
 }
 
@@ -211,19 +213,4 @@ int CVirtualPad::GetDir()
 		mDir = 3;
 	}
 	return mDir;
-}
-
-void CVirtualPad::GetIsAttack()
-{
-	mActorFSM = ATTACK;
-}
-
-void CVirtualPad::GetIsIdle()
-{
-	mActorFSM = IDLE;
-}
-
-int CVirtualPad::GetActorFSM()
-{
-	return mActorFSM;
 }

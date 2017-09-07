@@ -5,12 +5,15 @@
 
 #include "CActor.h"
 #include "CEnemy.h"
+#include "CGuageHP.h"
 
 #include "CBackgroundLayer.h"
 #include "CUILayer.h"
 #include "Define.h"
 #include "rapidjson\document.h"
 #include "rapidjson\reader.h"
+
+#include "FSM_Manager.h"
 
 
 USING_NS_CC;
@@ -77,7 +80,7 @@ void GameScene::CreateActor()
 	mpActor = new CActor();
 	mpActor->SetScene(mpBackgroundLayer);
 	mpActor->Create();
-	mpActor->ActorHPGauge(mpUILayer);
+	//mpActor->ActorHPGauge(mpUILayer);
 	mpActor->SetVirtualPad(mpUILayer->GetVirtualPad());
 
 	mpActor->FollowActor();
@@ -90,18 +93,18 @@ void GameScene::CreateEnemy()
 	mpEnemy = new CEnemy();
 	mpEnemy->SetScene(mpBackgroundLayer);
 	mpEnemy->Create();
-	mpEnemy->setPosition(Vec2(300, 300));
+	mpEnemy->setPosition(Vec2(500, 600));
 	mpEnemy->Build();
 }
 
 void GameScene::update(float dt)
 {
 	mpActor-> FSM_Selector();
-	mpActor->MoveActor(dt);
-	mpActor->Dir_Selector();
+	mpActor->MoveActor();
 
 	mpEnemy->MovePatten(dt);
 	this->Colision();
+
 }
 
 void GameScene::onEnter()
@@ -115,11 +118,6 @@ void GameScene::onExit()
 {
 	mpUILayer->RemoveListener();
 	Scene::onExit();
-}
-
-void GameScene::AttackBehavior()
-{
-	mpActor->AttackState();
 }
 
 void GameScene::MoveBehavior()
@@ -170,8 +168,26 @@ void GameScene::Colision()
 
 	// Actor와 Enemy가 부딫히는 경우
 	if (true == tRectActor.intersectsRect(tRectEnemy))
-	{
-		//log("crush");
+	{	tpActor->SetDamaged(tpEnemy->GetAP());
+		FSM_Manager::Getinstance()->SetNowState(DAMAGED);
+
+		int tEnemyDir = tpEnemy->GetmDir();
+		if (Up_Dir == tEnemyDir)
+		{
+			tpActor->setPosition(Vec2(tpActor->GetVec().x, tpActor->GetVec().y + 96));
+		}
+		else if(Down_Dir == tEnemyDir)
+		{
+			tpActor->setPosition(Vec2(tpActor->GetVec().x, tpActor->GetVec().y - 96));
+		}
+		else if (Left_Dir == tEnemyDir)
+		{
+			tpActor->setPosition(Vec2(tpActor->GetVec().x - 96, tpActor->GetVec().y));
+		}
+		else if (Right_Dir == tEnemyDir)
+		{
+			tpActor->setPosition(Vec2(tpActor->GetVec().x + 96, tpActor->GetVec().y));
+		}
 	}
 	else
 	{

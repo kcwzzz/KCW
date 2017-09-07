@@ -73,6 +73,7 @@ void GameScene::CreateActor()
 	mpActor->SetScene(this);			//  CActor가 GameScene(this)을 타겟하도록 설정
 	mpActor->setPosition(Vec2(240, 100));	//  SetPosition
 	mpActor->Build();					//  addChild
+	
 
 }
 

@@ -49,8 +49,6 @@ public:
 	virtual void TouchesCancelled(const std::vector<Touch*>&touches, Event *unused_event);
 
 	int GetDir();
-	void GetIsAttack();
-	void GetIsIdle();
-	int GetActorFSM();
+
 };
 

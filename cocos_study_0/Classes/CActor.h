@@ -99,25 +99,32 @@ public:
 	virtual void MoveState();
 	virtual void MoveStateStart();
 	virtual void MoveStateExcute();
-//	virtual void MoveStateExcute();
-
 	virtual void MoveStateEnd();
 
-
-
-
-
-
 	virtual void AttackState();
-	virtual void AttackEndState();
+	virtual void AttackStateStart();
+	virtual void AttackStateExcute();
+	virtual void AttackStateEnd();
+
 	virtual void DeadState();
+	virtual void DamagedState();
+
+
+
+
+
+
 	//
 
 	//CGuageHP : HP bar 노출에 사용
 	virtual float GetMaxHP();
 	virtual float GetCurHP();
+	virtual int GetAP();
 	virtual Sprite* GetAttackSprite();
-	
+	virtual int GetmDir();
+	virtual Vec2 GetVec();
+	void ChangeIdleState();
+
 public:
 	CActor();
 	virtual ~CActor();
