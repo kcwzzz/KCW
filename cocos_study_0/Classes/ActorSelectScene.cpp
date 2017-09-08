@@ -44,12 +44,20 @@ bool ActorSelectScene::init()
 
 	closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width / 2,
 		origin.y + closeItem->getContentSize().height / 2));
-	
+
 	/*
 	auto tSeq_0 = Sequence::create(
 		CallFunc::create(CC_CALLBACK_0(ActorSelectScene::FadeOutBG_1, this)),
-		CallFunc::create(CC_CALLBACK_1(ActorSelectScene::OnLoadStageInfo_0, this)), NULL	);
-	*/
+		CallFunc::create(CC_CALLBACK_1(ActorSelectScene::OnLoadStageInfo_0(), this)), NULL);
+
+
+	auto tSeq_1 = Sequence::create(
+		CallFunc::create(CC_CALLBACK_0(ActorSelectScene::FadeOutBG_1, this)),
+		CallFunc::create(CC_CALLBACK_1(ActorSelectScene::OnLoadStageInfo_0(), this)),
+		CallFunc::create(CC_CALLBACK_0(ActorSelectScene::IdleStateEnd, this)), NULL);
+
+		*/
+
 	auto SelectActor_0 = MenuItemImage::create(
 		"Hero_1_Select.png",
 		"Hero_1_Select.png",
@@ -58,7 +66,7 @@ bool ActorSelectScene::init()
 
 	auto SelectActor_1 = MenuItemImage::create(
 		"Hero_2_Select.png",
-		"Hero_2_Select.png",		
+		"Hero_2_Select.png",
 		CC_CALLBACK_1(ActorSelectScene::OnLoadStageInfo_1, this));
 	SelectActor_1->setPosition(Vec2(700, 200));
 
@@ -69,6 +77,7 @@ bool ActorSelectScene::init()
 	return true;
 }
 
+
 void ActorSelectScene::OnLoadStageInfo_0(Ref* pSender)
 {
 	DataDriven::GetInstance()->SetCurActorInfo(0);
@@ -77,22 +86,6 @@ void ActorSelectScene::OnLoadStageInfo_0(Ref* pSender)
 	Director::getInstance()->pushScene(pScene);
 }
 
-void ActorSelectScene ::FadeOutBG_0()
-{
-	auto tAction = FadeOut::create(1.5f);
-	
-	mpBGsprite_0->runAction(tAction);
-}
-
-void ActorSelectScene::FadeOutBG_1()
-{
-	auto tAction = FadeOut::create(1.5f);
-	
-	mpBGsprite_1->runAction(tAction);
-}
-
-
-
 void ActorSelectScene::OnLoadStageInfo_1(Ref* pSender)
 {
 	DataDriven::GetInstance()->SetCurActorInfo(1);
@@ -100,6 +93,23 @@ void ActorSelectScene::OnLoadStageInfo_1(Ref* pSender)
 	auto pScene = GameScene::createScene();
 	Director::getInstance()->pushScene(pScene);
 }
+
+void ActorSelectScene::FadeOutBG_0()
+{
+	auto tAction = FadeOut::create(1.5f);
+
+	mpBGsprite_0->runAction(tAction);
+}
+
+void ActorSelectScene::FadeOutBG_1()
+{
+	auto tAction = FadeOut::create(1.5f);
+
+	mpBGsprite_1->runAction(tAction);
+}
+
+
+
 
 void ActorSelectScene::menuCloseCallback(Ref* pSender)
 {

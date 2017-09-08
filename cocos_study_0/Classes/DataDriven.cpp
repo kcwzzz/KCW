@@ -97,3 +97,4 @@ void DataDriven::SetCurActorInfo(unsigned int tActorInfo)
 {
 	mCurActorIndex = tActorInfo;
 }
+
