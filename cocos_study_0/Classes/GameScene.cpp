@@ -41,7 +41,7 @@ bool GameScene::init()
 	CreateEnemy();
 
 	CSound::Getinstance()->Create();
-	//CSound::Getinstance()->PlayBGM(0);
+	CSound::Getinstance()->PlayBGM(2);
 
 	this->scheduleUpdate();
 

@@ -10,22 +10,22 @@ class CGuageHP
 {
 protected:
 	static CGuageHP *mpInstance;
-
-	float mCurHP = 0.0f;
-	Label *mpCurHP= NULL;
+	
 	float mMaxHP = 0.0f;
-
+	float mCurHP = 0.0f;
 	float mHPUIRatio = 0.0f;
 
-	Node *mpParentNode = NULL;
+	char tszTemp[64];
 	Sprite* mpSprGuargeBar = NULL;
 	Sprite* mpSprHalfHPBar = NULL;
+	Sprite* mpSprBGbar = NULL;
 
 	ProgressTimer *mpProgressTimer = NULL;
 	ProgressTimer *mpProgressTimerHalf = NULL;
 
-	Label *mpTitleLabel = NULL;
+	Label *mpHPbar= NULL;
 
+	Node *mpParentNode = NULL;
 
 public:
 	CGuageHP();
@@ -33,12 +33,12 @@ public:
 
 	static CGuageHP *Getinstance();
 
-	void Clear();
 
 	void Create(float tCurHP, float tMaxHP);
-	void Destroy();
+
 
 	void SetScene(Node *tpParentNode);
+	void SetCurHP(int tCurHP);
 
 	void AddToScene();
 	void RemoveFromScene();
@@ -48,4 +48,7 @@ public:
 	void SetPosition(Vec2 tVec);
 
 	void BuildGuageWithDamage(float tDamage);
+
+	void Destroy();
+
 };

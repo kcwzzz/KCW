@@ -14,7 +14,7 @@ CGuageHP *CGuageHP::Getinstance()
 
 CGuageHP::CGuageHP()
 {
-	Clear();
+
 }
 
 CGuageHP::~CGuageHP()
@@ -22,31 +22,15 @@ CGuageHP::~CGuageHP()
 	Destroy();
 }
 
-void CGuageHP::Clear()
-{
-	mCurHP = 0.0f;
-	mMaxHP = 0.0f;
-
-	mHPUIRatio = 0.0f;
-
-	mpParentNode = NULL;
-	mpSprGuargeBar = NULL;
-	mpProgressTimer = NULL;
-}
-
-
-
 
 void CGuageHP:: Create(float tCurHP, float tMaxHP)
 {
 	mCurHP = tCurHP;
 	mMaxHP = tMaxHP;
 
+	//HPBar ³ì»ö
 	mpSprGuargeBar = Sprite::create("HPbar_Green.png");
 	mpSprGuargeBar->retain();
-
-	mpSprHalfHPBar = Sprite::create("HPbar.png");
-	mpSprHalfHPBar->retain();
 
 	mpProgressTimer = ProgressTimer::create(mpSprGuargeBar);
 	mpProgressTimer->retain();
@@ -56,7 +40,11 @@ void CGuageHP:: Create(float tCurHP, float tMaxHP)
 	mpProgressTimer->setBarChangeRate(Vec2(1, 0));
 	mpProgressTimer->setReverseDirection(false);
 	mpProgressTimer->setPercentage(100.0f);
-	
+
+	//HPBar »¡°£»ö
+	mpSprHalfHPBar = Sprite::create("HPbar.png");
+	mpSprHalfHPBar->retain();
+		
 	mpProgressTimerHalf = ProgressTimer::create(mpSprHalfHPBar);
 	mpProgressTimerHalf->retain();
 	mpProgressTimerHalf->setAnchorPoint(Vec2(0, 0));
@@ -66,31 +54,24 @@ void CGuageHP:: Create(float tCurHP, float tMaxHP)
 	mpProgressTimerHalf->setReverseDirection(false);
 	mpProgressTimerHalf->setPercentage(100.0f);
 	mpProgressTimerHalf->setVisible(false);
+
+	mpSprBGbar = Sprite::create("HPbar_BG.png");
+	mpSprBGbar->retain();
+	mpSprBGbar->setAnchorPoint(Vec2(0, 0));
+
+	mpHPbar = new Label();
+	memset(tszTemp, 0, 64);
+
 }
 
 void CGuageHP::PrintScore()
 {
-	char tszTemp[512];
-	memset(tszTemp, 0, 512);
-	std::sprintf(tszTemp, "%d / %d", mCurHP, mMaxHP);
+	std::sprintf(tszTemp, "Hero HP :     %d / %d", (int)mCurHP, (int)mMaxHP);
 	std::string tString = tszTemp;
-	mpCurHP->setString(tString);
-}
-
-void CGuageHP::Destroy()
-{
-	if (NULL != mpProgressTimer)
-	{
-		mpProgressTimer->release();
-		mpProgressTimer = NULL;
-	}
-	if (NULL != mpProgressTimerHalf)
-	{
-		mpProgressTimerHalf->release();
-		mpProgressTimerHalf = NULL;
-	}
-
-	Clear();
+	mpHPbar->setString(tString);
+	mpHPbar->setSystemFontSize (25.0f);
+	mpHPbar->setColor(Color3B( 0, 0, 0));
+	mpHPbar->setAnchorPoint(Vec2(0, 0));
 }
 
 void CGuageHP::SetScene(Node *tpParentNode)
@@ -101,9 +82,10 @@ void CGuageHP::SetScene(Node *tpParentNode)
 
 void CGuageHP:: AddToScene()
 {
-	mpParentNode->addChild(mpProgressTimer);
-	mpParentNode->addChild(mpProgressTimerHalf);
-	mpParentNode->addChild(mpTitleLabel, 5);
+	mpParentNode->addChild(mpProgressTimer,3);
+	mpParentNode->addChild(mpProgressTimerHalf,3);
+	mpParentNode->addChild(mpHPbar, 5);
+	mpParentNode->addChild(mpSprBGbar,1);
 }
 
 
@@ -117,12 +99,12 @@ void CGuageHP::SetPosition(Vec2 tVec)
 {
 	mpProgressTimer->setPosition(tVec);
 	mpProgressTimerHalf->setPosition(tVec);
-	mpTitleLabel->setPosition(tVec);
+	mpSprBGbar->setPosition(tVec);
+	mpHPbar->setPosition(tVec + Vec2(70,5));
 }
 
 void CGuageHP::BuildGuageWithDamage(float tDamage)
 {
-	mCurHP = mCurHP - tDamage;
 	float tRatio = mCurHP*100 / mMaxHP;
 	mpProgressTimer->setPercentage(tRatio);
 	mpProgressTimerHalf->setPercentage(tRatio);
@@ -138,7 +120,22 @@ void CGuageHP::BuildGuageWithDamage(float tDamage)
 	this->PrintScore();
 }
 
-void Clean()
-{
 
+void CGuageHP::SetCurHP(int tCurHP)
+{
+	mCurHP = tCurHP;
+}
+
+void CGuageHP::Destroy()
+{
+	if (NULL != mpProgressTimer)
+	{
+		mpProgressTimer->release();
+		mpProgressTimer = NULL;
+	}
+	if (NULL != mpProgressTimerHalf)
+	{
+		mpProgressTimerHalf->release();
+		mpProgressTimerHalf = NULL;
+	}
 }

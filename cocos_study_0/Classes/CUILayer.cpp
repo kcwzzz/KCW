@@ -28,7 +28,9 @@ void CUILayer::CreateLayer()
 	mpUILayer->setPosition(Vec2(0, 0));
 	this->addChild(mpUILayer, 10);
 
-	CGuageHP::Getinstance()->Create;
+	CGuageHP::Getinstance()->SetScene(this);
+
+	//CGuageHP::Getinstance()->Create;
 }
 
 
@@ -46,7 +48,7 @@ void CUILayer::CreateBtnAttack()
 		"CloseSelected.png",
 		CC_CALLBACK_1(CUILayer::menuAttackCallback, this));
 
-	closeItem->setPosition(Vec2(800, 300));
+	closeItem->setPosition(Vec2(800, 200));
 
 	auto menu = Menu::create(closeItem, NULL);
 	menu->setPosition(Vec2::ZERO);

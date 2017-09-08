@@ -1,7 +1,7 @@
 #include "TitleScene.h"
 #include "SimpleAudioEngine.h"
 #include "ActorSelectScene.h"
-
+#include "CSound.h"
 USING_NS_CC;
 
 Scene* TitleScene::createScene()
@@ -25,13 +25,16 @@ bool TitleScene::init()
 	TitleText();
 	CloseGame();
 	BtnStartGame();
+
+	CSound::Getinstance()->Create();
+	CSound::Getinstance()->PlayBGM(0);
 		
 	return true;
 }
 void TitleScene:: TitleText()
 {
 	mpTitleLabel = Label::createWithTTF("Dash Hero", "fonts/BMJUA_ttf.ttf", 50);
-	mpTitleLabel->setPosition(Vec2(240, 540));
+	mpTitleLabel->setPosition(Vec2(512, 540));
 	this->addChild(mpTitleLabel, 5);
 
 	auto Change_Red = TintTo::create(3, 192, 0, 0);
@@ -69,7 +72,7 @@ void  TitleScene::TitleBackGround()
 	tpNode->addChild(tBackground_0,1,Vec2(1.0f, 0.0f), Vec2(0,0) );
 	//tpNode->setPosition(0, 0);
 
-	auto go = MoveBy::create(6, Vec2(-1280+480, 0));
+	auto go = MoveBy::create(6, Vec2(-1280, 0));
 	auto goBack = go->reverse();
 	auto seq = Sequence::create(go, goBack, NULL);
 	auto tRepeatFoever = RepeatForever::create(seq);
@@ -85,7 +88,7 @@ void TitleScene::BtnStartGame()
 	BtnStartGame->setFontSize(200);
 
 	auto tStartMenu = Menu::create(BtnStartGame, NULL);
-	tStartMenu->setPosition(Vec2(240, 180));
+	tStartMenu->setPosition(Vec2(512, 180));
 	this->addChild(tStartMenu, 5);
 }
 

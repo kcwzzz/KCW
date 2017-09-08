@@ -11,10 +11,16 @@ protected:
 	Sprite *mpSprite_0 = NULL;
 	Sprite *mpSprite_1 = NULL;
 
+	Sprite *mpBGsprite_0 = NULL;
+	Sprite *mpBGsprite_1 = NULL;
+
 public:
 
 	void OnLoadStageInfo_0(Ref *pSender);
 	void OnLoadStageInfo_1(Ref *pSender);
+
+	void FadeOutBG_0();
+	void FadeOutBG_1();
 
 	static cocos2d::Scene *createScene();
 	virtual bool init();

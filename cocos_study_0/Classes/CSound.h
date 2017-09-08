@@ -12,7 +12,7 @@ class CSound
 private:
 
 	static CSound *mpInstance;
-	string mStringBGMArray[1] = { "" };
+	string mStringBGMArray[3] = { "" };
 	string mStringEffectArray[1] = { "" };
 
 

@@ -31,7 +31,7 @@ void CEnemy::Create()
 
 	mpColisionBox = Sprite::create("ColisionCheckBar.png");
 	mpColisionBox->retain();
-	mpColisionBox->setPosition(mAttackVec);	
+	mpColisionBox->setPosition(mColVec);	
 }
 
 void CEnemy::Dir_Selector()

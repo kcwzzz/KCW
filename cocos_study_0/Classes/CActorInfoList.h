@@ -19,5 +19,6 @@ public :
 	unsigned int mId = 0;
 
 	string mImageFileName;
+	string mAttImageFileName;
 
 };

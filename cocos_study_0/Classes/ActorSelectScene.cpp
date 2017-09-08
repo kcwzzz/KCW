@@ -2,6 +2,8 @@
 #include "SimpleAudioEngine.h"
 #include "DataDriven.h"
 #include "GameScene.h"
+#include "CSound.h"
+
 USING_NS_CC;
 
 Scene* ActorSelectScene::createScene()
@@ -17,6 +19,8 @@ bool ActorSelectScene::init()
 	}
 
 	DataDriven::GetInstance()->CreateActor();
+	CSound::Getinstance()->Create();
+	CSound::Getinstance()->PlayBGM(1);
 
 	auto visibleSize = Director::getInstance()->getVisibleSize();
 	Vec2 origin = Director::getInstance()->getVisibleOrigin();
@@ -26,18 +30,35 @@ bool ActorSelectScene::init()
 		"CloseSelected.png",
 		CC_CALLBACK_1(ActorSelectScene::menuCloseCallback, this));
 
+	mpBGsprite_0 = Sprite::create("Antor_1.png");
+	mpBGsprite_0->retain();
+	mpBGsprite_0->setAnchorPoint(Vec2(0, 0));
+	mpBGsprite_0->setPosition(Vec2(0, 0));
+	this->addChild(mpBGsprite_0);
+
+	mpBGsprite_1 = Sprite::create("Antor_2.png");
+	mpBGsprite_1->retain();
+	mpBGsprite_1->setAnchorPoint(Vec2(0, 0));
+	mpBGsprite_1->setPosition(Vec2(512, 0));
+	this->addChild(mpBGsprite_1);
+
 	closeItem->setPosition(Vec2(origin.x + visibleSize.width - closeItem->getContentSize().width / 2,
 		origin.y + closeItem->getContentSize().height / 2));
 	
+	/*
+	auto tSeq_0 = Sequence::create(
+		CallFunc::create(CC_CALLBACK_0(ActorSelectScene::FadeOutBG_1, this)),
+		CallFunc::create(CC_CALLBACK_1(ActorSelectScene::OnLoadStageInfo_0, this)), NULL	);
+	*/
 	auto SelectActor_0 = MenuItemImage::create(
 		"Hero_1_Select.png",
-		"HelloWorld.png",
+		"Hero_1_Select.png",
 		CC_CALLBACK_1(ActorSelectScene::OnLoadStageInfo_0, this));
 	SelectActor_0->setPosition(Vec2(300, 200));
 
 	auto SelectActor_1 = MenuItemImage::create(
 		"Hero_2_Select.png",
-		"HelloWorld.png",
+		"Hero_2_Select.png",		
 		CC_CALLBACK_1(ActorSelectScene::OnLoadStageInfo_1, this));
 	SelectActor_1->setPosition(Vec2(700, 200));
 
@@ -55,6 +76,22 @@ void ActorSelectScene::OnLoadStageInfo_0(Ref* pSender)
 	auto pScene = GameScene::createScene();
 	Director::getInstance()->pushScene(pScene);
 }
+
+void ActorSelectScene ::FadeOutBG_0()
+{
+	auto tAction = FadeOut::create(1.5f);
+	
+	mpBGsprite_0->runAction(tAction);
+}
+
+void ActorSelectScene::FadeOutBG_1()
+{
+	auto tAction = FadeOut::create(1.5f);
+	
+	mpBGsprite_1->runAction(tAction);
+}
+
+
 
 void ActorSelectScene::OnLoadStageInfo_1(Ref* pSender)
 {

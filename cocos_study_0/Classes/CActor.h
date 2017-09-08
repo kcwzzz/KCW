@@ -12,7 +12,7 @@ class CBackgroundLayer;
 class CVirtualPad;
 class CActorAniBox;
 class CObjectAniBox;
-class CGuageHP;
+//class CGuageHP;
 
 class CActor
 {
@@ -30,7 +30,9 @@ protected:
 	float mSpeed = 0.0f;
 	float mSpeedRatio = 1.0f;
 	string mImageSpriteFile;
-	
+	string mAttImageFileName;
+
+
 	CActorAniBox *mpActorAniBox = NULL;
 	Vec2 mVec;
 
@@ -38,11 +40,13 @@ protected:
 	CObjectAniBox *mpObjectAniBox = NULL;
 	Sprite *mpAttSprite = NULL;
 	Sprite *mpColisionBox = NULL;
-	Vec2 mAttackVec;//충돌박스의 위치
+	Vec2 mColVec;//충돌박스의 위치	
+	
+	Vec2 mAttVec;//충돌박스의 위치
 
 
 	CVirtualPad *mpVirtualPad = NULL;
-	CGuageHP *mpGuageHP = NULL;
+	//CGuageHP *mpGuageHP = NULL;
 
 	Node *mpScene = NULL;
 	TMXTiledMap *mpTiledMap = NULL;
@@ -64,7 +68,7 @@ public:
 	virtual void Create();
 
 	virtual void SetScene(Node *tpScene);
-	virtual void ActorHPGauge(Node *tpNode);
+	//virtual void ActorHPGauge(Node *tpNode);
 	virtual void Dir_Selector();
 	virtual void SetmDir(int tDir);
 	virtual void SetFsm(int tFsm);

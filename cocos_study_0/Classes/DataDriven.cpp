@@ -44,11 +44,15 @@ void DataDriven::CreateActor()
 	{
 		int tId = tActorInfoList[i].GetObject()["id"].GetInt();
 		string tImageFileName = tActorInfoList[i].GetObject()["ImageFileName"].GetString();
+		string tAttImageFileName = tActorInfoList[i].GetObject()["AttacImageFileName"].GetString();
+
 
 		tpActorInfoList = NULL;
 		tpActorInfoList = new CActorInfoList();
 		tpActorInfoList->mId = tId;
 		tpActorInfoList->mImageFileName = tImageFileName;
+		tpActorInfoList->mAttImageFileName = tAttImageFileName;
+
 
 		const rapidjson::Value &tActorStatus = tActorInfoList[i].GetObject()["ActorStatus"];
 

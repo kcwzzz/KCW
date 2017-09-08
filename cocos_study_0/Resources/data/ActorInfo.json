@@ -3,6 +3,7 @@
     {
       "id": 0,
       "ImageFileName": "Hero_1.png",
+      "AttacImageFileName": "Attack_1.png",
       "ActorStatus": [
         {
           "Level": 1,
@@ -17,6 +18,7 @@
     {
       "id": 1,
       "ImageFileName": "Hero_2.png",
+      "AttacImageFileName": "Attack_2.png",
       "ActorStatus": [
         {
           "Level": 1,

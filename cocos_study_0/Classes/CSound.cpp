@@ -23,7 +23,9 @@ void CSound::Create()
 	SimpleAudioEngine::getInstance()->setBackgroundMusicVolume(0.5);
 	SimpleAudioEngine::getInstance()->setEffectsVolume(0.5);
 
-	mStringBGMArray[0] = "Sounds/hearthstone.mp3";
+	mStringBGMArray[0] = "Sounds/BGTitleScene.mp3";
+	mStringBGMArray[1] = "Sounds/BGSelectScene.mp3";
+	mStringBGMArray[2] = "Sounds/BGGameScene.mp3";
 	mStringEffectArray[0] = "Sounds/effect1.wav";
 
 	int ti = 0;

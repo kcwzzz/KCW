@@ -12,6 +12,7 @@
 #include "CActorStatus.h"
 #include "FSM_Manager.h"
 #include "Define.h"
+#include "CGuageHP.h"
 
 USING_NS_CC;
 
@@ -27,11 +28,11 @@ CActor::~CActor()
 
 void CActor::Clear()
 {
-
 	CActorInfoList *tpInfo = NULL;
 	tpInfo = DataDriven::GetInstance()->GetCurActorInfo();
 
 	mImageSpriteFile = tpInfo->mImageFileName;
+	mAttImageFileName = tpInfo->mAttImageFileName;
 
 	if (NULL != tpInfo)
 	{
@@ -65,26 +66,22 @@ void CActor::Create()
 
 	mpObjectAniBox = new CObjectAniBox();
 	mpObjectAniBox->SetScene(mpScene);
-	mpObjectAniBox->CreateAniBox("Attack.png", Vec2(0, 0), 153, 153, 0.05f, 5);
+	mpObjectAniBox->CreateAniBox(mAttImageFileName, Vec2(0, 0), 153, 153, 0.05f, 5);
 	mpAttSprite = mpObjectAniBox->GetSprite();
 
 	mpColisionBox = Sprite::create("Coin_1.png");
 	mpColisionBox->retain();
-	mpColisionBox->setPosition(mAttackVec);
+	mpColisionBox->setPosition(mColVec);
 	mpColisionBox->setVisible(0);
 
 	mpBGLayer = new CBackgroundLayer();
 	mpBGLayer->Create();
 	mpBGLayer->retain();
-}
 
-void CActor::ActorHPGauge(Node *tpNode)
-{
-	mpGuageHP = new CGuageHP();
-	mpGuageHP->Create(mCurHP, mMaxHP);
-	mpGuageHP->SetScene(tpNode);
-	mpGuageHP->SetPosition(Vec2(50, 730));
-	mpGuageHP->AddToScene();
+	CGuageHP::Getinstance()->Create(mCurHP, mMaxHP);
+	CGuageHP::Getinstance()->PrintScore();
+	CGuageHP::Getinstance()->SetPosition(Vec2(50, 730));
+	CGuageHP::Getinstance()->AddToScene();
 }
 
 void CActor::SetScene(Node *tpScene)
@@ -204,8 +201,8 @@ void CActor::MoveActor()
 	int tValueY = 0;
 
 	setPosition(mVec);
-	mpColisionBox->setPosition(mAttackVec);
-	mpObjectAniBox->SetPosition(mAttackVec);
+	mpColisionBox->setPosition(mColVec);
+	mpObjectAniBox->SetPosition(mAttVec);
 
 	if (mVec.x > 0 && mVec.x < Map_Width)
 	{
@@ -264,29 +261,38 @@ void CActor::FollowObject()
 	{
 	case Up_Dir:
 	{
-		mAttackVec.x = mVec.x;
-		mAttackVec.y = mVec.y + 32;
+		mAttVec.x = mVec.x;
+		mAttVec.y = mVec.y + 64;
+		mColVec.x = mVec.x;
+		mColVec.y = mVec.y + 32;
 	}
 	break;
 
 	case Down_Dir:
 	{
-		mAttackVec.x = mVec.x;
-		mAttackVec.y = mVec.y - 32;
+		mAttVec.x = mVec.x;
+		mAttVec.y = mVec.y - 64;
+		mColVec.x = mVec.x;
+		mColVec.y = mVec.y - 32;
+
 	}
 	break;
 
 	case Left_Dir:
 	{
-		mAttackVec.x = mVec.x - 32;
-		mAttackVec.y = mVec.y;
+		mAttVec.x = mVec.x - 64;
+		mAttVec.y = mVec.y;
+		mColVec.x = mVec.x - 32;
+		mColVec.y = mVec.y;
 	}
 	break;
 
 	case Right_Dir:
 	{
-		mAttackVec.x = mVec.x + 32;
-		mAttackVec.y = mVec.y;
+		mAttVec.x = mVec.x + 64;
+		mAttVec.y = mVec.y;
+		mColVec.x = mVec.x + 32;
+		mColVec.y = mVec.y;
 	}
 	break;
 	}
@@ -331,7 +337,9 @@ float CActor::GetCurHP()
 void CActor::SetDamaged(int tint)
 {
 	mCurHP = mCurHP - tint;
-	mpGuageHP->BuildGuageWithDamage(tint);
+	CGuageHP::Getinstance()->SetCurHP(mCurHP);
+	CGuageHP::Getinstance()->BuildGuageWithDamage(tint);
+	//mpGuageHP->BuildGuageWithDamage(tint);
 }
 
 int CActor::ColisionGeometry()
