@@ -68,22 +68,22 @@ bool ActorSelectScene::init()
 
 void ActorSelectScene::SeqStageChange_0()
 {
-	auto tSeq = Sequence::create(
-		CallFunc::create(CC_CALLBACK_0(ActorSelectScene::FadeOutBG_1, this)),
-		CallFunc::create(CC_CALLBACK_0(ActorSelectScene::OnLoadStage_0, this)), 
-		NULL);
+	auto tSeq = Sequence::create(FadeOut::create(1.0f),
+		CallFunc::create(CC_CALLBACK_0(ActorSelectScene::OnLoadStage_0, this)), NULL);
 
-	mpBGsprite_0->runAction(tSeq);
+	auto tRepeat = Repeat::create(tSeq, 1);
+
+	mpBGsprite_1->runAction(tRepeat);
 }
 
 void ActorSelectScene::SeqStageChange_1()
 {
-	auto tSeq = Sequence::create(
-		CallFunc::create(CC_CALLBACK_0(ActorSelectScene::FadeOutBG_0, this)),
-		CallFunc::create(CC_CALLBACK_0(ActorSelectScene::OnLoadStage_1, this)),
-		NULL);
+	auto tSeq = Sequence::create(FadeOut::create(1.0f),
+		CallFunc::create(CC_CALLBACK_0(ActorSelectScene::OnLoadStage_1, this)), NULL);
 
-	mpBGsprite_1->runAction(tSeq);
+	auto tRepeat = Repeat::create(tSeq, 1);
+
+	mpBGsprite_0->runAction(tRepeat);
 }
 
 
@@ -117,21 +117,6 @@ void ActorSelectScene::OnLoadStage_1()
 
 	auto pScene = GameScene::createScene();
 	Director::getInstance()->pushScene(pScene);
-}
-
-
-void ActorSelectScene::FadeOutBG_0()
-{
-	auto tAction = FadeOut::create(5.0f);
-
-	mpBGsprite_0->runAction(tAction);
-}
-
-void ActorSelectScene::FadeOutBG_1()
-{
-	auto tAction = FadeOut::create(5.0f);
-
-	mpBGsprite_1->runAction(tAction);
 }
 
 void ActorSelectScene::menuCloseCallback(Ref* pSender)

@@ -33,8 +33,8 @@ public:
 	void CreateBtnAttack();
 	void menuAttackCallback(Ref* pSender);
 	
-	void CreateBtnTestDamaged();
-	void menuAttackdCallback(Ref* pSender);
+	//void CreateBtnTestDamaged();
+	//void menuAttackdCallback(Ref* pSender);
 	
 	void GameOver();
 

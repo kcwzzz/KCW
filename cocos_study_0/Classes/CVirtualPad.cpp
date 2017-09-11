@@ -18,14 +18,14 @@ CVirtualPad::~CVirtualPad()
 
 void CVirtualPad::create(Layer* layer, Vec2 tVec)
 {
-	auto sprite = Sprite::create("coin.png");
+	auto sprite = Sprite::create("Joypad.jpg");
 	sprite->setPosition(tVec);
 	sprite->setScale(PADSIZE);
 	//sprite->setOpacity(100);
 	mpSprJoysticPad = sprite;
 	layer->addChild(sprite, 20);
 
-	sprite = Sprite::create("CloseSelected.png");
+	sprite = Sprite::create("Stick.jpg");
 	sprite->setPosition(tVec);
 	sprite->setScale(PADSIZE);
 	//sprite->setOpacity(150);

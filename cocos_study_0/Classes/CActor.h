@@ -16,7 +16,6 @@ class CObjectAniBox;
 
 class CActor
 {
-
 private :
 
 protected:	
@@ -25,13 +24,25 @@ protected:
 	float mEXP = 0.0f;
 	float mMaxHP = 0.0f;
 	float mCurHP = 0.0f;
+
+	float mMaxSP = 0.0f;
+	float mCurSP = 0.0f;
+
 	float mAP = 0.0f;
 	float mDefence = 0.0f;
 	float mSpeed = 0.0f;
 	float mSpeedRatio = 1.0f;
+	
 	string mImageSpriteFile;
+	int mActorImageSizeX = 0;
+	int mActorImageSizeY = 0;
+	float mActorImageSetDelay = 0.0f;
+	
 	string mAttImageFileName;
-
+	int mAttackImageSizeX = 0;
+	int mAttackImageSizeY = 0;
+	float mAttackImageSetDelay = 0.0f;
+	int mSetAttackImageCount = 0;
 
 	CActorAniBox *mpActorAniBox = NULL;
 	Vec2 mVec;
@@ -112,12 +123,6 @@ public:
 
 	virtual void DeadState();
 	virtual void DamagedState();
-
-
-
-
-
-
 	//
 
 	//CGuageHP : HP bar 노출에 사용

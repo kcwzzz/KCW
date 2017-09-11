@@ -56,7 +56,6 @@ void GameScene::CreateUILayer()
 	mpUILayer->VirtualPad();
 	mpUILayer->CreateBtnAttack();
 	mpUILayer->GetDir();
-	mpUILayer->CreateBtnTestDamaged();
 
 	mpUILayer->SetScene(this);
 
@@ -80,7 +79,6 @@ void GameScene::CreateActor()
 	mpActor = new CActor();
 	mpActor->SetScene(mpBackgroundLayer);
 	mpActor->Create();
-	//mpActor->ActorHPGauge(mpUILayer);
 	mpActor->SetVirtualPad(mpUILayer->GetVirtualPad());
 
 	mpActor->FollowActor();
@@ -90,19 +88,28 @@ void GameScene::CreateActor()
 
 void GameScene::CreateEnemy()
 {
-	mpEnemy = new CEnemy();
-	mpEnemy->SetScene(mpBackgroundLayer);
-	mpEnemy->Create();
-	mpEnemy->setPosition(Vec2(500, 600));
-	mpEnemy->Build();
+	int ti = 0;
+	for (ti = 0; ti < 10; ti++)
+	{
+		mpEnemy[ti] = new CEnemy();				//  CEnemy를 동적 할당
+		mpEnemy[ti]->SetScene(mpBackgroundLayer);
+		mpEnemy[ti]->Create();					//  Sprite 생성 및 앵커포인트 설정
+		mpEnemy[ti]->setPosition(Vec2(0 + 120 * ti, 450 + 20 * ti));	//  SetPosition
+		mpEnemy[ti]->Build();					//  addChild
+	}
 }
 
 void GameScene::update(float dt)
 {
-	mpActor-> FSM_Selector();
+	mpActor->FSM_Selector();
 	mpActor->MoveActor();
 
-	mpEnemy->MovePatten(dt);
+	int ti = 0;
+	for (ti = 0; ti < 10; ti++)
+	{
+		mpEnemy[ti]->MovePatten(dt);
+	}
+
 	this->Colision();
 
 }
@@ -138,21 +145,20 @@ void GameScene::DamagedActor()
 
 void GameScene::Colision()
 {
-	CActor *tpActor = NULL;
-	tpActor = mpActor;
+	mRectActor = mpActor->GetSprite()->getBoundingBox();
+	mRectActorAttack = mpActor->GetAttackSprite()->getBoundingBox();
 
-	CEnemy *tpEnemy = NULL;
-	tpEnemy = mpEnemy;
-
-	Rect tRectActor = tpActor->GetSprite()->getBoundingBox();
-	Rect tRectActorAttack = tpActor->GetAttackSprite()->getBoundingBox();
-	Rect tRectEnemy = tpEnemy->GetSprite()->getBoundingBox();
-	Rect tRectEnemyAttack = tpEnemy->GetAttackSprite()->getBoundingBox();
+	int ti = 0;
+	for (ti = 0; ti < 10; ti++)
+	{
+		mRectEnemy[ti] = mpEnemy[ti]->GetSprite()->getBoundingBox();
+		mRectEnemyAttack[ti] = mpEnemy[ti]->GetAttackSprite()->getBoundingBox();
+	
 
 	// Actor의 공격이 Enemy를 맞출 경우
 	if (true == mpActor->GetAttackSprite()->isVisible())
 	{
-		if (true == tRectActorAttack.intersectsRect(tRectEnemy))
+		if (true == mRectActorAttack.intersectsRect(mRectEnemy[ti]))
 		{
 			//log("good");
 		}
@@ -167,31 +173,32 @@ void GameScene::Colision()
 	}
 
 	// Actor와 Enemy가 부딫히는 경우
-	if (true == tRectActor.intersectsRect(tRectEnemy))
-	{	tpActor->SetDamaged(tpEnemy->GetAP());
+	if (true == mRectActor.intersectsRect(mRectEnemy[ti]))
+	{
+		mpActor->SetDamaged(mpEnemy[ti]->GetAP());
 		FSM_Manager::Getinstance()->SetNowState(DAMAGED);
 
-		int tEnemyDir = tpEnemy->GetmDir();
+		int tEnemyDir = mpEnemy[ti]->GetmDir();
 		if (Up_Dir == tEnemyDir)
 		{
-			tpActor->setPosition(Vec2(tpActor->GetVec().x, tpActor->GetVec().y + 96));
+			mpActor->setPosition(Vec2(mpActor->GetVec().x, mpActor->GetVec().y + 96));
 		}
-		else if(Down_Dir == tEnemyDir)
+		else if (Down_Dir == tEnemyDir)
 		{
-			tpActor->setPosition(Vec2(tpActor->GetVec().x, tpActor->GetVec().y - 96));
+			mpActor->setPosition(Vec2(mpActor->GetVec().x, mpActor->GetVec().y - 96));
 		}
 		else if (Left_Dir == tEnemyDir)
 		{
-			tpActor->setPosition(Vec2(tpActor->GetVec().x - 96, tpActor->GetVec().y));
+			mpActor->setPosition(Vec2(mpActor->GetVec().x - 96, mpActor->GetVec().y));
 		}
 		else if (Right_Dir == tEnemyDir)
 		{
-			tpActor->setPosition(Vec2(tpActor->GetVec().x + 96, tpActor->GetVec().y));
+			mpActor->setPosition(Vec2(mpActor->GetVec().x + 96, mpActor->GetVec().y));
 		}
 	}
 	else
 	{
 		//log("normal");
 	}
-
+	}
 }

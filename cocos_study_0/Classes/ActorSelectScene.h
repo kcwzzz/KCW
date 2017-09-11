@@ -24,12 +24,6 @@ public:
 
 	void SeqStageChange_0();
 	void SeqStageChange_1();
-	
-	void FadeOutBG_0();
-	void FadeOutBG_1();
-
-
-
 
 	static cocos2d::Scene *createScene();
 	virtual bool init();

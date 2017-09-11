@@ -23,11 +23,15 @@ protected:
 	CBackgroundLayer *mpBackgroundLayer = NULL;
 
 	TMXTiledMap *mpTilemap = NULL;
-
 	ActionCamera *mpCamera = NULL;
-	CActor *mpActor = NULL;			//초기화
-	CEnemy *mpEnemy = NULL;
 
+	CActor *mpActor = NULL;			//초기화
+	Rect mRectActor;
+	Rect mRectActorAttack;
+		
+	CEnemy *mpEnemy[10];
+	Rect mRectEnemy[10];
+	Rect mRectEnemyAttack[10];
 
 	CAniBox *mpAniBox = NULL;			//초기화
 	Size winSize;

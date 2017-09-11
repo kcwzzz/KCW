@@ -6,13 +6,17 @@
 #include "CActorAniBox.h"
 #include "CObjectAniBox.h"
 #include "CGuageHP.h"
+#include "CGuageSP.h"
+
 #include "CSound.h"
 #include "DataDriven.h"
 #include "CActorInfoList.h"
 #include "CActorStatus.h"
+#include "CActorImage.h"
+#include "CAttackImage.h"
+
 #include "FSM_Manager.h"
 #include "Define.h"
-#include "CGuageHP.h"
 
 USING_NS_CC;
 
@@ -31,15 +35,35 @@ void CActor::Clear()
 	CActorInfoList *tpInfo = NULL;
 	tpInfo = DataDriven::GetInstance()->GetCurActorInfo();
 
-	mImageSpriteFile = tpInfo->mImageFileName;
-	mAttImageFileName = tpInfo->mAttImageFileName;
-
 	if (NULL != tpInfo)
 	{
-		int tCount = 0;
-		tCount = tpInfo->mActorStatusVec.size();
+		int tActorImageCount = 0;
+		tActorImageCount = tpInfo->mActorImageVec.size();
 
-		for (int ti = 0; ti < tCount; ti++)
+		for (int ti = 0; ti < tActorImageCount; ti++)
+		{
+			mImageSpriteFile = tpInfo->mActorImageVec[ti]->mImageFileName;
+			mActorImageSizeX = tpInfo->mActorImageVec[ti]->mImageSize_x;
+			mActorImageSizeY = tpInfo->mActorImageVec[ti]->mImageSize_y;
+			mActorImageSetDelay = tpInfo->mActorImageVec[ti]->mSetDelay;
+		}
+
+		int tAttackImageCount = 0;
+		tAttackImageCount = tpInfo->mAttackImageVec.size();
+
+		for (int ti = 0; ti < tAttackImageCount; ti++)
+		{
+			mAttImageFileName = tpInfo->mAttackImageVec[ti]->mImageFileName;
+			mAttackImageSizeX = tpInfo->mAttackImageVec[ti]->mImageSize_x;
+			mAttackImageSizeY = tpInfo->mAttackImageVec[ti]->mImageSize_y;
+			mAttackImageSetDelay = tpInfo->mAttackImageVec[ti]->mSetDelay;
+			mSetAttackImageCount = tpInfo->mAttackImageVec[ti]->mSetImageCount;
+		}
+
+		int tStatusCount = 0;
+		tStatusCount = tpInfo->mActorStatusVec.size();
+
+		for (int ti = 0; ti < tStatusCount; ti++)
 		{
 			mState = 0;
 			mDefence = 5;
@@ -48,11 +72,13 @@ void CActor::Clear()
 			mLevel = tpInfo->mActorStatusVec[ti]->mLevel;
 			mEXP = tpInfo->mActorStatusVec[ti]->mExp;
 			mMaxHP = tpInfo->mActorStatusVec[ti]->mMaxHP;
+			mMaxSP = tpInfo->mActorStatusVec[ti]->mMaxSP;
 			mAP = tpInfo->mActorStatusVec[ti]->mAP;
 			mSpeed = tpInfo->mActorStatusVec[ti]->mSpeed;;
 			mSpeedRatio = tpInfo->mActorStatusVec[ti]->mSpeedRatio;
 
 			mCurHP = mMaxHP;
+			mCurSP = mMaxSP;
 		}
 	}
 }
@@ -62,11 +88,11 @@ void CActor::Create()
 {
 	mpActorAniBox = new CActorAniBox();
 	mpActorAniBox->SetScene(mpScene);
-	mpActorAniBox->CreateAniBox(mImageSpriteFile, Vec2(0, 0), 64, 64, 0.1f);
+	mpActorAniBox->CreateAniBox(mImageSpriteFile, Vec2(0, 0), mActorImageSizeX, mActorImageSizeY, mActorImageSetDelay);
 
 	mpObjectAniBox = new CObjectAniBox();
 	mpObjectAniBox->SetScene(mpScene);
-	mpObjectAniBox->CreateAniBox(mAttImageFileName, Vec2(0, 0), 153, 153, 0.05f, 5);
+	mpObjectAniBox->CreateAniBox(mAttImageFileName, Vec2(0, 0), mAttackImageSizeX, mAttackImageSizeY, mAttackImageSetDelay, mSetAttackImageCount);
 	mpAttSprite = mpObjectAniBox->GetSprite();
 
 	mpColisionBox = Sprite::create("Coin_1.png");
@@ -82,6 +108,11 @@ void CActor::Create()
 	CGuageHP::Getinstance()->PrintScore();
 	CGuageHP::Getinstance()->SetPosition(Vec2(50, 730));
 	CGuageHP::Getinstance()->AddToScene();
+
+	CGuageSP::Getinstance()->Create(mCurSP, mMaxSP);
+	CGuageSP::Getinstance()->PrintScore();
+	CGuageSP::Getinstance()->SetPosition(Vec2(50, 630));
+	CGuageSP::Getinstance()->AddToScene();
 }
 
 void CActor::SetScene(Node *tpScene)

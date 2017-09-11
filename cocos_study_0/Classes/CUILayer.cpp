@@ -3,6 +3,7 @@
 #include "CVirtualPad.h"
 #include "GameScene.h"
 #include "CGuageHP.h"
+#include "CGuageSP.h"
 #include "FSM_Manager.h"
 
 CUILayer *CUILayer::create()
@@ -29,26 +30,25 @@ void CUILayer::CreateLayer()
 	this->addChild(mpUILayer, 10);
 
 	CGuageHP::Getinstance()->SetScene(this);
+	CGuageSP::Getinstance()->SetScene(this);
 
-	//CGuageHP::Getinstance()->Create;
 }
 
 
 void CUILayer::VirtualPad()
 {
 	mpVirtualPad = new CVirtualPad();
-	mpVirtualPad->create(mpUILayer, Vec2(200, 200));
+	mpVirtualPad->create(mpUILayer, Vec2(100, 100));
 }
 
 void CUILayer::CreateBtnAttack()
-{
-	
+{	
 	auto closeItem = MenuItemImage::create(
-		"CloseNormal.png",
-		"CloseSelected.png",
+		"lol_Renekton_W.png",
+		"lol_Renekton_W.png",
 		CC_CALLBACK_1(CUILayer::menuAttackCallback, this));
 
-	closeItem->setPosition(Vec2(800, 200));
+	closeItem->setPosition(Vec2(900, 100));
 
 	auto menu = Menu::create(closeItem, NULL);
 	menu->setPosition(Vec2::ZERO);
@@ -58,12 +58,11 @@ void CUILayer::CreateBtnAttack()
 
 void CUILayer::menuAttackCallback(Ref* pSender)
 {
-	//mpScene->AttackBehavior();
 	FSM_Manager::Getinstance()->SetNowState(ATTACK);
 
 }
 
-
+/*
 void CUILayer::CreateBtnTestDamaged()
 {
 
@@ -84,7 +83,7 @@ void CUILayer::menuAttackdCallback(Ref* pSender)
 {
 	mpScene->DamagedActor();
 }
-
+*/
 void CUILayer::SetUpListener()
 {
 	mpListener = EventListenerTouchAllAtOnce::create();

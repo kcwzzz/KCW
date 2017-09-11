@@ -6,19 +6,22 @@
 using namespace std;
 
 class CActorStatus;
+class CActorImage;
+class CAttackImage;
+
 
 typedef vector<CActorStatus *> CActorStatusVec;
+typedef vector<CActorImage *> CActorImageVec;
+typedef vector<CAttackImage *> CAttackImageVec;
 
 class CActorInfoList
 {
 
 public :
-
-	CActorStatusVec mActorStatusVec;
-
 	unsigned int mId = 0;
 
-	string mImageFileName;
-	string mAttImageFileName;
+	CActorStatusVec mActorStatusVec;
+	CActorImageVec mActorImageVec;
+	CAttackImageVec mAttackImageVec;
 
 };
