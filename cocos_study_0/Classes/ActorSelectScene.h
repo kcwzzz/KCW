@@ -19,8 +19,17 @@ public:
 	void OnLoadStageInfo_0(Ref *pSender);
 	void OnLoadStageInfo_1(Ref *pSender);
 
+	void OnLoadStage_0();
+	void OnLoadStage_1();
+
+	void SeqStageChange_0();
+	void SeqStageChange_1();
+	
 	void FadeOutBG_0();
 	void FadeOutBG_1();
+
+
+
 
 	static cocos2d::Scene *createScene();
 	virtual bool init();
