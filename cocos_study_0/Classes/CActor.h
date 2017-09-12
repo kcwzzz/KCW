@@ -46,9 +46,14 @@ protected:
 
 	CActorAniBox *mpActorAniBox = NULL;
 	Vec2 mVec;
-
-
+	
 	CObjectAniBox *mpObjectAniBox = NULL;
+	CObjectAniBox *mpLevelEffect_0 = NULL;
+	CObjectAniBox *mpLevelEffect_1 = NULL;
+	CObjectAniBox *mpLevelEffect_2 = NULL;
+	CObjectAniBox *mpLevelEffect_3 = NULL;
+
+
 	Sprite *mpAttSprite = NULL;
 	Sprite *mpColisionBox = NULL;
 	Vec2 mColVec;//충돌박스의 위치	
@@ -133,6 +138,15 @@ public:
 	virtual int GetmDir();
 	virtual Vec2 GetVec();
 	void ChangeIdleState();
+
+	void CharacterLevel();
+
+	void State_0();
+	void State_1();
+	void State_2();
+	void State_3();
+
+	void StopAnimations();
 
 public:
 	CActor();

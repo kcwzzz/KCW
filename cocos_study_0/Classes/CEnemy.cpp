@@ -121,3 +121,9 @@ Sprite* CEnemy::GetAttackSprite()
 	return mpAttSprite;
 }
 
+void CEnemy::Build()
+{
+	mpActorAniBox->Build();
+	mpObjectAniBox->Build();
+	mpScene->addChild(mpColisionBox, 5);
+}

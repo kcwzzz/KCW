@@ -15,6 +15,8 @@ private:
 	int mActorState = 0;
 	int mEnemyState = 0;
 
+	int mActorLevel = 0;
+
 protected:
 
 public:
@@ -22,6 +24,9 @@ public:
 
 	int GetNowState();
 	void SetNowState(int tNowState);
+
+	int GetLevel();
+	void SetLevel(int tLevel);
 
 
 };

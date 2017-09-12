@@ -59,7 +59,7 @@ void CUILayer::CreateBtnAttack()
 void CUILayer::menuAttackCallback(Ref* pSender)
 {
 	FSM_Manager::Getinstance()->SetNowState(ATTACK);
-
+	FSM_Manager::Getinstance()->SetLevel(FSM_Manager::Getinstance()->GetLevel()+1);
 }
 
 /*

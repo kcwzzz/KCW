@@ -22,13 +22,13 @@
 
       "ActorStatus":[
         {         
-          "Level": 1,
+          "Level": 0,
           "EXP": 0,
           "MaxHP": 100,
           "Ap": 10,
           "Speed": 10,
           "SpeedRatio": 1,
-          "MaxSP" :  100,
+          "MaxSP" :  100
         }
       ]
     },

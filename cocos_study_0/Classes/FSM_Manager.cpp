@@ -26,3 +26,13 @@ void FSM_Manager::SetNowState(int tNowState)
 {
 	mActorState = tNowState;
 }
+
+int FSM_Manager::GetLevel()
+{
+	return mActorLevel;
+}	
+
+void FSM_Manager::SetLevel(int tLevel)
+{
+	mActorLevel = tLevel;
+}

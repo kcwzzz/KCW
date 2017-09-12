@@ -56,7 +56,6 @@ void GameScene::CreateUILayer()
 	mpUILayer->VirtualPad();
 	mpUILayer->CreateBtnAttack();
 	mpUILayer->GetDir();
-
 	mpUILayer->SetScene(this);
 
 	this->addChild(mpUILayer, 100);
@@ -80,7 +79,6 @@ void GameScene::CreateActor()
 	mpActor->SetScene(mpBackgroundLayer);
 	mpActor->Create();
 	mpActor->SetVirtualPad(mpUILayer->GetVirtualPad());
-
 	mpActor->FollowActor();
 	mpActor->setPosition(Vec2(300, 300));
 	mpActor->Build();
@@ -103,6 +101,7 @@ void GameScene::update(float dt)
 {
 	mpActor->FSM_Selector();
 	mpActor->MoveActor();
+	mpActor->CharacterLevel();
 
 	int ti = 0;
 	for (ti = 0; ti < 10; ti++)

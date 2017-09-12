@@ -99,8 +99,7 @@ void DataDriven::CreateActor()
 			tpActorImage->mSetDelay = tSetDelay;			
 
 			tpActorInfoList->mActorImageVec.push_back(tpActorImage);
-		}
-		
+		}	
 		
 		for (SizeType j = 0; j < tAttackImage.Size(); j++)
 		{
@@ -120,9 +119,6 @@ void DataDriven::CreateActor()
 
 			tpActorInfoList->mAttackImageVec.push_back(tpAttackImage);
 		}
-		
-		
-
 		mActorInfoListVec.push_back(tpActorInfoList);
 	}
 }

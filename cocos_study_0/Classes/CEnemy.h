@@ -21,4 +21,5 @@ public:
 	void MovePatten(float f);
 	void Dir_Selector();
 	Sprite* GetAttackSprite();
+	void Build();
 };

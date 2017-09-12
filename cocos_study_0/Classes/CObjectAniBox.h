@@ -22,6 +22,7 @@ protected:
 
 	Animation *mpAnimationObject = NULL;
 	Animate *mpAnimateObject = NULL;
+	Animate *mpAnimateRepeat = NULL;
 
 	Animate *mpCurAnimate = NULL;
 
@@ -36,7 +37,7 @@ public:
 
 	void CreateAniObject(int tWidth, int tHeight, float tSetDelay, int tFrameCount);
 
-
+	void RunAniFoever();
 
 	void RunAniObject();
 	void RunAniWithCallback(CallFunc *tpFunc);

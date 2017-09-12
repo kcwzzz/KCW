@@ -24,7 +24,6 @@ CActor::CActor()
 {
 	Clear();
 }
-
 CActor::~CActor()
 {
 
@@ -78,7 +77,7 @@ void CActor::Clear()
 			mSpeedRatio = tpInfo->mActorStatusVec[ti]->mSpeedRatio;
 
 			mCurHP = mMaxHP;
-			mCurSP = mMaxSP;
+			mCurSP = 0;
 		}
 	}
 }
@@ -93,6 +92,23 @@ void CActor::Create()
 	mpObjectAniBox = new CObjectAniBox();
 	mpObjectAniBox->SetScene(mpScene);
 	mpObjectAniBox->CreateAniBox(mAttImageFileName, Vec2(0, 0), mAttackImageSizeX, mAttackImageSizeY, mAttackImageSetDelay, mSetAttackImageCount);
+
+	mpLevelEffect_0 = new CObjectAniBox();
+	mpLevelEffect_0->SetScene(mpScene);
+	mpLevelEffect_0->CreateAniBox("Effect_0.png", Vec2(0, 0), 192, 192, 0.1, 18);
+
+	mpLevelEffect_1 = new CObjectAniBox();
+	mpLevelEffect_1->SetScene(mpScene);
+	mpLevelEffect_1->CreateAniBox("Effect_1.png", Vec2(0, 0), 192, 192, 0.1, 30);
+
+	mpLevelEffect_2 = new CObjectAniBox();
+	mpLevelEffect_2->SetScene(mpScene);
+	mpLevelEffect_2->CreateAniBox("Effect_2.png", Vec2(0, 0), 192, 192, 0.1, 10);
+
+	mpLevelEffect_3 = new CObjectAniBox();
+	mpLevelEffect_3->SetScene(mpScene);
+	mpLevelEffect_3->CreateAniBox("Effect_3.png", Vec2(0, 0), 192, 192, 0.1, 14);
+
 	mpAttSprite = mpObjectAniBox->GetSprite();
 
 	mpColisionBox = Sprite::create("Coin_1.png");
@@ -111,7 +127,7 @@ void CActor::Create()
 
 	CGuageSP::Getinstance()->Create(mCurSP, mMaxSP);
 	CGuageSP::Getinstance()->PrintScore();
-	CGuageSP::Getinstance()->SetPosition(Vec2(50, 630));
+	CGuageSP::Getinstance()->SetPosition(Vec2(50, 680));
 	CGuageSP::Getinstance()->AddToScene();
 }
 
@@ -131,6 +147,10 @@ void CActor::Build()
 {
 	mpActorAniBox->Build();
 	mpObjectAniBox->Build();
+	mpLevelEffect_0->Build();
+	mpLevelEffect_1->Build();
+	mpLevelEffect_2->Build();
+	mpLevelEffect_3->Build();
 	mpScene->addChild(mpColisionBox, 5);
 }
 // »ý¼º
@@ -146,7 +166,6 @@ void CActor::Dir_Selector()
 	else
 	{
 		mpActorAniBox->StopMoveAnimation();
-
 		switch (mDir)
 		{
 		case Up_Dir:
@@ -234,6 +253,11 @@ void CActor::MoveActor()
 	setPosition(mVec);
 	mpColisionBox->setPosition(mColVec);
 	mpObjectAniBox->SetPosition(mAttVec);
+
+	mpLevelEffect_0->SetPosition(mVec);
+	mpLevelEffect_1->SetPosition(mVec);
+	mpLevelEffect_2->SetPosition(mVec);
+	mpLevelEffect_3->SetPosition(mVec);
 
 	if (mVec.x > 0 && mVec.x < Map_Width)
 	{
@@ -400,8 +424,7 @@ int CActor::ColisionGeometry()
 void CActor::FSM_Selector()
 {
 	int tState = FSM_Manager::Getinstance()->GetNowState();
-
-	if (tState !=mCurState)
+	if (tState != mCurState)
 	{
 		switch (tState)
 		{
@@ -410,19 +433,19 @@ void CActor::FSM_Selector()
 			IdleState();
 		}
 		break;
-		
+
 		case MOVE:
 		{
 			MoveState();
 		}
 		break;
-		
+
 		case ATTACK:
 		{
 			AttackState();
 		}
 		break;
-		
+
 		case DAMAGED:
 		{
 			DamagedState();
@@ -441,30 +464,29 @@ void CActor::FSM_Selector()
 void CActor::IdleState()
 {
 	auto action = Sequence::create(
-		CallFunc ::create(CC_CALLBACK_0(CActor ::IdleStateStart,this)),
+		CallFunc::create(CC_CALLBACK_0(CActor::IdleStateStart, this)),
 		CallFunc::create(CC_CALLBACK_0(CActor::IdleStateExcute, this)),
 		CallFunc::create(CC_CALLBACK_0(CActor::IdleStateEnd, this)), NULL);
 
 	mpScene->runAction(action);
-}	
+}
 
 void CActor::IdleStateStart()
 {
 	mpObjectAniBox->Hide();
 	mpObjectAniBox->StopAnimation();
-	mpActorAniBox->Show();	
+	mpActorAniBox->Show();
 	mpActorAniBox->StopMoveAnimation();
-	log("idle start");
+
 }
 
 void CActor::IdleStateExcute()
 {
-	log("idle Excute");
-
+	this->State_0();
 }
+
 void CActor::IdleStateEnd()
 {
-	log("idle End");
 	mCurState = IDLE;
 }
 
@@ -486,7 +508,6 @@ void CActor::MoveStateStart()
 void CActor::MoveStateExcute()
 {
 	this->Dir_Selector();
-	log("move");
 }
 
 
@@ -514,15 +535,15 @@ void CActor::AttackStateExcute()
 {
 	mpObjectAniBox->RunAniObject();
 	CSound::Getinstance()->PlayEffect(0);
-	log("attack");
 }
 
 void CActor::AttackStateEnd()
 {
 	mpObjectAniBox->StopAnimation();
-	mCurState = ATTACK;	
+
+	mCurState = ATTACK;
 	mpObjectAniBox->RunAniWithCallback(
-		CallFunc::create(CC_CALLBACK_0(CActor ::ChangeIdleState, this))
+		CallFunc::create(CC_CALLBACK_0(CActor::ChangeIdleState, this))
 	);
 }
 
@@ -563,4 +584,96 @@ int CActor::GetAP()
 Vec2 CActor::GetVec()
 {
 	return mVec;
+}
+
+void CActor::State_0()
+{
+	mpLevelEffect_0->Show();
+	mpLevelEffect_0->RunAniFoever();
+}
+
+void CActor::State_1()
+{
+	mpLevelEffect_0->Hide();
+	mpLevelEffect_1->Show();
+	mpLevelEffect_1->RunAniFoever();
+}
+
+void CActor::State_2()
+{
+	mpLevelEffect_1->Hide();
+	mpLevelEffect_2->Show();
+	mpLevelEffect_2->RunAniFoever();
+}
+
+void CActor::State_3()
+{
+	mpLevelEffect_2->Hide();
+	mpLevelEffect_3->Show();
+	mpLevelEffect_3->RunAniFoever();
+}
+
+void CActor::StopAnimations()
+{
+	mpLevelEffect_0->StopAnimation();
+	mpLevelEffect_1->StopAnimation();
+	mpLevelEffect_2->StopAnimation();
+	mpLevelEffect_3->StopAnimation();
+}
+
+void CActor::CharacterLevel()
+{
+	int tLevel = FSM_Manager::Getinstance()->GetLevel();
+
+	log("%d", tLevel);
+	if (mLevel == tLevel)
+	{
+	}
+	else
+	{
+		this->StopAnimations();
+
+		switch (tLevel)
+		{
+		case 0:
+		{
+			this->State_0();
+			mLevel = tLevel;
+			//FSM_Manager::Getinstance()->SetLevel(0);
+		}
+		break;
+
+		case 1:
+		{
+
+			this->State_1();
+			mLevel = tLevel;
+			//FSM_Manager::Getinstance()->SetLevel(1);
+		}
+		break;
+
+		case 2:
+		{
+			this->State_2();
+			mLevel = tLevel;
+			//FSM_Manager::Getinstance()->SetLevel(2);
+		}
+		break;
+
+		case 3:
+		{
+			this->State_3();
+			mLevel = tLevel;
+			//FSM_Manager::Getinstance()->SetLevel(3);
+		}
+		break;
+
+		default:
+		{
+
+		}
+		break;
+
+		}
+	}
 }

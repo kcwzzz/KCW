@@ -5,12 +5,10 @@
 
 void CObjectAniBox::CreateAniBox(string tAniName, Vec2 tVec, int tWidth, int tHeight, float tSetDelay, int tFrameCount )
 {
-
 	this->CreateTexture(tAniName, tWidth, tHeight);
 	this->SetPosition(tVec);
 	this->CreateAniObject(tWidth, tHeight, tSetDelay, tFrameCount);
 	this->Hide();
-
 }
 
 void CObjectAniBox::SetScene(Node *tpNode)
@@ -43,8 +41,8 @@ void CObjectAniBox::CreateAniObject(int tWidth, int tHeight, float tSetDelay, in
 
 	for (int i = 0; i < tFrameCount;i++)
 	{
-		int column = i % tFrameCount;
-		int row = i / tFrameCount;
+		int column = i % 5;
+		int row = i / 5;
 		mpAnimationObject->addSpriteFrameWithTexture(
 			mpTexture,
 			Rect(column * tWidth, row * tHeight, tWidth, tHeight));
@@ -52,6 +50,8 @@ void CObjectAniBox::CreateAniObject(int tWidth, int tHeight, float tSetDelay, in
 
 	mpAnimateObject = Animate::create(mpAnimationObject);
 	mpAnimateObject->retain();
+
+
 }
 
 void CObjectAniBox::setRotation(int tAngle)
@@ -64,10 +64,15 @@ void CObjectAniBox::RunAniObject()
 	mpSprite->runAction(mpAnimateObject);
 }
 
+void CObjectAniBox::RunAniFoever()
+{
+	auto tseq = RepeatForever::create(mpAnimateObject);
+	
+	mpSprite->runAction(tseq);
+}
+
 void CObjectAniBox::RunAniWithCallback(CallFunc *tpFunc)
 {
-	//mpSprite->runAction(mpAnimateObject);
-
 	auto tSeq = Sequence::create(
 		mpAnimateObject,
 		tpFunc,
