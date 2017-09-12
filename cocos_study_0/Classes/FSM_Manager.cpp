@@ -36,3 +36,13 @@ void FSM_Manager::SetLevel(int tLevel)
 {
 	mActorLevel = tLevel;
 }
+
+int FSM_Manager::GetCurSP()
+{
+	return mCurSP;
+}
+
+void FSM_Manager::SetCurSP(int tCurSP)
+{
+	mCurSP += tCurSP;
+}

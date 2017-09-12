@@ -6,6 +6,7 @@
 #include "CActor.h"
 #include "CEnemy.h"
 #include "CGuageHP.h"
+#include "CGuageSP.h"
 
 #include "CBackgroundLayer.h"
 #include "CUILayer.h"
@@ -15,6 +16,8 @@
 
 #include "FSM_Manager.h"
 
+
+#include "CSkill_0.h"
 
 USING_NS_CC;
 
@@ -39,7 +42,7 @@ bool GameScene::init()
 	CreateUILayer();
 	CreateActor();
 	CreateEnemy();
-
+	CreateSkill();
 	CSound::Getinstance()->Create();
 	CSound::Getinstance()->PlayBGM(2);
 
@@ -152,15 +155,36 @@ void GameScene::Colision()
 	{
 		mRectEnemy[ti] = mpEnemy[ti]->GetSprite()->getBoundingBox();
 		mRectEnemyAttack[ti] = mpEnemy[ti]->GetAttackSprite()->getBoundingBox();
-	
-
 	// Actor의 공격이 Enemy를 맞출 경우
 	if (true == mpActor->GetAttackSprite()->isVisible())
 	{
 		if (true == mRectActorAttack.intersectsRect(mRectEnemy[ti]))
 		{
-			//log("good");
+			mpActor->AchiveSP(mpActor->GetAP());
+			CGuageSP::Getinstance()->SetCurSP(10);
+
+			int tActorDir = mpActor->GetmDir();
+			if (Up_Dir == tActorDir)
+			{
+				mpEnemy[ti]->setPosition(Vec2(mpEnemy[ti]->GetVec().x, mpEnemy[ti]->GetVec().y + 96));
+			}
+			else if (Down_Dir == tActorDir)
+			{
+				mpEnemy[ti]->setPosition(Vec2(mpEnemy[ti]->GetVec().x, mpEnemy[ti]->GetVec().y - 96));
+				//mpEnemy->setPosition(Vec2(mpActor->GetVec().x, mpActor->GetVec().y - 96));
+			}
+			else if (Left_Dir == tActorDir)
+			{
+				mpEnemy[ti]->setPosition(Vec2(mpEnemy[ti]->GetVec().x - 96, mpEnemy[ti]->GetVec().y));
+				//mpActor->setPosition(Vec2(mpActor->GetVec().x - 96, mpActor->GetVec().y));
+			}
+			else if (Right_Dir == tActorDir)
+			{
+				mpEnemy[ti]->setPosition(Vec2(mpEnemy[ti]->GetVec().x + 96, mpEnemy[ti]->GetVec().y));
+				//mpActor->setPosition(Vec2(mpActor->GetVec().x + 96, mpActor->GetVec().y));
+			}
 		}
+
 		else
 		{
 			//log("fuck");
@@ -200,4 +224,13 @@ void GameScene::Colision()
 		//log("normal");
 	}
 	}
+}
+
+void GameScene::CreateSkill()
+{
+	mpSkill_0 = new CSkill_0();
+	mpSkill_0->Create();
+	mpSkill_0->SetScene(this);
+	mpSkill_0->SetPosition(Vec2(300,200));
+	mpSkill_0->Build();
 }

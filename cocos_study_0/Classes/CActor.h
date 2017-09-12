@@ -12,6 +12,7 @@ class CBackgroundLayer;
 class CVirtualPad;
 class CActorAniBox;
 class CObjectAniBox;
+class CSkill_0;
 //class CGuageHP;
 
 class CActor
@@ -52,13 +53,13 @@ protected:
 	CObjectAniBox *mpLevelEffect_1 = NULL;
 	CObjectAniBox *mpLevelEffect_2 = NULL;
 	CObjectAniBox *mpLevelEffect_3 = NULL;
-
+	CSkill_0 *mpSkill_0 = NULL;
 
 	Sprite *mpAttSprite = NULL;
 	Sprite *mpColisionBox = NULL;
-	Vec2 mColVec;//충돌박스의 위치	
-	
+	Vec2 mColVec;//충돌박스의 위치		
 	Vec2 mAttVec;//충돌박스의 위치
+
 
 
 	CVirtualPad *mpVirtualPad = NULL;
@@ -128,6 +129,8 @@ public:
 
 	virtual void DeadState();
 	virtual void DamagedState();
+
+	void AchiveSP(int tInt);
 	//
 
 	//CGuageHP : HP bar 노출에 사용

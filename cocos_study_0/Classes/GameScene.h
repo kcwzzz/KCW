@@ -13,6 +13,7 @@ class CUILayer;
 class CActor;
 class CAniBox;
 class CEnemy;
+class CSkill_0;
 
 class GameScene : public cocos2d::Scene
 {
@@ -24,6 +25,8 @@ protected:
 
 	TMXTiledMap *mpTilemap = NULL;
 	ActionCamera *mpCamera = NULL;
+
+	CSkill_0 *mpSkill_0 = NULL;
 
 	CActor *mpActor = NULL;			//√ ±‚»≠
 	Rect mRectActor;
@@ -52,7 +55,7 @@ public:
 	void CreateActor();
 	void CreateEnemy();
 	void update(float dt);
-	void TestMoving(float f);
+
 
 	
 	//Actor
@@ -61,6 +64,10 @@ public:
 	void DamagedActor();
 
 	void Colision();
+
+
+	void CreateSkill();
+
 
 public:
 

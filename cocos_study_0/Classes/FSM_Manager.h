@@ -16,6 +16,7 @@ private:
 	int mEnemyState = 0;
 
 	int mActorLevel = 0;
+	int mCurSP = 0;
 
 protected:
 
@@ -28,5 +29,6 @@ public:
 	int GetLevel();
 	void SetLevel(int tLevel);
 
-
+	int GetCurSP();
+	void SetCurSP(int tCurSP);
 };

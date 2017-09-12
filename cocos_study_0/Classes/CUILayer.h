@@ -53,5 +53,4 @@ public:
 	virtual void onTouchesMoved(const vector<Touch*>&touches, Event* unused_event);
 	virtual void onTouchesEnded(const vector<Touch*>&touches, Event* unused_event);
 	virtual void onTouchesCancelled(const vector<Touch*>&touches, Event* unused_event);
-
 };

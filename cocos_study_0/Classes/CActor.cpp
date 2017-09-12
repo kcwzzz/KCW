@@ -18,6 +18,8 @@
 #include "FSM_Manager.h"
 #include "Define.h"
 
+#include "CSkill_0.h"
+
 USING_NS_CC;
 
 CActor::CActor()
@@ -120,6 +122,11 @@ void CActor::Create()
 	mpBGLayer->Create();
 	mpBGLayer->retain();
 
+	mpSkill_0 = new CSkill_0();
+	mpSkill_0->Create();
+	mpSkill_0->SetScene(mpScene);
+	mpSkill_0->SetPosition(mVec);
+
 	CGuageHP::Getinstance()->Create(mCurHP, mMaxHP);
 	CGuageHP::Getinstance()->PrintScore();
 	CGuageHP::Getinstance()->SetPosition(Vec2(50, 730));
@@ -151,6 +158,7 @@ void CActor::Build()
 	mpLevelEffect_1->Build();
 	mpLevelEffect_2->Build();
 	mpLevelEffect_3->Build();
+	mpSkill_0->Build();
 	mpScene->addChild(mpColisionBox, 5);
 }
 // »ý¼º
@@ -253,6 +261,7 @@ void CActor::MoveActor()
 	setPosition(mVec);
 	mpColisionBox->setPosition(mColVec);
 	mpObjectAniBox->SetPosition(mAttVec);
+	mpSkill_0->SetPosition(mVec);
 
 	mpLevelEffect_0->SetPosition(mVec);
 	mpLevelEffect_1->SetPosition(mVec);
@@ -391,10 +400,29 @@ float CActor::GetCurHP()
 
 void CActor::SetDamaged(int tint)
 {
-	mCurHP = mCurHP - tint;
+	if (mCurHP - tint >= 0)
+	{
+		mCurHP = mCurHP - tint;
+	}
+	else
+	{
+		mCurHP = 0;
+	}
 	CGuageHP::Getinstance()->SetCurHP(mCurHP);
 	CGuageHP::Getinstance()->BuildGuageWithDamage(tint);
-	//mpGuageHP->BuildGuageWithDamage(tint);
+}
+void CActor::AchiveSP(int tInt)
+{
+	if(mCurSP + tInt <= mMaxSP)
+	{
+		mCurSP = mCurSP + tInt;
+	}
+	else
+	{
+		mCurSP = mMaxSP;
+	}
+	CGuageSP::Getinstance()->SetCurSP(mCurSP) ;
+	CGuageSP::Getinstance()->BuildGuageWithDamage(tInt);
 }
 
 int CActor::ColisionGeometry()
@@ -470,21 +498,17 @@ void CActor::IdleState()
 
 	mpScene->runAction(action);
 }
-
 void CActor::IdleStateStart()
 {
 	mpObjectAniBox->Hide();
 	mpObjectAniBox->StopAnimation();
 	mpActorAniBox->Show();
 	mpActorAniBox->StopMoveAnimation();
-
 }
-
 void CActor::IdleStateExcute()
 {
 	this->State_0();
 }
-
 void CActor::IdleStateEnd()
 {
 	mCurState = IDLE;
@@ -499,18 +523,14 @@ void CActor::MoveState()
 
 	mpScene->runAction(action);
 }
-
 void CActor::MoveStateStart()
 {
 
 }
-
 void CActor::MoveStateExcute()
 {
 	this->Dir_Selector();
 }
-
-
 void CActor::MoveStateEnd()
 {
 	mCurState = MOVE;
@@ -525,28 +545,24 @@ void CActor::AttackState()
 
 	mpScene->runAction(action);
 }
-
 void CActor::AttackStateStart()
 {
 	mpObjectAniBox->Show();
+	mpSkill_0->Show();
 }
-
 void CActor::AttackStateExcute()
 {
 	mpObjectAniBox->RunAniObject();
 	CSound::Getinstance()->PlayEffect(0);
+	mpSkill_0->RunAniObject();
 }
-
 void CActor::AttackStateEnd()
 {
-	mpObjectAniBox->StopAnimation();
-
 	mCurState = ATTACK;
 	mpObjectAniBox->RunAniWithCallback(
 		CallFunc::create(CC_CALLBACK_0(CActor::ChangeIdleState, this))
 	);
 }
-
 void CActor::ChangeIdleState()
 {
 	FSM_Manager::Getinstance()->SetNowState(IDLE);
@@ -558,7 +574,6 @@ void CActor::DeadState()
 	mpActorAniBox->Hide();
 	mCurState = DEAD;
 }
-
 void CActor::DamagedState()
 {
 	FSM_Manager::Getinstance()->SetNowState(IDLE);
@@ -584,33 +599,6 @@ int CActor::GetAP()
 Vec2 CActor::GetVec()
 {
 	return mVec;
-}
-
-void CActor::State_0()
-{
-	mpLevelEffect_0->Show();
-	mpLevelEffect_0->RunAniFoever();
-}
-
-void CActor::State_1()
-{
-	mpLevelEffect_0->Hide();
-	mpLevelEffect_1->Show();
-	mpLevelEffect_1->RunAniFoever();
-}
-
-void CActor::State_2()
-{
-	mpLevelEffect_1->Hide();
-	mpLevelEffect_2->Show();
-	mpLevelEffect_2->RunAniFoever();
-}
-
-void CActor::State_3()
-{
-	mpLevelEffect_2->Hide();
-	mpLevelEffect_3->Show();
-	mpLevelEffect_3->RunAniFoever();
 }
 
 void CActor::StopAnimations()
@@ -639,16 +627,13 @@ void CActor::CharacterLevel()
 		{
 			this->State_0();
 			mLevel = tLevel;
-			//FSM_Manager::Getinstance()->SetLevel(0);
 		}
 		break;
 
 		case 1:
 		{
-
 			this->State_1();
 			mLevel = tLevel;
-			//FSM_Manager::Getinstance()->SetLevel(1);
 		}
 		break;
 
@@ -656,7 +641,6 @@ void CActor::CharacterLevel()
 		{
 			this->State_2();
 			mLevel = tLevel;
-			//FSM_Manager::Getinstance()->SetLevel(2);
 		}
 		break;
 
@@ -664,7 +648,6 @@ void CActor::CharacterLevel()
 		{
 			this->State_3();
 			mLevel = tLevel;
-			//FSM_Manager::Getinstance()->SetLevel(3);
 		}
 		break;
 
@@ -676,4 +659,30 @@ void CActor::CharacterLevel()
 
 		}
 	}
+}
+void CActor::State_0()
+{
+	mpLevelEffect_0->Show();
+	mpLevelEffect_0->RunAniFoever();
+}
+
+void CActor::State_1()
+{
+	mpLevelEffect_0->Hide();
+	mpLevelEffect_1->Show();
+	mpLevelEffect_1->RunAniFoever();
+}
+
+void CActor::State_2()
+{
+	mpLevelEffect_1->Hide();
+	mpLevelEffect_2->Show();
+	mpLevelEffect_2->RunAniFoever();
+}
+
+void CActor::State_3()
+{
+	mpLevelEffect_2->Hide();
+	mpLevelEffect_3->Show();
+	mpLevelEffect_3->RunAniFoever();
 }

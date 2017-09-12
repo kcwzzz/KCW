@@ -61,13 +61,13 @@ void CGuageHP:: Create(float tCurHP, float tMaxHP)
 
 	mpHPbar = new Label();
 	memset(tszTemp, 0, 64);
-
 }
 
 void CGuageHP::PrintScore()
 {
 	std::sprintf(tszTemp, "Hero HP :     %d / %d", (int)mCurHP, (int)mMaxHP);
 	std::string tString = tszTemp;
+
 	mpHPbar->setString(tString);
 	mpHPbar->setSystemFontSize (25.0f);
 	mpHPbar->setColor(Color3B( 0, 0, 0));
@@ -119,7 +119,6 @@ void CGuageHP::BuildGuageWithDamage(float tDamage)
 
 	this->PrintScore();
 }
-
 
 void CGuageHP::SetCurHP(int tCurHP)
 {

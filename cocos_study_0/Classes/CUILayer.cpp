@@ -28,10 +28,8 @@ void CUILayer::CreateLayer()
 	mpUILayer->setAnchorPoint(Vec2(0, 0));
 	mpUILayer->setPosition(Vec2(0, 0));
 	this->addChild(mpUILayer, 10);
-
 	CGuageHP::Getinstance()->SetScene(this);
 	CGuageSP::Getinstance()->SetScene(this);
-
 }
 
 

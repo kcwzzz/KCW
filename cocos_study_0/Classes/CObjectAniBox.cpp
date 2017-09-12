@@ -50,8 +50,6 @@ void CObjectAniBox::CreateAniObject(int tWidth, int tHeight, float tSetDelay, in
 
 	mpAnimateObject = Animate::create(mpAnimationObject);
 	mpAnimateObject->retain();
-
-
 }
 
 void CObjectAniBox::setRotation(int tAngle)
