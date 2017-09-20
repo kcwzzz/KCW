@@ -57,6 +57,8 @@
      <Compile Include="Assets\CExam_3.cs" />
      <Compile Include="Assets\CExam_4.cs" />
      <Compile Include="Assets\CExam_5.cs" />
+     <Compile Include="Assets\CExam_6.cs" />
+     <Compile Include="Assets\CExam_7.cs" />
      <Compile Include="Assets\CUISceneTest.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>

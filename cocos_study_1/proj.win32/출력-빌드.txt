@@ -1,2 +1,0 @@
-﻿편집하며 계속하기 : error  : 'HelloWorldScene.cpp'('cocos_study_0.exe'에 있음)은(는) 편집하며 계속하기를 사용하도록 설정하여 링크되지 않았습니다. /INCREMENTAL 링크를 사용하도록 설정하고 /EDITANDCONTINUE 지시문이 무시되지 않도록 하세요.
-편집하며 계속하기 : error  : 'HelloWorldScene.h'('cocos_study_0.exe'에 있음)은(는) 편집하며 계속하기를 사용하도록 설정하여 링크되지 않았습니다. /INCREMENTAL 링크를 사용하도록 설정하고 /EDITANDCONTINUE 지시문이 무시되지 않도록 하세요.

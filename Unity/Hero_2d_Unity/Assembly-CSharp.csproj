@@ -52,8 +52,6 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\CTestArray.cs" />
-     <Compile Include="Assets\CUIBtnDice.cs" />
-     <Compile Include="Assets\CUIBtnRCPGame.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

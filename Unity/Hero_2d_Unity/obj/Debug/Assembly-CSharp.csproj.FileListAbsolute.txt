@@ -28,6 +28,5 @@ D:\KCW\Unity\Hero_2d_Unity\Temp\bin\Debug\UnityEngine.Timeline.xml
 D:\KCW\Unity\Hero_2d_Unity\Temp\bin\Debug\UnityEngine.Analytics.xml
 D:\KCW\Unity\Hero_2d_Unity\Temp\bin\Debug\UnityEngine.HoloLens.xml
 D:\KCW\Unity\Hero_2d_Unity\obj\Debug\Assembly-CSharp.csprojResolveAssemblyReference.cache
-D:\KCW\Unity\Hero_2d_Unity\obj\Debug\Assembly-CSharp.csproj.CoreCompileInputs.cache
 D:\KCW\Unity\Hero_2d_Unity\obj\Debug\Assembly-CSharp.dll
 D:\KCW\Unity\Hero_2d_Unity\obj\Debug\Assembly-CSharp.pdb
