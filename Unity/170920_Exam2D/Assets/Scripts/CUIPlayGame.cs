@@ -10,19 +10,34 @@ public class CUIPlayGame : MonoBehaviour {
     {
         mpScene = tpScene;
     }
+
 	// Use this for initialization
-	void Start () {
+	void Start ()
+    {
 		
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
 		
 	}
 
-    public void OnClickBtnAttack()
+    public void OnClickBtnAttackLt()
     {
-        Debug.Log("CUIPlayGame.OneClickBtnAttack");
-        mpScene.mpAlberto.DoAttack();
+        float tDirX = -1.0f;
+
+        Debug.Log("CUIPlayGame.OneClickBtnAttackLeft");
+        mpScene.AlbertoDoAttack(tDirX);
+
     }
+
+    public void OnClickBtnAttackRt()
+    {
+        float tDirX = 1.0f;
+        Debug.Log("CUIPlayGame.OneClickBtnAttackRight");
+        mpScene.AlbertoDoAttack(tDirX);
+
+    }
+
 }
