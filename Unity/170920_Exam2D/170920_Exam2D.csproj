@@ -80,7 +80,10 @@
   <ItemGroup>
     <Compile Include="Assets\CBehaviourStateAttack.cs" />
     <Compile Include="Assets\Scripts\CAlberto.cs" />
+    <Compile Include="Assets\Scripts\CBullet.cs" />
     <Compile Include="Assets\Scripts\CDxGameOver.cs" />
+    <Compile Include="Assets\Scripts\CEnemy.cs" />
+    <Compile Include="Assets\Scripts\CRabbit.cs" />
     <Compile Include="Assets\Scripts\CScenePlayGAme.cs" />
     <Compile Include="Assets\Scripts\CSlime.cs" />
     <Compile Include="Assets\Scripts\CUIPlayGame.cs" />

@@ -6,6 +6,8 @@ public class CUIPlayGame : MonoBehaviour {
 
     protected CScenePlayGAme mpScene = null;
 
+    float tDirX = 0.0f;
+
     public void SetScene(CScenePlayGAme tpScene)
     {
         mpScene = tpScene;
@@ -25,8 +27,7 @@ public class CUIPlayGame : MonoBehaviour {
 
     public void OnClickBtnAttackLt()
     {
-        float tDirX = -1.0f;
-
+        tDirX = -1.0f;
         Debug.Log("CUIPlayGame.OneClickBtnAttackLeft");
         mpScene.AlbertoDoAttack(tDirX);
 
@@ -34,10 +35,8 @@ public class CUIPlayGame : MonoBehaviour {
 
     public void OnClickBtnAttackRt()
     {
-        float tDirX = 1.0f;
+        tDirX = 1.0f;
         Debug.Log("CUIPlayGame.OneClickBtnAttackRight");
-        mpScene.AlbertoDoAttack(tDirX);
-
+        mpScene.AlbertoDoAttack(tDirX);        
     }
-
 }

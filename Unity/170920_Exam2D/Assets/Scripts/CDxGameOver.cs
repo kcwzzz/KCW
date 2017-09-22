@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class CDxGameOver : MonoBehaviour
 {
+    private CScenePlayGAme mpScene = null;
+
+    Animator mpAnimator = null;
 
     // Use this for initialization
     void Start()
     {
-        this.Hide();
     }
 
     // Update is called once per frame
@@ -16,13 +18,22 @@ public class CDxGameOver : MonoBehaviour
     {
 
     }
+    public void CreateRyu()
+    {
+        mpAnimator = GetComponentInChildren < Animator>();
+    }
+
+    public void SetScene(CScenePlayGAme tpScene)
+    {
+        mpScene = tpScene;
+    }
 
     public bool IsShow()
     {
         return this.gameObject.activeInHierarchy;
     }
 
-    public void show()
+    public void Show()
     {   
         this.gameObject.SetActive(true);
     }
@@ -35,5 +46,6 @@ public class CDxGameOver : MonoBehaviour
     public void OnClickBtnRetry()
     {
         this.Hide();
+        
     }
 }

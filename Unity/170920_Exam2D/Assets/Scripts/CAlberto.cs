@@ -4,15 +4,7 @@ using UnityEngine;
 
 public class CAlberto : CUnit
 {
-    public enum STATE
-    {
-        IDLE = 0,
-        ATTACK = 1,
-        DEAD = 2
 
-    };
-
-    STATE mState = STATE.IDLE;
 
     // Use this for initialization
     void Start()
@@ -49,12 +41,15 @@ public class CAlberto : CUnit
             case STATE.ATTACK:
                 {
                     mpAnimator.SetTrigger("mTrigAniAttack");
+                    
+                    DoAttack();
                 }
                 break;
 
             case STATE.DEAD:
                 {
-                    mpAnimator.SetTrigger("mTrigAniDead");
+                    //mpAnimator.SetTrigger("mTrigAniDead");
+                    Destroy(this.gameObject);
                 }
                 break;
         }
@@ -71,8 +66,25 @@ public class CAlberto : CUnit
                 SetState(STATE.DEAD);
                 DoState();
 
-                mpScene.mpDxGameOver.show();                
+                mpScene.mpDxGameOver.Show();
             }
+        }
+    }
+
+    public void DoAttack()
+    {        
+        mpAnimator.SetTrigger("mTrigAttack");
+        CBullet tBullet =  Instantiate<CBullet>(mpScene.PFBullet, this.transform.position,
+                             Quaternion.identity);
+
+        float tAlbertoDirX =  this.transform.localScale.x;
+
+        tBullet.SetBuletDirX(tAlbertoDirX);
+
+        if (STATE.IDLE == mState)
+        {
+            mState = STATE.DEAD;
+            mpAnimator.SetTrigger("mTrigAttack");
         }
     }
 }

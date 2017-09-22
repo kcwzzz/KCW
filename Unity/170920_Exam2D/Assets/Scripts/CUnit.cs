@@ -8,6 +8,16 @@ public class CUnit : MonoBehaviour {
     protected bool mIsAlive = false;
     protected Animator mpAnimator = null;
 
+    public enum STATE
+    {
+        IDLE = 0,
+        ATTACK = 1,
+        DEAD = 2
+
+    };
+
+    public STATE mState = STATE.IDLE;
+
     // Use this for initialization
     void Start () {
 		
