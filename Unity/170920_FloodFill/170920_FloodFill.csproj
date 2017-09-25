@@ -79,6 +79,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\FloodFill.cs" />
+    <Compile Include="Assets\Scripts\CAlberto.cs" />
+    <Compile Include="Assets\Scripts\CEnemy.cs" />
+    <Compile Include="Assets\Scripts\CRyuGameDataMgr.cs" />
+    <Compile Include="Assets\Scripts\CRyuUnit.cs" />
+    <Compile Include="Assets\Scripts\CScenePlayGame.cs" />
+    <Compile Include="Assets\Scripts\CSceneTitle.cs" />
+    <Compile Include="Assets\Scripts\CUIPlayGame.cs" />
+    <Compile Include="Assets\Scripts\CUITitle.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

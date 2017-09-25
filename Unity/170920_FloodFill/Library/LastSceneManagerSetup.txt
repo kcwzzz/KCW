@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/FloodFill.unity
+- path: Assets/CScenePlayGame.unity
   isLoaded: 1
   isActive: 1

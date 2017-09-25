@@ -84,7 +84,7 @@ public class CAlberto : CUnit
         if (STATE.IDLE == mState)
         {
             mState = STATE.DEAD;
-            mpAnimator.SetTrigger("mTrigAttack");
+            mpAnimator.SetTrigger("mTrigMove");
         }
     }
 }
