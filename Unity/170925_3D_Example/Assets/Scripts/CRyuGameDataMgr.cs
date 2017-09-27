@@ -8,6 +8,7 @@ public class CRyuGameDataMgr
 
     public CAlberto PFAlberto = null;
     public CEnemy PFSlime = null;
+    public CEnemy PFBobby = null;
     public int SceneLoadNum = 0;
 
 
@@ -36,6 +37,7 @@ public class CRyuGameDataMgr
         //load prefabs
         PFAlberto = Resources.Load<CAlberto>("Prefabs/PFAlberto");
         PFSlime = Resources.Load<CEnemy>("Prefabs/PFSlime");
+        PFBobby = Resources.Load<CEnemy>("Prefabs/PFBobby");
     }
 
 	// Use this for initialization

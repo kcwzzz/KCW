@@ -21,8 +21,8 @@ public class CUITitle : MonoBehaviour
 
     public void OnClickBtnGoScenePlayGame()
     {
+        CRyuSoundMgr.GetInst().Play(0);
         SceneManager.LoadScene("CScenePlayGame");
-        //SceneManager.LoadScene("CSceneGrid_0", LoadSceneMode.Additive);
         SceneManager.LoadScene("CSceneGrid_0", LoadSceneMode.Additive);
         SceneManager.LoadScene("CScenePlayGameUI", LoadSceneMode.Additive);
 
