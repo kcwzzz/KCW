@@ -5,8 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class CScenePlayGame : MonoBehaviour
 {
+    int mCount = 0;
     public CAlberto PFAlberto = null;
     public CEnemy PFSlime = null;
+    public CEnemy_1 PFEnemy_1 = null;
     private CAlberto mpAlberto = null;
 
     List<CEnemy> mEnemyList = null;
@@ -37,8 +39,27 @@ public class CScenePlayGame : MonoBehaviour
     }
     void DoCreateEnemy()
     {
-        int ti = 0;
-        CEnemy tpSlime = null;
+
+        int tSceneNum = CRyuGameDataMgr.GetInst().SceneLoadNum;
+
+        mCount = mEnemyList.Count;
+
+        if (mEnemyList.Count < CRyuGameDataMgr.GetInst().mStageInfoBundle.mStageInfoList[tSceneNum].mUnitInfoList.Count)
+        {
+            CEnemy tpSlime = null;
+            tpSlime = Instantiate<CEnemy>(CRyuGameDataMgr.GetInst().PFSlime, Vector3.zero, Quaternion.identity);
+
+            tpSlime.transform.position = new Vector3(CRyuGameDataMgr.GetInst().mStageInfoBundle.mStageInfoList[tSceneNum].mUnitInfoList[mCount].mX,
+                CRyuGameDataMgr.GetInst().mStageInfoBundle.mStageInfoList[tSceneNum].mUnitInfoList[mCount].mY,
+                CRyuGameDataMgr.GetInst().mStageInfoBundle.mStageInfoList[tSceneNum].mUnitInfoList[mCount].mZ);
+
+            tpSlime.SetScene(this);
+
+            mEnemyList.Add(tpSlime);
+            mEnemyList[mCount].CreateAni();
+            CRyuSoundMgr.GetInst().Play(2);
+
+        }
 
         /*
         int ti = 0;
@@ -68,7 +89,23 @@ public class CScenePlayGame : MonoBehaviour
             mEnemyList.Add(tpBobby);
             CRyuSoundMgr.GetInst().Play(2);
         }
+        else if(6==mEnemyList.Count)
+        {
+            CEnemy_1 tpEnemy_1= null;
+            tpEnemy_1 = null;
+            tpEnemy_1 = Instantiate<CEnemy_1>(CRyuGameDataMgr.GetInst().PFEnemy_1, Vector3.zero, Quaternion.identity);
+            tpEnemy_1.transform.position = new Vector3(-5, 0, 0);
+            tpEnemy_1.SetScene(this);
+            tpEnemy_1.SetAlberto(mpAlberto);
+            mEnemyList.Add(tpEnemy_1);
+            CRyuSoundMgr.GetInst().Play(2);
+
+
+
+
+        }
         */
+
     }
 
     public CAlberto GetAlberto()

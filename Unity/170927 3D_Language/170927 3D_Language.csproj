@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>2017.1.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -81,12 +83,17 @@
     <Compile Include="Assets\Scripts\CAlberto.cs" />
     <Compile Include="Assets\Scripts\CAudioBundle.cs" />
     <Compile Include="Assets\Scripts\CBobby.cs" />
+    <Compile Include="Assets\Scripts\CBullet.cs" />
+    <Compile Include="Assets\Scripts\CDialogueInfo.cs" />
     <Compile Include="Assets\Scripts\CEnemy.cs" />
+    <Compile Include="Assets\Scripts\CEnemy_1.cs" />
+    <Compile Include="Assets\Scripts\CGameDataMgr.cs" />
     <Compile Include="Assets\Scripts\CLamp.cs" />
     <Compile Include="Assets\Scripts\CRyuGameDataMgr.cs" />
     <Compile Include="Assets\Scripts\CRyuSoundMgr.cs" />
     <Compile Include="Assets\Scripts\CRyuUnit.cs" />
     <Compile Include="Assets\Scripts\CSceneEmpty.cs" />
+    <Compile Include="Assets\Scripts\CSceneEvent.cs" />
     <Compile Include="Assets\Scripts\CSceneLoad.cs" />
     <Compile Include="Assets\Scripts\CScenePlayGame.cs" />
     <Compile Include="Assets\Scripts\CSceneTitle.cs" />
@@ -103,7 +110,12 @@
     <None Include="Assets\Plugins\Android\res\values\strings.xml" />
     <None Include="Assets\Resources\Lang\ui_en.xml" />
     <None Include="Assets\Resources\Lang\ui_ko.xml" />
-    <None Include="Assets\Resources\XML\Enemy_info.xml" />
+    <None Include="Assets\Resources\XML\Enemy_info.xml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Assets\Resources\dialogue_list.xml">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

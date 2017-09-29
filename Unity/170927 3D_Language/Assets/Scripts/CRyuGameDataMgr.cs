@@ -13,6 +13,8 @@ public class CRyuGameDataMgr
     public CAlberto PFAlberto = null;
     public CEnemy PFSlime = null;
     public CEnemy PFBobby = null;
+    public CEnemy_1 PFEnemy_1 = null;
+    public CBullet PFBulletSphere = null;
 
     public int SceneLoadNum = 0;
 
@@ -20,7 +22,11 @@ public class CRyuGameDataMgr
     public List<string> mLangTextList = null;
 
     public Text mpTxtString = null;
+    public List<string> mpTxtStringList = null;
+
+    //public CStageInfoList mStageInfoBundle= null;
     public CStageInfoList mStageInfoBundle= null;
+
 
     public void CreateRyu()
     {
@@ -28,10 +34,12 @@ public class CRyuGameDataMgr
         PFAlberto = Resources.Load<CAlberto>("Prefabs/PFAlberto");
         PFSlime = Resources.Load<CEnemy>("Prefabs/PFSlime");
         PFBobby = Resources.Load<CEnemy>("Prefabs/PFBobby");
-        CreateWithLanguageType();
-        mStageInfoBundle = new CStageInfoList();
-        LoadStageXmlFile("XML/Enemy_info");
+        PFEnemy_1 = Resources.Load<CEnemy_1>("Prefabs/PFEnemy_1");
+        PFBulletSphere = Resources.Load<CBullet>("Prefabs/PFBulletSphere");
 
+        CreateWithLanguageType();
+
+        CreateWithStageData();
     }
 
     protected CRyuGameDataMgr()
@@ -130,6 +138,12 @@ public class CRyuGameDataMgr
         }
 
         return true;
+    }
+
+    private void CreateWithStageData()
+    {
+        mStageInfoBundle = new CStageInfoList();
+        LoadStageXmlFile("XML/Enemy_info");
     }
 
     protected bool LoadStageXmlFile(string tFileName)

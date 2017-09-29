@@ -1,0 +1,10 @@
+<DialogueInfoList>
+  <DialogueInfo>
+    <mId>0</mId>
+    <mDialogue>0번째 대화입니다.</mDialogue>
+  </DialogueInfo>
+  <DialogueInfo>
+    <mId>1</mId>
+    <mDialogue>1번째 대화입니다.</mDialogue>
+  </DialogueInfo>
+</DialogueInfoList>

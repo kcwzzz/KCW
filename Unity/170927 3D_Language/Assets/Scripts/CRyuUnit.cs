@@ -6,7 +6,7 @@ public class CRyuUnit : MonoBehaviour
 {
     protected Animator mpAnimator = null;
     protected CScenePlayGame mpScene = null;
-
+    
     public enum STATE
     {
         IDLE = 0,
@@ -62,5 +62,11 @@ public class CRyuUnit : MonoBehaviour
     virtual public void DoRatote()
     {
         this.transform.Rotate(Vector3.up, 90.0f, Space.Self);
+        
+    }
+
+    virtual public void DoFire()
+    {
+        
     }
 }

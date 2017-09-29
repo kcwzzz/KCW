@@ -22,9 +22,6 @@ public class CUIPlayGame : MonoBehaviour
 
     }
 
-
-
-
     public void OnClickBtnMove()
     {
         mpScene.GetAlberto().GetAni().SetTrigger("mTrigMove");
@@ -35,6 +32,12 @@ public class CUIPlayGame : MonoBehaviour
     {
         mpScene.GetAlberto().GetAni().SetTrigger("mTrigRotate");
         mpScene.GetAlberto().DoRatote();
+    }
+
+    public void OnClickBtnFire()
+    {
+        mpScene.GetAlberto().GetAni().SetTrigger("mTrigFire");
+        mpScene.GetAlberto().DoFire();
     }
 
     public void SetScene(CScenePlayGame tpScene)

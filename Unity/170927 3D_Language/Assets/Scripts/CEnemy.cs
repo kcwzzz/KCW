@@ -47,7 +47,7 @@ public class CEnemy : CRyuUnit
                 this.transform.position.y + 0.5f, this.transform.position.z);
 
             Vector3 tDir = this.transform.forward;
-
+            
             RaycastHit tRaycastHit;
 
             if (true == Physics.Raycast(tPosition, tDir, out tRaycastHit, 10.0f))
@@ -109,7 +109,8 @@ public class CEnemy : CRyuUnit
 
                 tQ.ToAngleAxis(out tAngle, out tAxis);
                 Quaternion.AngleAxis(90.0f, Vector3.up);
-    */
+                */
+
                 this.transform.position = Vector3.MoveTowards(this.transform.position, mpAlberto.transform.position, 1.0f);
 
             }

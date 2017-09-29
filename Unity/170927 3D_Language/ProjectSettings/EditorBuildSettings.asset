@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/CScenePlayGame.unity
     guid: 6eff89406fd67e947825109962b3455c
   - enabled: 1
+    path: Assets/CSceneEvent.unity
+    guid: fca4fc3165f5fc641aad82a283b3808b
+  - enabled: 1
     path: Assets/CScenePlayGameUI.unity
     guid: b9a9d4a6f2e40b648a7cc464d68887b0
   - enabled: 1

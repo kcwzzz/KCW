@@ -551,7 +551,8 @@ MonoBehaviour:
     m_ScenePaths: []
     m_ShowAllHits: 0
     m_SearchArea: 0
-    m_Folders: []
+    m_Folders:
+    - Assets
   m_ViewMode: 0
   m_StartGridSize: 64
   m_LastFolders: []
@@ -562,7 +563,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 14260000
     m_LastClickedID: 9748
-    m_ExpandedIDs: 000000001026000014260000162600001e2600002226000028260000
+    m_ExpandedIDs: 00000000062600000a2600000c26000014260000182600001e260000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -590,21 +591,21 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000001026000014260000162600001e2600002226000028260000
+    m_ExpandedIDs: 00000000062600000a2600000c26000014260000182600001e260000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: CRyuStageInfoList
-      m_OriginalName: CRyuStageInfoList
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 1686
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_SearchString: 
@@ -673,7 +674,7 @@ MonoBehaviour:
     height: 691
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 
+    m_SelectedIDs: 10260000
     m_LastClickedID: 0
     m_ExpandedIDs: 1afcffff00000000
     m_RenameOverlay:

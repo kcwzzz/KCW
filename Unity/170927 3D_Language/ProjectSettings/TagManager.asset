@@ -6,6 +6,8 @@ TagManager:
   tags:
   - tagLamp
   - tagActor
+  - tagBullet
+  - tag Enemy
   layers:
   - Default
   - TransparentFX

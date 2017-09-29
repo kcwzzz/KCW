@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/CSceneLoad.unity
+- path: Assets/CSceneGrid_0.unity
   isLoaded: 1
   isActive: 1

@@ -15,8 +15,6 @@ public class CSceneLoad : MonoBehaviour
         CRyuSoundMgr.GetInst().BuildRyu();
 
         CRyuGameDataMgr.GetInst().CreateRyu();
-
-
         CRyuGameDataMgr.GetInst().SetSceneNum(0);
 
         SceneManager.LoadScene("CSceneTitle");
